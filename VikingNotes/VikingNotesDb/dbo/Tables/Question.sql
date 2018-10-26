@@ -4,6 +4,18 @@
 -- Question        :  
 -- QuizID          :  (references Quiz.QuizID)
 --
+--
+-- Create Table    : 'Question'   
+-- QuestionID      :  
+-- Question        :  
+-- QuizID          :  (references Quiz.QuizID)
+--
+--
+-- Create Table    : 'Question'   
+-- QuestionID      :  
+-- Question        :  
+-- QuizID          :  (references Quiz.QuizID)
+--
 CREATE TABLE Question (
     QuestionID     BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     Question       NCHAR(400) NOT NULL,
