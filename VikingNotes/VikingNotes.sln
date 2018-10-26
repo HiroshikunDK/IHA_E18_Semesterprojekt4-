@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "VikingNotesDb", "VikingNotesDb\VikingNotesDb.sqlproj", "{F01EC55F-B82E-4872-AE74-05A605D141F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTfullWebApi", "RESTfullWebApi\RESTfullWebApi.csproj", "{59D87144-DF4F-416F-BD6D-2856BF6B6E01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{F01EC55F-B82E-4872-AE74-05A605D141F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F01EC55F-B82E-4872-AE74-05A605D141F6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F01EC55F-B82E-4872-AE74-05A605D141F6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{59D87144-DF4F-416F-BD6D-2856BF6B6E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D87144-DF4F-416F-BD6D-2856BF6B6E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D87144-DF4F-416F-BD6D-2856BF6B6E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D87144-DF4F-416F-BD6D-2856BF6B6E01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
