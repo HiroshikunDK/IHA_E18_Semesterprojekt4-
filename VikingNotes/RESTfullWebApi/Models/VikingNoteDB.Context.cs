@@ -16,7 +16,7 @@ namespace RESTfullWebApi.Models
     public partial class VikingNoteDBEntities : DbContext
     {
         public VikingNoteDBEntities()
-            : base("name=VikingNoteDBEntities")
+            : base("name=VikingNoteDBEntities1")
         {
         }
     
@@ -26,8 +26,11 @@ namespace RESTfullWebApi.Models
         }
     
         public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<Catagory> Catagories { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Quiz> Quizs { get; set; }
+        public virtual DbSet<Study> Studies { get; set; }
         public virtual DbSet<Userr> Userrs { get; set; }
+        public virtual DbSet<UserType> UserTypes { get; set; }
     }
 }

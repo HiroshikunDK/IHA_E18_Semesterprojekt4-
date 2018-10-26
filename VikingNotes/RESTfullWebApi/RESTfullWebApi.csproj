@@ -191,15 +191,21 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\CatagoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
+    <Compile Include="Controllers\StudyController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Answer.cs">
+      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Catagory.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Question.cs">
@@ -208,7 +214,13 @@
     <Compile Include="Models\Quiz.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Study.cs">
+      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Userr.cs">
+      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserType.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VikingNoteDB.Context.cs">
@@ -239,8 +251,8 @@
     <Content Include="Global.asax" />
     <Content Include="Models\VikingNoteDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>VikingNoteDB.Context.cs</LastGenOutput>
       <DependentUpon>VikingNoteDB.edmx</DependentUpon>
+      <LastGenOutput>VikingNoteDB.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\VikingNoteDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

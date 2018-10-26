@@ -14,6 +14,13 @@
           <Property Name="IsCorrect" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="QuestionID" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Catagory">
+          <Key>
+            <PropertyRef Name="CatagoryID" />
+          </Key>
+          <Property Name="CatagoryID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Question">
           <Key>
             <PropertyRef Name="QuestionID" />
@@ -28,6 +35,16 @@
           </Key>
           <Property Name="QuizID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="100" />
+          <Property Name="CatagoryID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Study">
+          <Key>
+            <PropertyRef Name="StudyID" />
+          </Key>
+          <Property Name="StudyID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="40" Nullable="false" />
         </EntityType>
         <EntityType Name="Userr">
           <Key>
@@ -36,6 +53,17 @@
           <Property Name="UserID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="Password" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="EmailAdress" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserTypeID" Type="bigint" Nullable="false" />
+          <Property Name="StudyID" Type="bigint" Nullable="false" />
+          <Property Name="StudentNumber" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="UserTypeID" />
+          </Key>
+          <Property Name="UserTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <Association Name="fk_Answer">
           <End Role="Question" Type="Self.Question" Multiplicity="1" />
@@ -73,11 +101,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Quiz2">
+          <End Role="Catagory" Type="Self.Catagory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Quiz" Type="Self.Quiz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catagory">
+              <PropertyRef Name="CatagoryID" />
+            </Principal>
+            <Dependent Role="Quiz">
+              <PropertyRef Name="CatagoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Userr">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Userr" Type="Self.Userr" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="UserTypeID" />
+            </Principal>
+            <Dependent Role="Userr">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Userr2">
+          <End Role="Study" Type="Self.Study" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Userr" Type="Self.Userr" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Study">
+              <PropertyRef Name="StudyID" />
+            </Principal>
+            <Dependent Role="Userr">
+              <PropertyRef Name="StudyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="VikingNoteDBModelStoreContainer">
           <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Catagory" EntityType="Self.Catagory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quiz" EntityType="Self.Quiz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Study" EntityType="Self.Study" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Userr" EntityType="Self.Userr" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_Answer" Association="Self.fk_Answer">
             <End Role="Question" EntitySet="Question" />
             <End Role="Answer" EntitySet="Answer" />
@@ -89,6 +162,18 @@
           <AssociationSet Name="fk_Quiz" Association="Self.fk_Quiz">
             <End Role="Userr" EntitySet="Userr" />
             <End Role="Quiz" EntitySet="Quiz" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Quiz2" Association="Self.fk_Quiz2">
+            <End Role="Catagory" EntitySet="Catagory" />
+            <End Role="Quiz" EntitySet="Quiz" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Userr" Association="Self.fk_Userr">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="Userr" EntitySet="Userr" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Userr2" Association="Self.fk_Userr2">
+            <End Role="Study" EntitySet="Study" />
+            <End Role="Userr" EntitySet="Userr" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -106,6 +191,14 @@
           <Property Name="QuestionID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="Self.fk_Answer" FromRole="Answer" ToRole="Question" />
         </EntityType>
+        <EntityType Name="Catagory">
+          <Key>
+            <PropertyRef Name="CatagoryID" />
+          </Key>
+          <Property Name="CatagoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Quizs" Relationship="Self.fk_Quiz2" FromRole="Catagory" ToRole="Quiz" />
+        </EntityType>
         <EntityType Name="Question">
           <Key>
             <PropertyRef Name="QuestionID" />
@@ -122,8 +215,20 @@
           </Key>
           <Property Name="QuizID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="CatagoryID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Catagory" Relationship="Self.fk_Quiz2" FromRole="Quiz" ToRole="Catagory" />
           <NavigationProperty Name="Questions" Relationship="Self.fk_Question" FromRole="Quiz" ToRole="Question" />
           <NavigationProperty Name="Userr" Relationship="Self.fk_Quiz" FromRole="Quiz" ToRole="Userr" />
+        </EntityType>
+        <EntityType Name="Study">
+          <Key>
+            <PropertyRef Name="StudyID" />
+          </Key>
+          <Property Name="StudyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Userrs" Relationship="Self.fk_Userr2" FromRole="Study" ToRole="Userr" />
         </EntityType>
         <EntityType Name="Userr">
           <Key>
@@ -132,7 +237,21 @@
           <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="EmailAdress" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="UserTypeID" Type="Int64" Nullable="false" />
+          <Property Name="StudyID" Type="Int64" Nullable="false" />
+          <Property Name="StudentNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Quizs" Relationship="Self.fk_Quiz" FromRole="Userr" ToRole="Quiz" />
+          <NavigationProperty Name="Study" Relationship="Self.fk_Userr2" FromRole="Userr" ToRole="Study" />
+          <NavigationProperty Name="UserType" Relationship="Self.fk_Userr" FromRole="Userr" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="UserTypeID" />
+          </Key>
+          <Property Name="UserTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Userrs" Relationship="Self.fk_Userr" FromRole="UserType" ToRole="Userr" />
         </EntityType>
         <Association Name="fk_Answer">
           <End Role="Question" Type="Self.Question" Multiplicity="1" />
@@ -143,6 +262,20 @@
             </Principal>
             <Dependent Role="Answer">
               <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Quiz2">
+          <End Role="Catagory" Type="Self.Catagory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Quiz" Type="Self.Quiz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catagory">
+              <PropertyRef Name="CatagoryID" />
+            </Principal>
+            <Dependent Role="Quiz">
+              <PropertyRef Name="CatagoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -170,14 +303,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="VikingNoteDBEntities" annotation:LazyLoadingEnabled="true">
+        <Association Name="fk_Userr2">
+          <End Role="Study" Type="Self.Study" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Userr" Type="Self.Userr" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Study">
+              <PropertyRef Name="StudyID" />
+            </Principal>
+            <Dependent Role="Userr">
+              <PropertyRef Name="StudyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Userr">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Userr" Type="Self.Userr" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="UserTypeID" />
+            </Principal>
+            <Dependent Role="Userr">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VikingNoteDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Answers" EntityType="Self.Answer" />
+          <EntitySet Name="Catagories" EntityType="Self.Catagory" />
           <EntitySet Name="Questions" EntityType="Self.Question" />
           <EntitySet Name="Quizs" EntityType="Self.Quiz" />
+          <EntitySet Name="Studies" EntityType="Self.Study" />
           <EntitySet Name="Userrs" EntityType="Self.Userr" />
+          <EntitySet Name="UserTypes" EntityType="Self.UserType" />
           <AssociationSet Name="fk_Answer" Association="Self.fk_Answer">
             <End Role="Question" EntitySet="Questions" />
             <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Quiz2" Association="Self.fk_Quiz2">
+            <End Role="Catagory" EntitySet="Catagories" />
+            <End Role="Quiz" EntitySet="Quizs" />
           </AssociationSet>
           <AssociationSet Name="fk_Question" Association="Self.fk_Question">
             <End Role="Quiz" EntitySet="Quizs" />
@@ -187,13 +355,21 @@
             <End Role="Userr" EntitySet="Userrs" />
             <End Role="Quiz" EntitySet="Quizs" />
           </AssociationSet>
+          <AssociationSet Name="fk_Userr2" Association="Self.fk_Userr2">
+            <End Role="Study" EntitySet="Studies" />
+            <End Role="Userr" EntitySet="Userrs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Userr" Association="Self.fk_Userr">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="Userr" EntitySet="Userrs" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="VikingNoteDBModelStoreContainer" CdmEntityContainer="VikingNoteDBEntities">
+        <EntityContainerMapping StorageEntityContainer="VikingNoteDBModelStoreContainer" CdmEntityContainer="VikingNoteDBEntities1">
           <EntitySetMapping Name="Answers">
             <EntityTypeMapping TypeName="VikingNoteDBModel.Answer">
               <MappingFragment StoreEntitySet="Answer">
@@ -201,6 +377,14 @@
                 <ScalarProperty Name="Answer1" ColumnName="Answer" />
                 <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Catagories">
+            <EntityTypeMapping TypeName="VikingNoteDBModel.Catagory">
+              <MappingFragment StoreEntitySet="Catagory">
+                <ScalarProperty Name="CatagoryID" ColumnName="CatagoryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -218,6 +402,17 @@
               <MappingFragment StoreEntitySet="Quiz">
                 <ScalarProperty Name="QuizID" ColumnName="QuizID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CatagoryID" ColumnName="CatagoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Studies">
+            <EntityTypeMapping TypeName="VikingNoteDBModel.Study">
+              <MappingFragment StoreEntitySet="Study">
+                <ScalarProperty Name="StudyID" ColumnName="StudyID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -227,6 +422,18 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailAdress" ColumnName="EmailAdress" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="StudyID" ColumnName="StudyID" />
+                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="VikingNoteDBModel.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
