@@ -71,4 +71,7 @@
     <Build Include="dbo\Tables\Study.sql" />
     <Build Include="dbo\Tables\UserType.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="TestData-PostDeploy.sql" />
+  </ItemGroup>
 </Project>
