@@ -6,12 +6,14 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Principal;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
+    [BasicAuthentication]
     public class UserController : ApiController
     {
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
