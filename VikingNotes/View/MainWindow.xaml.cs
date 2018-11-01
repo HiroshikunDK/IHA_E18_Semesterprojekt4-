@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ViewModels;
 
 namespace View
 {
@@ -23,6 +24,21 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btn_takeQuiz_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new TakeQuizViewModel();
+        }
+
+        private void btn_makeQuiz_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new MakeQuizViewModel();
+        }
+
+        private void btn_Statistics_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new StatisticsViewModel();
         }
     }
 }

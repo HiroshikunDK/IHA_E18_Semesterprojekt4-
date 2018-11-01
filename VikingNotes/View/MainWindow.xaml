@@ -4,9 +4,52 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:views="clr-namespace:View.Views"
+        xmlns:viewmodel="clr-namespace:ViewModels;assembly=ViewModels..NETFramework,Version=v4.6.1"
+        xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="VikingNote 1.0" Height="450" Width="800">
+
+    <Window.Resources>
+        <DataTemplate x:Name="TakeQuizViewTemplate" DataType="{x:Type viewmodels:TakeQuizViewModel}">
+            <views:TakeQuizView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="MakeQuizViewTemplate" DataType="{x:Type viewmodels:MakeQuizViewModel}">
+            <views:MakeQuizView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="StatisticsViewTemplate" DataType="{x:Type viewmodels:StatisticsViewModel}">
+            <views:StatisticsView DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid Background="white">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <DockPanel VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Background="White"/>
+
+        <views:TopBarView Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="3"/>
+
+        <Button Grid.Column="0" Grid.Row="1" Content="Tag Quiz" Background="LightCyan" BorderBrush="{x:Null}" Click="btn_takeQuiz_Clicked"/>
+        <Button Grid.Column="1" Grid.Row="1" Content="Statistik" Background="LightCyan" BorderBrush="{x:Null}" Click="btn_Statistics_Clicked"/>
+        <Button Grid.Column="2"  Grid.Row="1" Content="Lav Quiz" Background="LightCyan" BorderBrush="{x:Null}" Click="btn_makeQuiz_Clicked"/>
+
+        <ContentControl VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="9" Content="{Binding}"/>
     </Grid>
 </Window>

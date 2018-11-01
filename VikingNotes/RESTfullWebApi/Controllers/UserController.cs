@@ -13,7 +13,6 @@ using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
-    [BasicAuthentication]
     public class UserController : ApiController
     {
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
