@@ -260,4 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 
-# /VikingNotes/RESTfullWebApi/Models/*
+/VikingNotes/RESTfullWebApi/Models/*
