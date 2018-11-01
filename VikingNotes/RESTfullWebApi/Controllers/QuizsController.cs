@@ -14,6 +14,10 @@ namespace RESTfullWebApi.Controllers
 {
     public class QuizsController : ApiController
     {
+        public QuizsController()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+        }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Quizs

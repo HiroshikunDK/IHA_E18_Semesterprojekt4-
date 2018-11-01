@@ -14,6 +14,10 @@ namespace RESTfullWebApi.Controllers
 {
     public class CatagoriesController : ApiController
     {
+        public CatagoriesController()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+        }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Catagories

@@ -14,6 +14,10 @@ namespace RESTfullWebApi.Controllers
 {
     public class UserrsController : ApiController
     {
+        public UserrsController()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+        }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Userrs
