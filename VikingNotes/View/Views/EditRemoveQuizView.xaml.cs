@@ -12,24 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ViewModels;
 
 namespace View.Views
 {
     /// <summary>
-    /// Interaction logic for MakeQuizView.xaml
+    /// Interaction logic for EditRemoveQuizView.xaml
     /// </summary>
-    public partial class MakeQuizView : UserControl
+    public partial class EditRemoveQuizView : UserControl
     {
-        public MakeQuizView()
+        public EditRemoveQuizView()
         {
             InitializeComponent();
-            DataContext = new MakeQuizViewModel();
-        }
-
-        private void btn_makeNewQuiz_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new MakeNewQuizViewModel();
         }
     }
 }

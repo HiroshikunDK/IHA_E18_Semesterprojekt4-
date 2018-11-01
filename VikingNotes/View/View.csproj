@@ -55,6 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\AllStatisticsView.xaml.cs">
+      <DependentUpon>AllStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditRemoveQuizView.xaml.cs">
+      <DependentUpon>EditRemoveQuizView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MakeNewQuizView.xaml.cs">
       <DependentUpon>MakeNewQuizView.xaml</DependentUpon>
     </Compile>
@@ -70,6 +76,9 @@
     <Compile Include="Views\TopBarView.xaml.cs">
       <DependentUpon>TopBarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\YourStatisticsView.xaml.cs">
+      <DependentUpon>YourStatisticsView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,6 +91,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AllStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditRemoveQuizView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MakeNewQuizView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TopBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\YourStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

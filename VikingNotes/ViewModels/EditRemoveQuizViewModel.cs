@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ViewModels
 {
-    public class TakeQuizViewModel : BaseViewModel
-    {  
+    public class EditRemoveQuizViewModel : BaseViewModel
+    {
     }
 }

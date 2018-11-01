@@ -8,20 +8,23 @@
         xmlns:viewmodel="clr-namespace:ViewModels;assembly=ViewModels..NETFramework,Version=v4.6.1"
         xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
         mc:Ignorable="d"
+        x:Name="StartWindow"
         Title="VikingNote 1.0" Height="450" Width="800">
-
+   
     <Window.Resources>
         <DataTemplate x:Name="TakeQuizViewTemplate" DataType="{x:Type viewmodels:TakeQuizViewModel}">
-            <views:TakeQuizView DataContext="{Binding}"/>
+            <views:TakeQuizView/>
         </DataTemplate>
         <DataTemplate x:Name="MakeQuizViewTemplate" DataType="{x:Type viewmodels:MakeQuizViewModel}">
-            <views:MakeQuizView DataContext="{Binding}"/>
+            <views:MakeQuizView />
         </DataTemplate>
         <DataTemplate x:Name="StatisticsViewTemplate" DataType="{x:Type viewmodels:StatisticsViewModel}">
-            <views:StatisticsView DataContext="{Binding}"/>
+            <views:StatisticsView />
         </DataTemplate>
     </Window.Resources>
-
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid Background="white">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -42,14 +45,12 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <DockPanel VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Background="White"/>
-
         <views:TopBarView Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="3"/>
 
-        <Button Grid.Column="0" Grid.Row="1" Content="Tag Quiz" Background="LightCyan" BorderBrush="{x:Null}" Click="btn_takeQuiz_Clicked"/>
-        <Button Grid.Column="1" Grid.Row="1" Content="Statistik" Background="LightCyan" BorderBrush="{x:Null}" Click="btn_Statistics_Clicked"/>
-        <Button Grid.Column="2"  Grid.Row="1" Content="Lav Quiz" Background="LightCyan" BorderBrush="{x:Null}" Click="btn_makeQuiz_Clicked"/>
+        <Button Grid.Column="0" Grid.Row="1" Content="Tag Quiz" Background="LightCyan" BorderBrush="{x:Null}" Command="{Binding Path=LoadTakeQuizViewCommand}"/>
+        <Button Grid.Column="1" Grid.Row="1" Content="Statistik" Background="LightCyan" BorderBrush="{x:Null}" Command="{Binding Path=LoadStatisticsViewCommand}"/>
+        <Button Grid.Column="2"  Grid.Row="1" Content="Lav Quiz" Background="LightCyan" BorderBrush="{x:Null}" Command="{Binding Path=LoadMakeQuizViewCommand}"/>
 
-        <ContentControl VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="9" Content="{Binding}"/>
+        <ContentControl VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="9" Content="{Binding Path=CurrentViewModel}"/>
     </Grid>
 </Window>

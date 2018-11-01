@@ -5,13 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:View.Views"
              xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             x:Name="MakeQuiz"
              d:DesignHeight="450" d:DesignWidth="800">
+
     <UserControl.Resources>
         <DataTemplate x:Name="MakeNewQuizViewTemplate" DataType="{x:Type viewmodels:MakeNewQuizViewModel}">
-            <local:MakeNewQuizView DataContext="{Binding}"/>
+            <local:MakeNewQuizView />
+        </DataTemplate>
+        <DataTemplate x:Name="EditRemoveQuizViewTemplate" DataType="{x:Type viewmodels:EditRemoveQuizViewModel}">
+            <local:EditRemoveQuizView />
         </DataTemplate>
     </UserControl.Resources>
+    <UserControl.DataContext>
+        <viewmodels:MakeQuizViewModel />
+    </UserControl.DataContext>
+
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -33,9 +42,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Content="Lav ny Quiz" Background="LightCyan" BorderBrush="{x:Null}" Click="btn_makeNewQuiz_Clicked"/>
-        <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Content="Rediger/fjern Quiz" Background="LightCyan" BorderBrush="{x:Null}"/>
+        <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Content="Lav ny Quiz" Background="LightCyan" BorderBrush="{x:Null}" Command="{Binding Path=LoadMakeNewQuizViewCommand}"/>
+        <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Content="Rediger/fjern Quiz" Background="LightCyan" BorderBrush="{x:Null}" Command="{Binding Path=LoadEditRemoveQuizViewCommand}"/>
 
-        <ContentControl VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="10" Content="{Binding MakeNew}"/>
+        <ContentControl x:Name="MakeQuizContent" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="10" Content="{Binding Path=CurrentViewModel}"/>
     </Grid>
 </UserControl>
