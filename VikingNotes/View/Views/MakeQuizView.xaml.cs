@@ -24,12 +24,7 @@ namespace View.Views
         public MakeQuizView()
         {
             InitializeComponent();
-            DataContext = new MakeQuizViewModel();
         }
 
-        private void btn_makeNewQuiz_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new MakeNewQuizViewModel();
-        }
     }
 }
