@@ -25,20 +25,5 @@ namespace View
         {
             InitializeComponent();
         }
-
-        private void btn_takeQuiz_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new TakeQuizViewModel();
-        }
-
-        private void btn_makeQuiz_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new MakeQuizViewModel();
-        }
-
-        private void btn_Statistics_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new StatisticsViewModel();
-        }
     }
 }
