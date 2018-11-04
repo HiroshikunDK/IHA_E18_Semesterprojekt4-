@@ -23,6 +23,26 @@
 -- StudyID         :  (references Study.StudyID)
 -- StudentNumber   :  
 --
+--
+-- Create Table    : 'Userr'   
+-- UserID          :  
+-- UserName        :  
+-- Password        :  
+-- EmailAdress     :  
+-- UserTypeID      :  (references UserType.UserTypeID)
+-- StudyID         :  (references Study.StudyID)
+-- StudentNumber   :  
+--
+--
+-- Create Table    : 'Userr'   
+-- UserID          :  
+-- UserName        :  
+-- Password        :  
+-- EmailAdress     :  
+-- UserTypeID      :  (references UserType.UserTypeID)
+-- StudyID         :  (references Study.StudyID)
+-- StudentNumber   :  
+--
 CREATE TABLE Userr (
     UserID         BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     UserName       NCHAR(20) NOT NULL UNIQUE,

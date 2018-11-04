@@ -19,6 +19,20 @@
 -- IsCorrect       :  
 -- QuestionID      :  (references Question.QuestionID)
 --
+--
+-- Create Table    : 'Answer'   
+-- AnswerID        :  
+-- Answer          :  
+-- IsCorrect       :  
+-- QuestionID      :  (references Question.QuestionID)
+--
+--
+-- Create Table    : 'Answer'   
+-- AnswerID        :  
+-- Answer          :  
+-- IsCorrect       :  
+-- QuestionID      :  (references Question.QuestionID)
+--
 CREATE TABLE Answer (
     AnswerID       BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     Answer         NCHAR(50) NOT NULL,
