@@ -17,12 +17,17 @@ namespace RESTfullWebApi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Study()
         {
+            this.Semesters = new HashSet<Semester>();
             this.Userrs = new HashSet<Userr>();
         }
     
         public long StudyID { get; set; }
         public string Name { get; set; }
+        public long FacultyID { get; set; }
     
+        public virtual Faculty Faculty { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Semester> Semesters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Userr> Userrs { get; set; }
     }

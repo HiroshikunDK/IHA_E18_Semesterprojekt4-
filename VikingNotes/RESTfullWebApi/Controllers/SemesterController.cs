@@ -6,62 +6,63 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
-    public class UserTypesController : ApiController
+    public class SemesterController : ApiController
     {
-        public UserTypesController()
+        public SemesterController()
         {
             db.Configuration.ProxyCreationEnabled = false;
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
-        // GET: api/UserTypes
-        public IQueryable<UserType> GetUserTypes()
+        // GET: api/Semester
+        public IQueryable<Semester> GetSemesters()
         {
-            return db.UserTypes;
+            return db.Semesters;
         }
 
-        // GET: api/UserTypes/5
-        [ResponseType(typeof(UserType))]
-        public IHttpActionResult GetUserType(long id)
+        // GET: api/Semester/5
+        [ResponseType(typeof(Semester))]
+        public async Task<IHttpActionResult> GetSemester(long id)
         {
-            UserType userType = db.UserTypes.Find(id);
-            if (userType == null)
+            Semester semester = await db.Semesters.FindAsync(id);
+            if (semester == null)
             {
                 return NotFound();
             }
 
-            return Ok(userType);
+            return Ok(semester);
         }
 
-        // PUT: api/UserTypes/5
+        // PUT: api/Semester/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUserType(long id, UserType userType)
+        public async Task<IHttpActionResult> PutSemester(long id, Semester semester)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != userType.UserTypeID)
+            if (id != semester.SemesterID)
             {
                 return BadRequest();
             }
 
-            db.Entry(userType).State = EntityState.Modified;
+            db.Entry(semester).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserTypeExists(id))
+                if (!SemesterExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +75,35 @@ namespace RESTfullWebApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/UserTypes
-        [ResponseType(typeof(UserType))]
-        public IHttpActionResult PostUserType(UserType userType)
+        // POST: api/Semester
+        [ResponseType(typeof(Semester))]
+        public async Task<IHttpActionResult> PostSemester(Semester semester)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.UserTypes.Add(userType);
-            db.SaveChanges();
+            db.Semesters.Add(semester);
+            await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = userType.UserTypeID }, userType);
+            return CreatedAtRoute("DefaultApi", new { id = semester.SemesterID }, semester);
         }
 
-        // DELETE: api/UserTypes/5
-        [ResponseType(typeof(UserType))]
-        public IHttpActionResult DeleteUserType(long id)
+        // DELETE: api/Semester/5
+        [ResponseType(typeof(Semester))]
+        public async Task<IHttpActionResult> DeleteSemester(long id)
         {
-            UserType userType = db.UserTypes.Find(id);
-            if (userType == null)
+            Semester semester = await db.Semesters.FindAsync(id);
+            if (semester == null)
             {
                 return NotFound();
             }
 
-            db.UserTypes.Remove(userType);
-            db.SaveChanges();
+            db.Semesters.Remove(semester);
+            await db.SaveChangesAsync();
 
-            return Ok(userType);
+            return Ok(semester);
         }
 
         protected override void Dispose(bool disposing)
@@ -114,9 +115,9 @@ namespace RESTfullWebApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool UserTypeExists(long id)
+        private bool SemesterExists(long id)
         {
-            return db.UserTypes.Count(e => e.UserTypeID == id) > 0;
+            return db.Semesters.Count(e => e.SemesterID == id) > 0;
         }
     }
 }

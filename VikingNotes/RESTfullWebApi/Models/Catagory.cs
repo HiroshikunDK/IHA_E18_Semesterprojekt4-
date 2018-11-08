@@ -18,6 +18,7 @@ namespace RESTfullWebApi.Models
         public Catagory()
         {
             this.Quizs = new HashSet<Quiz>();
+            this.Courses = new HashSet<Course>();
         }
     
         public long CatagoryID { get; set; }
@@ -25,5 +26,7 @@ namespace RESTfullWebApi.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Quiz> Quizs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

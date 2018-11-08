@@ -6,62 +6,63 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
-    public class QuizsController : ApiController
+    public class RatingController : ApiController
     {
-        public QuizsController()
+        public RatingController()
         {
             db.Configuration.ProxyCreationEnabled = false;
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
-        // GET: api/Quizs
-        public IQueryable<Quiz> GetQuizs()
+        // GET: api/Rating
+        public IQueryable<Rating> GetRatings()
         {
-            return db.Quizs;
+            return db.Ratings;
         }
 
-        // GET: api/Quizs/5
-        [ResponseType(typeof(Quiz))]
-        public IHttpActionResult GetQuiz(long id)
+        // GET: api/Rating/5
+        [ResponseType(typeof(Rating))]
+        public async Task<IHttpActionResult> GetRating(long id)
         {
-            Quiz quiz = db.Quizs.Find(id);
-            if (quiz == null)
+            Rating rating = await db.Ratings.FindAsync(id);
+            if (rating == null)
             {
                 return NotFound();
             }
 
-            return Ok(quiz);
+            return Ok(rating);
         }
 
-        // PUT: api/Quizs/5
+        // PUT: api/Rating/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutQuiz(long id, Quiz quiz)
+        public async Task<IHttpActionResult> PutRating(long id, Rating rating)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != quiz.QuizID)
+            if (id != rating.RatingID)
             {
                 return BadRequest();
             }
 
-            db.Entry(quiz).State = EntityState.Modified;
+            db.Entry(rating).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!QuizExists(id))
+                if (!RatingExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +75,35 @@ namespace RESTfullWebApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Quizs
-        [ResponseType(typeof(Quiz))]
-        public IHttpActionResult PostQuiz(Quiz quiz)
+        // POST: api/Rating
+        [ResponseType(typeof(Rating))]
+        public async Task<IHttpActionResult> PostRating(Rating rating)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Quizs.Add(quiz);
-            db.SaveChanges();
+            db.Ratings.Add(rating);
+            await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = quiz.QuizID }, quiz);
+            return CreatedAtRoute("DefaultApi", new { id = rating.RatingID }, rating);
         }
 
-        // DELETE: api/Quizs/5
-        [ResponseType(typeof(Quiz))]
-        public IHttpActionResult DeleteQuiz(long id)
+        // DELETE: api/Rating/5
+        [ResponseType(typeof(Rating))]
+        public async Task<IHttpActionResult> DeleteRating(long id)
         {
-            Quiz quiz = db.Quizs.Find(id);
-            if (quiz == null)
+            Rating rating = await db.Ratings.FindAsync(id);
+            if (rating == null)
             {
                 return NotFound();
             }
 
-            db.Quizs.Remove(quiz);
-            db.SaveChanges();
+            db.Ratings.Remove(rating);
+            await db.SaveChangesAsync();
 
-            return Ok(quiz);
+            return Ok(rating);
         }
 
         protected override void Dispose(bool disposing)
@@ -114,9 +115,9 @@ namespace RESTfullWebApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool QuizExists(long id)
+        private bool RatingExists(long id)
         {
-            return db.Quizs.Count(e => e.QuizID == id) > 0;
+            return db.Ratings.Count(e => e.RatingID == id) > 0;
         }
     }
 }

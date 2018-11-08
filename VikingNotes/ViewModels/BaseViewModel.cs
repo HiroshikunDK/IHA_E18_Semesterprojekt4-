@@ -24,5 +24,10 @@ namespace ViewModels
                 handler(this, e);
             }
         }
+
+        protected virtual void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -6,62 +6,63 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
-    public class StudiesController : ApiController
+    public class UserrController : ApiController
     {
-        public StudiesController()
+        public UserrController()
         {
             db.Configuration.ProxyCreationEnabled = false;
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
-        // GET: api/Studies
-        public IQueryable<Study> GetStudies()
+        // GET: api/Userr
+        public IQueryable<Userr> GetUserrs()
         {
-            return db.Studies;
+            return db.Userrs;
         }
 
-        // GET: api/Studies/5
-        [ResponseType(typeof(Study))]
-        public IHttpActionResult GetStudy(long id)
+        // GET: api/Userr/5
+        [ResponseType(typeof(Userr))]
+        public async Task<IHttpActionResult> GetUserr(long id)
         {
-            Study study = db.Studies.Find(id);
-            if (study == null)
+            Userr userr = await db.Userrs.FindAsync(id);
+            if (userr == null)
             {
                 return NotFound();
             }
 
-            return Ok(study);
+            return Ok(userr);
         }
 
-        // PUT: api/Studies/5
+        // PUT: api/Userr/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutStudy(long id, Study study)
+        public async Task<IHttpActionResult> PutUserr(long id, Userr userr)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != study.StudyID)
+            if (id != userr.UserID)
             {
                 return BadRequest();
             }
 
-            db.Entry(study).State = EntityState.Modified;
+            db.Entry(userr).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StudyExists(id))
+                if (!UserrExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +75,35 @@ namespace RESTfullWebApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Studies
-        [ResponseType(typeof(Study))]
-        public IHttpActionResult PostStudy(Study study)
+        // POST: api/Userr
+        [ResponseType(typeof(Userr))]
+        public async Task<IHttpActionResult> PostUserr(Userr userr)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Studies.Add(study);
-            db.SaveChanges();
+            db.Userrs.Add(userr);
+            await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = study.StudyID }, study);
+            return CreatedAtRoute("DefaultApi", new { id = userr.UserID }, userr);
         }
 
-        // DELETE: api/Studies/5
-        [ResponseType(typeof(Study))]
-        public IHttpActionResult DeleteStudy(long id)
+        // DELETE: api/Userr/5
+        [ResponseType(typeof(Userr))]
+        public async Task<IHttpActionResult> DeleteUserr(long id)
         {
-            Study study = db.Studies.Find(id);
-            if (study == null)
+            Userr userr = await db.Userrs.FindAsync(id);
+            if (userr == null)
             {
                 return NotFound();
             }
 
-            db.Studies.Remove(study);
-            db.SaveChanges();
+            db.Userrs.Remove(userr);
+            await db.SaveChangesAsync();
 
-            return Ok(study);
+            return Ok(userr);
         }
 
         protected override void Dispose(bool disposing)
@@ -114,9 +115,9 @@ namespace RESTfullWebApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool StudyExists(long id)
+        private bool UserrExists(long id)
         {
-            return db.Studies.Count(e => e.StudyID == id) > 0;
+            return db.Userrs.Count(e => e.UserID == id) > 0;
         }
     }
 }

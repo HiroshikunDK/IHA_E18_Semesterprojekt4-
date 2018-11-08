@@ -6,62 +6,63 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
-    public class UserrsController : ApiController
+    public class UserTypeController : ApiController
     {
-        public UserrsController()
+        public UserTypeController()
         {
             db.Configuration.ProxyCreationEnabled = false;
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
-        // GET: api/Userrs
-        public IQueryable<Userr> GetUserrs()
+        // GET: api/UserType
+        public IQueryable<UserType> GetUserTypes()
         {
-            return db.Userrs;
+            return db.UserTypes;
         }
 
-        // GET: api/Userrs/5
-        [ResponseType(typeof(Userr))]
-        public IHttpActionResult GetUserr(long id)
+        // GET: api/UserType/5
+        [ResponseType(typeof(UserType))]
+        public async Task<IHttpActionResult> GetUserType(long id)
         {
-            Userr userr = db.Userrs.Find(id);
-            if (userr == null)
+            UserType userType = await db.UserTypes.FindAsync(id);
+            if (userType == null)
             {
                 return NotFound();
             }
 
-            return Ok(userr);
+            return Ok(userType);
         }
 
-        // PUT: api/Userrs/5
+        // PUT: api/UserType/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUserr(long id, Userr userr)
+        public async Task<IHttpActionResult> PutUserType(long id, UserType userType)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != userr.UserID)
+            if (id != userType.UserTypeID)
             {
                 return BadRequest();
             }
 
-            db.Entry(userr).State = EntityState.Modified;
+            db.Entry(userType).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserrExists(id))
+                if (!UserTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +75,35 @@ namespace RESTfullWebApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Userrs
-        [ResponseType(typeof(Userr))]
-        public IHttpActionResult PostUserr(Userr userr)
+        // POST: api/UserType
+        [ResponseType(typeof(UserType))]
+        public async Task<IHttpActionResult> PostUserType(UserType userType)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Userrs.Add(userr);
-            db.SaveChanges();
+            db.UserTypes.Add(userType);
+            await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = userr.UserID }, userr);
+            return CreatedAtRoute("DefaultApi", new { id = userType.UserTypeID }, userType);
         }
 
-        // DELETE: api/Userrs/5
-        [ResponseType(typeof(Userr))]
-        public IHttpActionResult DeleteUserr(long id)
+        // DELETE: api/UserType/5
+        [ResponseType(typeof(UserType))]
+        public async Task<IHttpActionResult> DeleteUserType(long id)
         {
-            Userr userr = db.Userrs.Find(id);
-            if (userr == null)
+            UserType userType = await db.UserTypes.FindAsync(id);
+            if (userType == null)
             {
                 return NotFound();
             }
 
-            db.Userrs.Remove(userr);
-            db.SaveChanges();
+            db.UserTypes.Remove(userType);
+            await db.SaveChangesAsync();
 
-            return Ok(userr);
+            return Ok(userType);
         }
 
         protected override void Dispose(bool disposing)
@@ -114,9 +115,9 @@ namespace RESTfullWebApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool UserrExists(long id)
+        private bool UserTypeExists(long id)
         {
-            return db.Userrs.Count(e => e.UserID == id) > 0;
+            return db.UserTypes.Count(e => e.UserTypeID == id) > 0;
         }
     }
 }

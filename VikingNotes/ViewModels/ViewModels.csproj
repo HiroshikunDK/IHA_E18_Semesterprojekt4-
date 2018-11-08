@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AllStatisticsViewModel.cs" />
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="EditRemoveQuizViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
@@ -54,6 +55,16 @@
     <Compile Include="TakeQuizViewModel.cs" />
     <Compile Include="TopBarViewModel.cs" />
     <Compile Include="YourStatisticsViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{3f55cb13-3ccc-4938-95be-dbcbb24890c9}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RESTfullWebApi\RESTfullWebApi.csproj">
+      <Project>{59D87144-DF4F-416F-BD6D-2856BF6B6E01}</Project>
+      <Name>RESTfullWebApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

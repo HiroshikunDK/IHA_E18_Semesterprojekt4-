@@ -6,31 +6,32 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
-    public class CatagoriesController : ApiController
+    public class CatagoryController : ApiController
     {
-        public CatagoriesController()
+        public CatagoryController()
         {
             db.Configuration.ProxyCreationEnabled = false;
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
-        // GET: api/Catagories
+        // GET: api/Catagory
         public IQueryable<Catagory> GetCatagories()
         {
             return db.Catagories;
         }
 
-        // GET: api/Catagories/5
+        // GET: api/Catagory/5
         [ResponseType(typeof(Catagory))]
-        public IHttpActionResult GetCatagory(long id)
+        public async Task<IHttpActionResult> GetCatagory(long id)
         {
-            Catagory catagory = db.Catagories.Find(id);
+            Catagory catagory = await db.Catagories.FindAsync(id);
             if (catagory == null)
             {
                 return NotFound();
@@ -39,9 +40,9 @@ namespace RESTfullWebApi.Controllers
             return Ok(catagory);
         }
 
-        // PUT: api/Catagories/5
+        // PUT: api/Catagory/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCatagory(long id, Catagory catagory)
+        public async Task<IHttpActionResult> PutCatagory(long id, Catagory catagory)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +58,7 @@ namespace RESTfullWebApi.Controllers
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,9 +75,9 @@ namespace RESTfullWebApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Catagories
+        // POST: api/Catagory
         [ResponseType(typeof(Catagory))]
-        public IHttpActionResult PostCatagory(Catagory catagory)
+        public async Task<IHttpActionResult> PostCatagory(Catagory catagory)
         {
             if (!ModelState.IsValid)
             {
@@ -84,23 +85,23 @@ namespace RESTfullWebApi.Controllers
             }
 
             db.Catagories.Add(catagory);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = catagory.CatagoryID }, catagory);
         }
 
-        // DELETE: api/Catagories/5
+        // DELETE: api/Catagory/5
         [ResponseType(typeof(Catagory))]
-        public IHttpActionResult DeleteCatagory(long id)
+        public async Task<IHttpActionResult> DeleteCatagory(long id)
         {
-            Catagory catagory = db.Catagories.Find(id);
+            Catagory catagory = await db.Catagories.FindAsync(id);
             if (catagory == null)
             {
                 return NotFound();
             }
 
             db.Catagories.Remove(catagory);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return Ok(catagory);
         }

@@ -12,22 +12,20 @@ namespace RESTfullWebApi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Question
+    public partial class Semester
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Question()
+        public Semester()
         {
-            this.Answers = new HashSet<Answer>();
+            this.Courses = new HashSet<Course>();
         }
     
-        public long QuestionID { get; set; }
-        public string Question1 { get; set; }
-        public long QuizID { get; set; }
-        public long WrongCount { get; set; }
-        public long CorrectCount { get; set; }
+        public long SemesterID { get; set; }
+        public string SemesterNumber { get; set; }
+        public long StudyID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Answer> Answers { get; set; }
-        public virtual Quiz Quiz { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
+        public virtual Study Study { get; set; }
     }
 }

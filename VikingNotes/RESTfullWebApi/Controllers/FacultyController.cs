@@ -6,62 +6,63 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
-    public class QuestionsController : ApiController
+    public class FacultyController : ApiController
     {
-        public QuestionsController()
+        public FacultyController()
         {
             db.Configuration.ProxyCreationEnabled = false;
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
-        // GET: api/Questions
-        public IQueryable<Question> GetQuestions()
+        // GET: api/Faculty
+        public IQueryable<Faculty> GetFaculties()
         {
-            return db.Questions;
+            return db.Faculties;
         }
 
-        // GET: api/Questions/5
-        [ResponseType(typeof(Question))]
-        public IHttpActionResult GetQuestion(long id)
+        // GET: api/Faculty/5
+        [ResponseType(typeof(Faculty))]
+        public async Task<IHttpActionResult> GetFaculty(long id)
         {
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            Faculty faculty = await db.Faculties.FindAsync(id);
+            if (faculty == null)
             {
                 return NotFound();
             }
 
-            return Ok(question);
+            return Ok(faculty);
         }
 
-        // PUT: api/Questions/5
+        // PUT: api/Faculty/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutQuestion(long id, Question question)
+        public async Task<IHttpActionResult> PutFaculty(long id, Faculty faculty)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != question.QuestionID)
+            if (id != faculty.FacultyID)
             {
                 return BadRequest();
             }
 
-            db.Entry(question).State = EntityState.Modified;
+            db.Entry(faculty).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!QuestionExists(id))
+                if (!FacultyExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +75,35 @@ namespace RESTfullWebApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Questions
-        [ResponseType(typeof(Question))]
-        public IHttpActionResult PostQuestion(Question question)
+        // POST: api/Faculty
+        [ResponseType(typeof(Faculty))]
+        public async Task<IHttpActionResult> PostFaculty(Faculty faculty)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Questions.Add(question);
-            db.SaveChanges();
+            db.Faculties.Add(faculty);
+            await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = question.QuestionID }, question);
+            return CreatedAtRoute("DefaultApi", new { id = faculty.FacultyID }, faculty);
         }
 
-        // DELETE: api/Questions/5
-        [ResponseType(typeof(Question))]
-        public IHttpActionResult DeleteQuestion(long id)
+        // DELETE: api/Faculty/5
+        [ResponseType(typeof(Faculty))]
+        public async Task<IHttpActionResult> DeleteFaculty(long id)
         {
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            Faculty faculty = await db.Faculties.FindAsync(id);
+            if (faculty == null)
             {
                 return NotFound();
             }
 
-            db.Questions.Remove(question);
-            db.SaveChanges();
+            db.Faculties.Remove(faculty);
+            await db.SaveChangesAsync();
 
-            return Ok(question);
+            return Ok(faculty);
         }
 
         protected override void Dispose(bool disposing)
@@ -114,9 +115,9 @@ namespace RESTfullWebApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool QuestionExists(long id)
+        private bool FacultyExists(long id)
         {
-            return db.Questions.Count(e => e.QuestionID == id) > 0;
+            return db.Faculties.Count(e => e.FacultyID == id) > 0;
         }
     }
 }
