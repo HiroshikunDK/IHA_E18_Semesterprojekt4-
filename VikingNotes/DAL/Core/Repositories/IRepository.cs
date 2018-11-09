@@ -8,8 +8,8 @@ namespace DAL.Core.Repositories
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> Get(int id);
-        Task<IQueryable<TEntity>> GetAll();
+        Task<TEntity> GetAsync(int id);
+        Task<List<TEntity>> GetAllAsync();
         void Update(int id, TEntity entity);
         void Add(TEntity entity);
         void Remove(int id);

@@ -23,15 +23,15 @@ namespace DAL.Presistence.Repositories
         }
 
 
-        public async Task<IQueryable<TEntity>> GetAll()
+        public async Task<List<TEntity>> GetAllAsync()
         {
             string uri = "api/" + typeof(TEntity).Name;
             string responseString = await Client().GetStringAsync(uri);
-            var respons = JsonConvert.DeserializeObject<IQueryable<TEntity>>(responseString);
+            var respons = JsonConvert.DeserializeObject<List<TEntity>>(responseString);
             return respons;
         }
 
-        public async Task<TEntity> Get(int id)
+        public async Task<TEntity> GetAsync(int id)
         {
             Uri uri = new Uri("api/" + typeof(TEntity).Name + "/" + id);
             string responseString = await Client().GetStringAsync(uri);

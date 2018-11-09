@@ -24,7 +24,7 @@ namespace ViewModels
 
         public TakeQuizViewModel()
         {
-            SelectFaculityCommand = new Command(selectFaculity, canExecute);
+            SelectFaculityCommand = new Command(SelectFaculity, canExecute);
         }
 
 
@@ -71,10 +71,10 @@ namespace ViewModels
             return true;
         }
 
-        private void selectFaculity(object parameter)
+        public async void SelectFaculity(object parameter)
         {
             int id = Convert.ToInt32(parameter);
-            StudyList = Data.Study.GetAll().Result.ToList();
+            StudyList = (await Data.Study.GetAllAsync()).FindAll(s => s.FacultyID == id);
                // .Result.Where(s => s.FacultyID == id).ToList()
         }
     }
