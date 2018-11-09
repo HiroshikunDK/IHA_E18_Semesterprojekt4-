@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:View.Views"
              xmlns:ViewModels="clr-namespace:ViewModels;assembly=ViewModels" x:Class="View.Views.TakeQuizView"
+             xmlns:model="clr-namespace:RESTfullWebApi;assembly=RESTfullWebApi-WebAppMainModule..NETFramework,Version=v4.6.1"
+             xmlns:models="clr-namespace:RESTfullWebApi.Models;assembly=RESTfullWebApi"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -41,17 +43,59 @@
         <Button Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" Content="Arts" Background="LightYellow" BorderBrush="{x:Null}" Command="{Binding SelectFaculityCommand}" CommandParameter="3"/>
         <Button Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="0" Content="Aarhus BSS" Background="LightGreen" BorderBrush="{x:Null}" Command="{Binding SelectFaculityCommand}" CommandParameter="4"/>
 
-        <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Study"/>
-        <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Semester"/>
-        <Label Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Curse"/>
-        <Label Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Quiz"/>
+        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Study"/>
+        <Label Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Semester"/>
+        <Label Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Curse"/>
+        <Label Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Quiz"/>
+        <Label Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="Sort by"/>
+
+        <ComboBox Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10,5,10,0" Text="{Binding QuizSortBy}">
+            <ComboBoxItem Name="cbi1" VerticalAlignment="Center" IsSelected="True">Rating</ComboBoxItem>
+            <ComboBoxItem Name="cbi2" VerticalAlignment="Center">Sværhed</ComboBoxItem>
+        </ComboBox>
 
 
-        <ListView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="6" Margin="10,0,10,0" ItemsSource="{Binding StudyList, UpdateSourceTrigger=PropertyChanged}"/>
-        <ListView Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="6" Margin="10,0,10,0"/>
-        <ListView Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="6" Margin="10,0,10,0"/>
-        <ListView Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="6" Margin="10,0,10,0" ItemsSource="{Binding CourseList}" />
+        <ListView Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="10,30,10,0" ItemsSource="{Binding StudyList, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectedItem="{Binding SelectedStudy}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="models:Study">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+             
+        </ListView>
+        <ListView Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="10,30,10,10" ItemsSource="{Binding SemesterList, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectedItem="{Binding SelectedSemester}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="models:Semester">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding SemesterNumber}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="10,30,10,0"  ItemsSource="{Binding CourseList, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectedItem="{Binding SelectedCourse}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="models:Course">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-        <ContentControl VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="10"/>
+        <ListView Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="6" Grid.RowSpan="4" Margin="10,30,10,20" ItemsSource="{Binding QuizList, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedQuiz}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Catagory.Name}" Margin="20,0,0,0"/>
+                        <TextBlock Text="{Binding Name}" Margin="20,0,0,0"/>
+                        <TextBlock Text="{Binding Description}" Margin="20,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+            <ContentControl VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="10"/>
     </Grid>
 </UserControl>

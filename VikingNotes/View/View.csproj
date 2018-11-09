@@ -151,6 +151,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RESTfullWebApi\RESTfullWebApi.csproj">
+      <Project>{59d87144-df4f-416f-bd6d-2856bf6b6e01}</Project>
+      <Name>RESTfullWebApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViewModels\ViewModels.csproj">
       <Project>{1e73b481-0bd6-44b3-af21-21a13c4f7e37}</Project>
       <Name>ViewModels</Name>

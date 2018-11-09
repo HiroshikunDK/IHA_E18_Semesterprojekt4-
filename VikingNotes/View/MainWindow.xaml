@@ -9,7 +9,7 @@
         xmlns:viewmodels="clr-namespace:ViewModels;assembly=ViewModels"
         mc:Ignorable="d"
         x:Name="StartWindow"
-        Title="VikingNote 1.0" Height="450" Width="800">
+        Title="VikingNote 1.0" Height="550" Width="800">
    
     <Window.Resources>
         <DataTemplate x:Name="TakeQuizViewTemplate" DataType="{x:Type viewmodels:TakeQuizViewModel}">
