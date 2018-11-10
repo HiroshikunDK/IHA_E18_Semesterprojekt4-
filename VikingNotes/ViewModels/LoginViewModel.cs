@@ -33,13 +33,17 @@ namespace ViewModels
         private Study study { get; set; }
         private string studyID { get; set; }
 
+        private List<Study> studyList { get; set; }
+
+        private UserType userTypeStandard { get; set; }
+
         public LoginViewModel(IUnitOfWork data, ILoginService loginservice)
         {
-            Username = "";
-            Password = "";
-            RePassword = "";
-            Email = "";
-            StudyID = "";
+            Username = "Virkman";
+            Password = "nicholas";
+            RePassword = "nicholas";
+            Email = "nvirkman@gmail.com";
+            StudyID = "11786";
 
             loginService = loginservice;
             IsRegistrering = false;
@@ -47,6 +51,8 @@ namespace ViewModels
             CheckBoxClick = new Command(CheckBoxClickFunc, canExecute);
             ButtonClick = new Command(ButtonClickFunc, CanButtonExecute); 
             Data = data;
+            GetStudyList();
+            GetStandardUserType();
         }
 
         public void UpdateCanExecute(object sender, KeyEventArgs e)
@@ -62,9 +68,9 @@ namespace ViewModels
                 newUser.UserName = username;
                 newUser.Password = password;
                 newUser.EmailAdress = email;
-                newUser.Study = study;
+                newUser.StudyID = study.StudyID;
                 newUser.StudentNumber = studyID;
-                newUser.UserTypeID = 1;
+                newUser.UserTypeID = userTypeStandard.UserTypeID;
 
                 Data.User.Add(newUser);
                 MessageBox.Show("User succefully registrede! Welcome " + username + ", du logges nu ind");
@@ -148,6 +154,15 @@ namespace ViewModels
                 RaisePropertyChanged("StudyID");
             }
         }
+        public List<Study> StudyList
+        {
+            get { return studyList; }
+            set
+            {
+                studyList = value;
+                RaisePropertyChanged("StudyList");
+            }
+        }
 
         private void CheckBoxClickFunc(object obj)
         {
@@ -175,6 +190,16 @@ namespace ViewModels
                 buttonContent = value;
                 RaisePropertyChanged("ButtonContent");
             }
+        }
+
+        public async void GetStudyList()
+        {
+            StudyList = await Data.Study.GetAllAsync();
+        }
+
+        public async void GetStandardUserType()
+        {
+            userTypeStandard = await Data.UserType.GetAsync(1);
         }
     }
 }

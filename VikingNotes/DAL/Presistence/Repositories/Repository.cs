@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using DAL.Core.Repositories;
+using System.Windows;
 
 namespace DAL.Presistence.Repositories
 {
@@ -20,6 +22,11 @@ namespace DAL.Presistence.Repositories
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
+
+            var http = (HttpWebRequest)WebRequest.Create(new Uri("http://localhost:57869/"));
+            http.Accept = "application/json";
+            http.ContentType = "application/json";
+            http.Method = "POST";
         }
 
 
@@ -49,8 +56,15 @@ namespace DAL.Presistence.Repositories
         public async void Add(TEntity entity)
         {
             string uri = "api/" + typeof(TEntity).Name;
-            HttpContent content = new StringContent(entity.ToString(), Encoding.UTF8, "application/json");
-            await Client().PostAsync(uri, content);
+            var stringPayload = await Task.Run(() => JsonConvert.SerializeObject(entity));
+            HttpContent content = new StringContent(stringPayload, Encoding.UTF8, "application/json");
+            var httpResponse = await Client().PostAsync(uri, content);
+            if (httpResponse.Content != null)
+            {
+                var responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+                // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
+            }
         }
 
         public async void Remove(int id)

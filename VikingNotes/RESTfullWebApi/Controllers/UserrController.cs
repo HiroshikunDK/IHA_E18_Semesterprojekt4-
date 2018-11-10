@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -18,6 +19,8 @@ namespace RESTfullWebApi.Controllers
         public UserrController()
         {
             db.Configuration.ProxyCreationEnabled = false;
+
+            //db.Database.Log = sql => Debug.Write(sql);
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
@@ -89,6 +92,7 @@ namespace RESTfullWebApi.Controllers
 
         // POST: api/Userr
         [ResponseType(typeof(Userr))]
+        
         public async Task<IHttpActionResult> PostUserr(Userr userr)
         {
             if (!ModelState.IsValid)
