@@ -12,19 +12,20 @@
         Title="VikingNote 1.0" Height="550" Width="800">
    
     <Window.Resources>
-        <DataTemplate x:Name="TakeQuizViewTemplate" DataType="{x:Type viewmodels:TakeQuizViewModel}">
+        <DataTemplate DataType="{x:Type viewmodels:TakeQuizViewModel}">
             <views:TakeQuizView/>
         </DataTemplate>
-        <DataTemplate x:Name="MakeQuizViewTemplate" DataType="{x:Type viewmodels:MakeQuizViewModel}">
+        <DataTemplate DataType="{x:Type viewmodels:MakeQuizViewModel}">
             <views:MakeQuizView />
         </DataTemplate>
-        <DataTemplate x:Name="StatisticsViewTemplate" DataType="{x:Type viewmodels:StatisticsViewModel}">
+        <DataTemplate DataType="{x:Type viewmodels:StatisticsViewModel}">
             <views:StatisticsView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TopBarViewModel}">
+            <views:TopBarView />
+        </DataTemplate>
     </Window.Resources>
-    <Window.DataContext>
-        <viewmodels:MainWindowViewModel/>
-    </Window.DataContext>
+
     <Grid Background="white">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -45,7 +46,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <views:TopBarView Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="3"/>
+        
+        <ContentControl VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Content="{Binding Path=TopBarViewModel}"/>
 
         <Button Grid.Column="0" Grid.Row="1" Content="Tag Quiz" Background="LightCyan" BorderBrush="{x:Null}" Command="{Binding Path=LoadTakeQuizViewCommand}"/>
         <Button Grid.Column="1" Grid.Row="1" Content="Statistik" Background="LightCyan" BorderBrush="{x:Null}" Command="{Binding Path=LoadStatisticsViewCommand}"/>

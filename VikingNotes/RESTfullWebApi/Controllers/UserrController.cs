@@ -22,8 +22,19 @@ namespace RESTfullWebApi.Controllers
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Userr
-        public IQueryable<Userr> GetUserrs()
+        public IQueryable<Userr> GetUserrs(string username = null, string password = null)
         {
+            if (username != null && password != null)
+            {
+                List<Userr> list = new List<Userr>();
+                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password == password);
+                if (loggedInUserr == null)
+                {
+                    return list.AsQueryable();
+                }
+                list.Add(loggedInUserr);
+                return list.AsQueryable();
+            }
             return db.Userrs;
         }
 
@@ -31,6 +42,7 @@ namespace RESTfullWebApi.Controllers
         [ResponseType(typeof(Userr))]
         public async Task<IHttpActionResult> GetUserr(long id)
         {
+            
             Userr userr = await db.Userrs.FindAsync(id);
             if (userr == null)
             {

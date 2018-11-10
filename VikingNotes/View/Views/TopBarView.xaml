@@ -10,9 +10,7 @@
              d:DesignHeight="20" d:DesignWidth="800">
 
     <Grid Background="White">
-        <Grid.DataContext>
-            <Viewmodels:TopBarViewModel/>
-        </Grid.DataContext>
+        
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -21,7 +19,8 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Margin="20,0,0,0" VerticalAlignment="Center" Text="Logget ind som: "/>
-        <TextBlock Grid.Column="3" Margin="0,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding CurrentDateTime, StringFormat={}{0:dd-MMM-yyyy hh:mm:ss}}"/>
+        <TextBlock Grid.Column="0" Margin="20,0,0,0" VerticalAlignment="Center" Text="Logget ind som: " HorizontalAlignment="Left"/>
+        <TextBlock Grid.Column="1" Text="{Binding Username}"/> 
+        <TextBlock Grid.Column="3" Margin="0,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding CurrentDateTime, StringFormat={}{0:dd-MMM-yyyy HH:mm:ss}}"/>
     </Grid>
 </UserControl>

@@ -10,18 +10,29 @@ namespace ViewModels.Commands
     public class Command : ICommand
     {
         Action<object> executeMethod;
-        Func<object, bool> canexecuteMethod;
+        //Func<object, bool> canexecuteMethod;
+        private Predicate<object> canExecutePredicate;
 
-        public Command(Action<object> executeMethod, Func<object, bool> canexecuteMethod)
+        public Command(Action<object> executeMethod, Predicate<object> canExecute)
         {
             this.executeMethod = executeMethod;
-            this.canexecuteMethod = canexecuteMethod;
+            this.canExecutePredicate = canExecute;
         }
-        public event EventHandler CanExecuteChanged;
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            //if (canexecuteMethod(parameter))
+            //{
+            //    return true;
+            //}
+            //return false;
+            return this.canExecutePredicate == null ? true : this.canExecutePredicate(parameter);
         }
 
         public void Execute(object parameter)

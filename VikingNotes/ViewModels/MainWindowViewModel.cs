@@ -4,28 +4,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DAL.Core;
+using DAL.Presistence;
 using ViewModels.Commands;
+using ViewModels.Services.Interfaces;
+using ViewModels.Services.Source;
 
 namespace ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        public MainWindowViewModel()
+        private ILoginService loginService { get; set; }
+        private IUnitOfWork Data { get; set; }
+
+        public ICommand LoadTakeQuizViewCommand { get; private set; }
+        public ICommand LoadStatisticsViewCommand { get; private set; }
+        public ICommand LoadMakeQuizViewCommand { get; private set; }
+
+        // ViewModel for loginView
+        //private BaseViewModel _loginViewModel;
+
+        // ViewModel that is currently bound to the ContentControl
+        private BaseViewModel _currentViewModel;
+
+        private BaseViewModel _topBarViewModel;
+
+        public MainWindowViewModel(IUnitOfWork data, ILoginService loginservice, TopBarViewModel topBarVM)
         {
             this.LoadTakeQuizView();
+            Data = data;
+            loginService = loginservice;
+            TopBarViewModel = topBarVM;
+         
 
             // Hook up Commands to associated methods
             this.LoadTakeQuizViewCommand = new DelegateCommand(o => this.LoadTakeQuizView());
             this.LoadStatisticsViewCommand = new DelegateCommand(o => this.LoadStatisticsView());
             this.LoadMakeQuizViewCommand = new DelegateCommand(o => this.LoadMakeQuizView());
         }
-
-        public ICommand LoadTakeQuizViewCommand { get; private set; }
-        public ICommand LoadStatisticsViewCommand { get; private set; }
-        public ICommand LoadMakeQuizViewCommand { get; private set; }
-
-        // ViewModel that is currently bound to the ContentControl
-        private BaseViewModel _currentViewModel;
+        
 
         public BaseViewModel CurrentViewModel
         {
@@ -33,7 +50,18 @@ namespace ViewModels
             set
             {
                 _currentViewModel = value;
-                this.OnPropertyChanged("CurrentViewModel");
+                RaisePropertyChanged("CurrentViewModel");
+            }
+        }
+
+        public BaseViewModel TopBarViewModel
+        {
+            get { return _topBarViewModel; }
+            set
+            {
+                _topBarViewModel = value;
+                RaisePropertyChanged("TopBarViewModel");
+
             }
         }
 

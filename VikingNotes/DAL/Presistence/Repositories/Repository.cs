@@ -33,7 +33,7 @@ namespace DAL.Presistence.Repositories
 
         public async Task<TEntity> GetAsync(int id)
         {
-            Uri uri = new Uri("api/" + typeof(TEntity).Name + "/" + id);
+            string uri = "api/" + typeof(TEntity).Name + "/" + id;
             string responseString = await Client().GetStringAsync(uri);
             var respons = JsonConvert.DeserializeObject<TEntity>(responseString);
             return respons;
@@ -41,21 +41,21 @@ namespace DAL.Presistence.Repositories
 
         public async void Update(int id, TEntity entity)
         {
-            Uri uri = new Uri("api/" + typeof(TEntity).Name + "/" + id);
+            string uri = "api/" + typeof(TEntity).Name + "/" + id;
             HttpContent content = new StringContent(entity.ToString(), Encoding.UTF8, "application/json");
             await Client().PutAsync(uri, content);
         }
 
         public async void Add(TEntity entity)
         {
-            Uri uri = new Uri("api/" + typeof(TEntity).Name);
+            string uri = "api/" + typeof(TEntity).Name;
             HttpContent content = new StringContent(entity.ToString(), Encoding.UTF8, "application/json");
             await Client().PostAsync(uri, content);
         }
 
         public async void Remove(int id)
         {
-            Uri uri = new Uri("api/" + typeof(TEntity).Name + "/" + id);
+            string uri = "api/" + typeof(TEntity).Name + "/" + id;
             await Client().DeleteAsync(uri);
         }
     }
