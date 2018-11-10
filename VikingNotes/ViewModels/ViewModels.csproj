@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllStatisticsViewModel.cs" />
+    <Compile Include="AnswerQuizQuestionViewModel.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
