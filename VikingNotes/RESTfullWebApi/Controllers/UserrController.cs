@@ -20,7 +20,7 @@ namespace RESTfullWebApi.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
 
-            //db.Database.Log = sql => Debug.Write(sql);
+            db.Database.Log = sql => Debug.Write(sql);
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
@@ -103,7 +103,7 @@ namespace RESTfullWebApi.Controllers
             db.Userrs.Add(userr);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = userr.UserID }, userr);
+            return Ok(userr);
         }
 
         // DELETE: api/Userr/5

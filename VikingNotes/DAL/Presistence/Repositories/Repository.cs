@@ -53,18 +53,21 @@ namespace DAL.Presistence.Repositories
             await Client().PutAsync(uri, content);
         }
 
-        public async void Add(TEntity entity)
+        public async Task<TEntity> Add(TEntity entity)
         {
             string uri = "api/" + typeof(TEntity).Name;
             var stringPayload = await Task.Run(() => JsonConvert.SerializeObject(entity));
             HttpContent content = new StringContent(stringPayload, Encoding.UTF8, "application/json");
-            var httpResponse = await Client().PostAsync(uri, content);
+            HttpResponseMessage httpResponse = await Client().PostAsync(uri, content);
             if (httpResponse.Content != null)
             {
                 var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                TEntity respons = JsonConvert.DeserializeObject<TEntity>(responseContent);
+                return respons;
 
                 // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
             }
+            return null;
         }
 
         public async void Remove(int id)

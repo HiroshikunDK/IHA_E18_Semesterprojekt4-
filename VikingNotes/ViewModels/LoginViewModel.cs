@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -40,6 +41,8 @@ namespace ViewModels
         private UserType userTypeStandard { get; set; }
 
         private List<string> Usernames { get; set; }
+        private List<string> Emails { get; set; }
+        private List<string> StudentNumbers{ get; set; }
 
         public LoginViewModel(IUnitOfWork data, ILoginService loginservice)
         {
@@ -53,10 +56,12 @@ namespace ViewModels
             StudyID = "11786";
 
             Usernames = new List<string>();
+            StudentNumbers = new List<string>();
+            Emails = new List<string>();
 
             GetStudyList();
             GetStandardUserType();
-            GetUsernames();
+            GetUsers();
 
             IsRegistrering = false;
             ButtonContent = "Login";
@@ -97,9 +102,9 @@ namespace ViewModels
                 newUser.StudentNumber = studyID;
                 newUser.UserTypeID = userTypeStandard.UserTypeID;
 
-                Data.User.Add(newUser);
-                MessageBox.Show("User succefully registrede! Welcome " + username + ", du logges nu ind");
-                loginService.User = newUser;
+                Userr responsUser = await Data.User.Add(newUser);
+                MessageBox.Show("User succefully registrede! Welcome " + username + ", dit userID er " + responsUser.UserID +" du logges nu ind");
+                loginService.User = responsUser;
                 return;
             }
             loginService.VertifyLogin(username, password);
@@ -146,7 +151,7 @@ namespace ViewModels
                 {
                     foreach (var _username in Usernames)
                     {
-                        if (value == _username.Trim())
+                        if (value == _username)
                         {
                             List<string> errors = new List<string>
                             {
@@ -215,20 +220,40 @@ namespace ViewModels
             get { return email; }
             set
             {
-                email = value;
                 RaisePropertyChanged("Email");
-                if (value.Contains("@") && value.Contains("."))
-                {
-                    ClearErrors("Email");
-                }
-                else
+                if (!(value.Contains("@") && value.Contains(".")))
                 {
                     List<string> errors = new List<string>
                     {
                         "Email is not valid!"
                     };
                     SetErrors("Email", errors);
+                    return;
+                    
                 }
+                else if (Emails != null && IsRegistrering)
+                {
+                    foreach (var _email in Emails)
+                    {
+                        if (value == _email)
+                        {
+                            List<string> errors = new List<string>
+                            {
+                                "Email exists!"
+                            };
+                            SetErrors("Email", errors);
+                            break;
+                        }
+                        ClearErrors("Email");
+                    }
+
+                }
+
+                if (!IsRegistrering)
+                {
+                    ClearErrors("Email");
+                }
+                email = value;
             }
         }
 
@@ -255,7 +280,6 @@ namespace ViewModels
             get { return studyID; }
             set
             {
-                studyID = value;
                 RaisePropertyChanged("StudyID");
                 foreach (char c in value)
                 {
@@ -266,10 +290,30 @@ namespace ViewModels
                             "StudyID kan only be in numbers!"
                         };
                         SetErrors("StudyID", errors);
-                        break;
+                        return;
                     }
+                }
+                if (StudentNumbers != null && IsRegistrering)
+                {
+                    foreach (var _studentNos in StudentNumbers)
+                    {
+                        if (value == _studentNos)
+                        {
+                            List<string> errors = new List<string>
+                            {
+                                "StudyID exists!"
+                            };
+                            SetErrors("StudyID", errors);
+                            break;
+                        }
+                        ClearErrors("StudyID");
+                    }
+                }
+                if (!IsRegistrering)
+                {
                     ClearErrors("StudyID");
                 }
+                studyID = value;
             }
         }
         public List<Study> StudyList
@@ -320,11 +364,13 @@ namespace ViewModels
             userTypeStandard = await Data.UserType.GetAsync(1);
         }
 
-        public async void GetUsernames()
+        public async void GetUsers()
         {
             foreach (var users in await Data.User.GetAllAsync())
             {
-                Usernames.Add(users.UserName);
+                Usernames.Add(users.UserName.Trim());
+                StudentNumbers.Add(users.StudentNumber.Trim());
+                Emails.Add(users.EmailAdress.Trim());
             }
         }
 

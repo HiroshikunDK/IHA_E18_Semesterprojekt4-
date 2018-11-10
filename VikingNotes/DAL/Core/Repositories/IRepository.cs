@@ -11,7 +11,7 @@ namespace DAL.Core.Repositories
         Task<TEntity> GetAsync(int id);
         Task<List<TEntity>> GetAllAsync();
         void Update(int id, TEntity entity);
-        void Add(TEntity entity);
+        Task<TEntity> Add(TEntity entity);
         void Remove(int id);
     }
 }
