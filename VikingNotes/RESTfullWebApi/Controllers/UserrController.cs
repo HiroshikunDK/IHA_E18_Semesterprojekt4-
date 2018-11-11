@@ -18,7 +18,7 @@ namespace RESTfullWebApi.Controllers
     {
         public UserrController()
         {
-            db.Configuration.ProxyCreationEnabled = false;
+            //db.Configuration.ProxyCreationEnabled = false;
 
             db.Database.Log = sql => Debug.Write(sql);
         }

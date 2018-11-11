@@ -12,17 +12,18 @@ namespace RESTfullWebApi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Rating
+    public partial class UserType
     {
-        public Rating()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UserType()
         {
-            
+            this.Userrs = new HashSet<Userr>();
         }
-        public long RatingID { get; set; }
-        public int Rating1 { get; set; }
-        public string Reason { get; set; }
-        public long QuizID { get; set; }
     
-        public virtual Quiz Quiz { get; set; }
+        public long UserTypeID { get; set; }
+        public string Type { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Userr> Userrs { get; set; }
     }
 }

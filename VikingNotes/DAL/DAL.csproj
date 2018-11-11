@@ -74,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\RESTfullWebApi\RESTfullWebApi.csproj">
       <Project>{59d87144-df4f-416f-bd6d-2856bf6b6e01}</Project>
       <Name>RESTfullWebApi</Name>
