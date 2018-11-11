@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DAL.Core;
 using DAL.Core.Repositories;
 using DAL.Presistence.Repositories;
-using RESTfullWebApi.Models;
 
 namespace DAL.Presistence
 {
@@ -15,28 +14,28 @@ namespace DAL.Presistence
         public UnitOfWork()
         {
             User = new UserRepository();
-            Answer = new Repository<Answer>();
-            Catagory = new Repository<Catagory>();
-            Question = new Repository<Question>();
-            Quiz = new Repository<Quiz>();
-            Study = new Repository<Study>();
-            UserType = new Repository<UserType>();
-            Course = new Repository<Course>();
-            Faculty = new Repository<Faculty>();
-            Rating = new Repository<Rating>();
-            Semester = new Repository<Semester>();
+            Answer = new AnswerRepository();
+            Catagory = new CatagoryRepository();
+            Question = new QuestionRepository();
+            Quiz = new QuizRepository();
+            Study = new StudyRepository();
+            UserType = new UserTypeRepository();
+            Course = new CourseRepository();
+            Faculty = new FacultyRepository();
+            Rating = new RatingRepository();
+            Semester = new SemesterRepository();
         }
 
         public IUserRepository User { get; }
-        public IRepository<Answer> Answer { get; }
-        public IRepository<Catagory> Catagory { get; }
-        public IRepository<Question> Question { get; }
-        public IRepository<Quiz> Quiz { get; }
-        public IRepository<Study> Study { get; }
-        public IRepository<UserType> UserType { get; }
-        public IRepository<Course> Course { get; }
-        public IRepository<Faculty> Faculty { get; }
-        public IRepository<Rating> Rating { get; }
-        public IRepository<Semester> Semester { get; }
+        public IAnswerRepository Answer { get; }
+        public ICatagoryRepository Catagory { get; }
+        public IQuestionRepository Question { get; }
+        public IQuizRepository Quiz { get; }
+        public IStudyRepository Study { get; }
+        public IUserTypeRepository UserType { get; }
+        public ICourseRepository Course { get; }
+        public IFacultyRepository Faculty { get; }
+        public IRatingRepository Rating { get; }
+        public ISemesterRepository Semester { get; }
     }
 }
