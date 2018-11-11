@@ -43,8 +43,8 @@ namespace ViewModels.Services.Source
                 UserFailedToLogIn?.Invoke(this, EventArgs.Empty);
                 return;
             }
+            //UserLoggedIn?.Invoke(this, new UserLoggedInEventArg(this, userList.FirstOrDefault()));
             User = userList.FirstOrDefault();
-            UserLoggedIn?.Invoke(this, new UserLoggedInEventArg(this, User));
         }
     }
 }

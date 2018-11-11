@@ -17,7 +17,7 @@ namespace RESTfullWebApi.Controllers
     {
         public AnswerController()
         {
-            db.Configuration.ProxyCreationEnabled = false;
+            //db.Configuration.ProxyCreationEnabled = false;
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
