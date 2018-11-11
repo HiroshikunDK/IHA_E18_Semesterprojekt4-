@@ -21,9 +21,6 @@ namespace RESTfullWebApi
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            GlobalConfiguration.Configuration.IncludeErrorDetailPolicy
-                = IncludeErrorDetailPolicy.Always;
-
             config.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));
             //config.Filters.Add(new BasicAuthenticationAttribute());

@@ -67,12 +67,10 @@
       <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\RESTfullWebApi\RESTfullWebApi.csproj">
-      <Project>{59d87144-df4f-416f-bd6d-2856bf6b6e01}</Project>
+      <Project>{59D87144-DF4F-416F-BD6D-2856BF6B6E01}</Project>
       <Name>RESTfullWebApi</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

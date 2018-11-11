@@ -60,9 +60,6 @@ namespace View
         public void LoginSuccesfull(object o, UserLoggedInEventArg args)
         {
             loginView.Close();
-            string outPut = "Login Sucessfully completed!\nWelcome to VikingNote 1.0 " + args.User.UserName + "\nYou have made " +
-                            args.User.Quizs.Count + " quizzes so far";
-            MessageBox.Show(outPut);
             mainWindow.Show();
         }
 

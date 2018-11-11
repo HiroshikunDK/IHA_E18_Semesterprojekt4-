@@ -17,11 +17,16 @@ namespace DAL.Presistence.Repositories
         public static HttpClient Client()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://virkman-001-site1.ctempurl.com/");
+            client.BaseAddress = new Uri("http://localhost:57869/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
+
+            var http = (HttpWebRequest)WebRequest.Create(new Uri("http://localhost:57869/"));
+            http.Accept = "application/json";
+            http.ContentType = "application/json";
+            http.Method = "POST";
         }
 
 
