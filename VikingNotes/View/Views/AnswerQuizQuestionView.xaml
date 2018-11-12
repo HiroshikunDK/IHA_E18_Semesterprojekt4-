@@ -8,6 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <viewModels:QuestionToAnswerStatusBrush x:Key="QuestionToAnswerStatusBrush"/>
         <viewModels:IntToAnswerConverter x:Key="IntToAnswerConverter"/>
         <viewModels:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
     </UserControl.Resources>
@@ -44,7 +45,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <TextBlock Text="{Binding Path=Question1}" MinWidth="40"/>
+                        <TextBlock Text="{Binding Path=Question1}" MinWidth="40" Foreground="{Binding Converter={StaticResource QuestionToAnswerStatusBrush}, Mode=OneWay}" />
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

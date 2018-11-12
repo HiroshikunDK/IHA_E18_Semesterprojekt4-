@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using RESTfullWebApi.Models;
 using ViewModels.Commands;
 
@@ -40,7 +41,7 @@ namespace ViewModels
             Answers.Add(new Answer(){Answer1 = "mulighed 1"});
             Answers.Add(new Answer(){Answer1 = "mulighed 2"});
             Answers.Add(new Answer(){Answer1 = "mulighed 3"});
-            Answers.Add(new Answer(){Answer1 = "mulighed 4"}); //kommenter ud for at teste
+            //Answers.Add(new Answer(){Answer1 = "mulighed 4"}); //TODO: kommenter ud/ind for at teste
 
             QuestionAnswerClick = new Command(QuestionAnswerClickFunc, canExecute);
         }
@@ -69,6 +70,11 @@ namespace ViewModels
             set { answers = value; }
         }
 
+        public bool[,] AnswersGiven
+        {
+            get { return _answersGiven; }
+        }
+
         private void QuestionAnswerClickFunc(object obj)
         {
             string selectedAnswer = ((Button)obj).Content.ToString();
@@ -78,10 +84,11 @@ namespace ViewModels
                 if (selectedAnswer.Equals(answer.Answer1))
                 {
                     LogAnswer(answer);
+                    break;
                 }
             }
 
-            if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //do something to handle when quiz is over
+            if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to reflect that jumping through is possible
             else
             {
                 currentQuestionIndex++;
@@ -99,7 +106,7 @@ namespace ViewModels
         private void LogAnswer(Answer selectedAnswer)
         {
             _answersGiven[currentQuestionIndex, 0] = true;
-            _answersGiven[currentQuestionIndex, 1] = false; //selectedAnswer.IsCorrect; //TODO: why is IsCorrect a string?
+            _answersGiven[currentQuestionIndex, 1] = false; //selectedAnswer.IsCorrect; //TODO: why is IsCorrect a string? and make this set itself to the state of IsCorrect (true/false)
         }
 
         /// <summary>
@@ -140,6 +147,30 @@ namespace ViewModels
             int answerNumber = Int16.Parse((string)parameter);
 
             return answerNumber < cnt ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// Takes the question and returns a brush based on it being answered
+    /// </summary>
+    public class QuestionToAnswerStatusBrush : IValueConverter
+    {
+        SolidColorBrush unansweredBrush = new SolidColorBrush(Colors.Black);
+        SolidColorBrush answeredBrush = new SolidColorBrush(Colors.SteelBlue);
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var question = (RESTfullWebApi.Models.Question)value;
+
+            //TODO: add something to Question to allow the program to know if it has been answered correctly
+            //return question.IsAnswered ? answeredBrush : unansweredBrush; 
+
+            return unansweredBrush;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
