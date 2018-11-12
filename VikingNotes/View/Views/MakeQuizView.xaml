@@ -9,7 +9,14 @@
              x:Name="MakeQuiz"
              d:DesignHeight="450" d:DesignWidth="800">
 
-   
+    <UserControl.Resources>
+        <DataTemplate x:Name="MakeNewQuizViewTemplate" DataType="{x:Type viewmodels:MakeNewQuizViewModel}">
+            <local:MakeNewQuizView />
+        </DataTemplate>
+        <DataTemplate x:Name="EditRemoveQuizViewTemplate" DataType="{x:Type viewmodels:EditRemoveQuizViewModel}">
+            <local:EditRemoveQuizView />
+        </DataTemplate>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <viewmodels:MakeQuizViewModel />
     </UserControl.DataContext>
