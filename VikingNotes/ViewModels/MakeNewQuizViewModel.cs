@@ -11,13 +11,35 @@ namespace ViewModels
 {
     public class MakeNewQuizViewModel : BaseViewModel
     {
+        
         private string quizName { get; set; }
-
         public string QuizName
         {
             get { return quizName; }
             set { quizName = value; }
         }
+
+        private string questionName { get; set; }
+
+        public string QuestionName
+        {
+            get { return questionName;}
+            set { questionName = value; }
+
+        }
+
+
+        private List<string> questions { get; set; }
+        public List<string> Questions
+        {
+            get { return questions;}
+            set { questions = value; }
+        }
+
+
+
+
+
 
         public ICommand GemogNaeste { get; set; }
 
@@ -25,7 +47,6 @@ namespace ViewModels
         {
             GemogNaeste = new Command(SOmething,CanExecute);
         }
-
 
         private bool CanExecute(object o)
         {
