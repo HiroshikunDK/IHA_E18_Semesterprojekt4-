@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using RESTfullWebApi.Models;
@@ -18,15 +20,19 @@ namespace ViewModels
 
         public ICommand QuestionAnswerClick { get; set; }
 
-
         private int currentQuestionIndex;
         private int answerCount;
+
+        private bool[,] _answersGiven; //[x,0] = is answer given, [x, 1] = is answer correct
 
         public AnswerQuizQuestionViewModel ()
         {
             selectedQuiz = new Quiz();
-            currentQuestion = new Question();
+            selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 1"});
+            selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 2"});
 
+            currentQuestion = new Question();
+            _answersGiven = new bool[selectedQuiz.Questions.Count, 2];
 
             //Testing TODO remove this once it has been tested properly
             currentQuestion.Question1 = "test spørgsmål: ";
@@ -63,10 +69,18 @@ namespace ViewModels
             set { answers = value; }
         }
 
-
         private void QuestionAnswerClickFunc(object obj)
         {
-            LogAnswer();
+            string selectedAnswer = ((Button)obj).Content.ToString();
+
+            foreach (var answer in Answers)
+            {
+                if (selectedAnswer.Equals(answer.Answer1))
+                {
+                    LogAnswer(answer);
+                }
+            }
+
             if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //do something to handle when quiz is over
             else
             {
@@ -82,8 +96,10 @@ namespace ViewModels
         /// <summary>
         /// Save selected answer locally.
         /// </summary>
-        private void LogAnswer()
+        private void LogAnswer(Answer selectedAnswer)
         {
+            _answersGiven[currentQuestionIndex, 0] = true;
+            _answersGiven[currentQuestionIndex, 1] = false; //selectedAnswer.IsCorrect; //TODO: why is IsCorrect a string?
         }
 
         /// <summary>
@@ -102,17 +118,9 @@ namespace ViewModels
         {
             var context = (ViewModels.AnswerQuizQuestionViewModel)value;
 
-            //int cnt = context.Answers.Capacity - 1;
-
             int answerNumber = Int16.Parse((string)parameter);
-            string answer = "";
 
-            if (answerNumber < context.Answers.Count) answer = context.Answers[answerNumber].Answer1; //testing TODO: Remove once it has been tested properly.
-            else
-            {
-                answer = "sut";
-            }
-            return answer;
+            return answerNumber < context.Answers.Count ? context.Answers[answerNumber].Answer1 : "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -127,14 +135,11 @@ namespace ViewModels
         {
             var context = (ViewModels.AnswerQuizQuestionViewModel) value;
             //int cnt = context.CurrentQuestion.Answers.Count;
-
             int cnt = context.Answers.Count; //testing due to not being able to run, has to use a local TODO: remove this
-
 
             int answerNumber = Int16.Parse((string)parameter);
 
             return answerNumber < cnt ? Visibility.Visible : Visibility.Hidden;
-            //throw new NotImplementedException();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
