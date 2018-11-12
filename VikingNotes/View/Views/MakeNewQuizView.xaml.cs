@@ -18,7 +18,7 @@ namespace View.Views
     /// <summary>
     /// Interaction logic for MakeNewQuizView.xaml
     /// </summary>
-    public partial class MakeNewQuizView : UserControl
+    public partial class MakeNewQuizView :UserControl
     {
         public MakeNewQuizView()
         {
