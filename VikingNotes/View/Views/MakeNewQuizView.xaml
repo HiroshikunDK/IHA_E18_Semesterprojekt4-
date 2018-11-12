@@ -8,20 +8,51 @@
 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-   
-    <Grid Background="White">
-        <Button Content="Next Question" HorizontalAlignment="Left" Margin="629,291,0,0" VerticalAlignment="Top" Width="130" Height="34" FontSize="18"/>
-        <Button Content="Previous Question" HorizontalAlignment="Left" Margin="42,291,0,0" VerticalAlignment="Top" Width="174" FontSize="18"/>
-        <TextBox HorizontalAlignment="Left" Height="59" Margin="42,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <CheckBox Content="Correct Answer" HorizontalAlignment="Left" Margin="63,247,0,0" VerticalAlignment="Top"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="195,191,0,0" VerticalAlignment="Top" Width="21" RenderTransformOrigin="-0.267,-0.208"/>
-        <Button Content="Save Multiple Choice Quiz" HorizontalAlignment="Left" Margin="246,348,0,0" VerticalAlignment="Top" Width="301" Height="46" FontSize="24"/>
-        <TextBox HorizontalAlignment="Left" Height="42" Margin="212,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" FontSize="24"/>
-        <TextBlock HorizontalAlignment="Left" Margin="42,33,0,0" TextWrapping="Wrap" Text="Quiz Title" VerticalAlignment="Top" Height="41" Width="120" FontSize="24"/>
-        <TextBox HorizontalAlignment="Left" Height="42" Margin="212,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" FontSize="18"/>
-        <TextBlock HorizontalAlignment="Left" Margin="42,92,0,0" TextWrapping="Wrap" Text="Question :" VerticalAlignment="Top" Height="28" Width="88" FontSize="18"/>
-        <Label Content="Subject:" HorizontalAlignment="Left" Margin="671,0,0,0" VerticalAlignment="Top" Width="113"/>
-        <Label Content="Course:" HorizontalAlignment="Left" Margin="671,31,0,0" VerticalAlignment="Top" Width="113"/>
+    <UserControl.DataContext>
+        <viewmodels:MakeNewQuizViewModel/>
+    </UserControl.DataContext>
 
+    <Grid Background="White">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Column="6" Grid.Row="8"  Content="Next Question" HorizontalAlignment="Stretch"  VerticalAlignment="Center" FontSize="14" Command="{Binding GemogNaeste}"/>
+        <Button Grid.Column="1" Grid.Row="8" Content="Prev. Question" HorizontalAlignment="Stretch" VerticalAlignment="Center " FontSize="14"/>
+        <TextBox Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="1" HorizontalAlignment="Stretch" Margin="40,0,40,0" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="14" Height="30" Text="{Binding QuizName}"/>
+        <CheckBox Grid.Column ="1" Grid.ColumnSpan="2" Grid.Row="7" Content="Correct Answer" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+        <Button Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="8" Content="Save Multiple Choice Quiz" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+        <TextBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Grid.RowSpan="3" HorizontalAlignment="Stretch"   TextWrapping="Wrap" VerticalAlignment="Stretch"  FontSize="12" />
+        <TextBlock  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Quiz Title" VerticalAlignment="Center"  FontSize="18"/>
+        <TextBox Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="2" HorizontalAlignment="Stretch"   TextWrapping="Wrap" VerticalAlignment="Center" Height="30" FontSize="14" Margin="40,0,40,0"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Question" VerticalAlignment="Center"  FontSize="18"/>
+        <Label Grid.Column="6" Grid.Row="1" Content="Course:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+        <Label Grid.Column="6" Grid.Row="2" Content="Subject:" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+        <ListBox Grid.ColumnSpan="2" Grid.Column="4" HorizontalAlignment="Center"   Grid.Row="4" Grid.RowSpan="3" VerticalAlignment="Stretch" Width="140"/>
+        <ListBox Grid.ColumnSpan="2" Grid.Column="6" HorizontalAlignment="Center"   Grid.Row="4" Grid.RowSpan="3" VerticalAlignment="Stretch" Width="140"/>
+        <Label Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="3" Content="Svarmuligheder" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+        <Label Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="3" Content="Spørgsmål" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
     </Grid>
+
+
 </UserControl>
