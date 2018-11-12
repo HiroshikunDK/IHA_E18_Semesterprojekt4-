@@ -19,10 +19,11 @@
 
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="216*"/>
-            <ColumnDefinition Width="184*"/>
-            <ColumnDefinition Width="207*"/>
-            <ColumnDefinition Width="193*"/>
+            <ColumnDefinition Width="54*"/>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="25*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
@@ -41,7 +42,7 @@
         <Button Content="{Binding ConverterParameter=3, Converter={StaticResource IntToAnswerConverter}, Mode=OneWay}" HorizontalAlignment="Left" Margin="70,30,0,0" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" MinWidth="100" MinHeight="50" Height="50" Width="100" 
                 Visibility="{Binding ConverterParameter=3, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" Command="{Binding QuestionAnswerClick}"/>
 
-        <ListBox Grid.Column="3" HorizontalAlignment="Left" Height="218" Margin="10,22,0,0" VerticalAlignment="Top" Width="173" ItemsSource="{Binding SelectedQuiz.Questions}">
+        <ListBox Grid.Column="3" HorizontalAlignment="Left" Height="218" Margin="10,22,0,0" VerticalAlignment="Top" Width="173" ItemsSource="{Binding SelectedQuiz.Questions}" Grid.ColumnSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
@@ -50,6 +51,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <Button Content="PREV" Grid.Column="3" HorizontalAlignment="Left" Margin="22,45,0,0" Grid.Row="1" VerticalAlignment="Top" Width="36" Height="20" Command="{Binding Path=PrevQuestionClick}"/>
+        <Button Content="NEXT" Grid.Column="4" HorizontalAlignment="Left" Margin="22,45,0,0" Grid.Row="1" VerticalAlignment="Top" Width="36" Height="20" Command="{Binding Path=NextQuestionClick}"/>
 
     </Grid>
 </UserControl>
