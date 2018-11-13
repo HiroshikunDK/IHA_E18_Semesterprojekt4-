@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DAL.Core;
 using DAL.Presistence;
+using RESTfullWebApi.Models;
 using ViewModels.Commands;
 using ViewModels.Services.Interfaces;
 using ViewModels.Services.Source;
@@ -83,7 +84,7 @@ namespace ViewModels
 
         private void LoadAnswerQuiz()
         {
-            CurrentViewModel = new AnswerQuizQuestionViewModel();
+            CurrentViewModel = new AnswerQuizQuestionViewModel(new Quiz());
         }
     }
 }

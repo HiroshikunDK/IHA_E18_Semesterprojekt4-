@@ -29,7 +29,7 @@ namespace ViewModels
         //TODO: this should be made into something that is stored in a Question, to make access possible in converters, and easier to associate with given question.
         private bool[,] _answersGiven; //[x,0] = is answer given, [x, 1] = is answer correct
 
-        public AnswerQuizQuestionViewModel ()
+        public AnswerQuizQuestionViewModel (Quiz quiz)
         {
             QuestionAnswerClick = new Command(QuestionAnswerClickFunc, canExecute);
             NextQuestionClick = new Command(NextQuestionClickFunc, canExecute);
