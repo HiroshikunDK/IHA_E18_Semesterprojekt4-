@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
 using DAL.Core;
 using DAL.Presistence;
@@ -32,16 +33,24 @@ namespace ViewModels
         public string QuestionName
         {
             get { return questionName;}
-            set { questionName = value; }
+            set
+            {
+                questionName = value;
+                RaisePropertyChanged("QuestionName");
+            }
 
         }
 
 
-        private IList<Question> questions { get; set; }
-        public IList<Question> Questions
+        private List<Question> questions { get; set; }
+        public List<Question> Questions
         {
             get { return questions;}
-            set { questions = value; }
+            set
+            {
+                questions = value;
+                RaisePropertyChanged("Questions");
+            }
         }
 
 
@@ -65,7 +74,11 @@ namespace ViewModels
         public IList<Faculty> FacultyList
         {
             get { return _FacultyList; }
-            set { _FacultyList = value; }
+            set
+            {
+                _FacultyList = value;
+                RaisePropertyChanged("FacultyList");
+            }
 
         }
 
@@ -88,15 +101,7 @@ namespace ViewModels
                 RaisePropertyChanged("CourseList");
             }
         }
-        public IList<Quiz> QuizList
-        {
-            get { return _quizList; }
-            set
-            {
-                _quizList = value;
-                RaisePropertyChanged("QuizList");
-            }
-        }
+       
 
 
         public ICommand GemogNaeste { get; set; }
@@ -109,6 +114,8 @@ namespace ViewModels
 
 
         public ICommand SelectFaculityCommand { get; set; }
+        private Quiz CurrentQuiz=new Quiz();
+        private Question newQuestion { get; set; }
 
         public MakeNewQuizViewModel()
         {
@@ -116,9 +123,52 @@ namespace ViewModels
             GemogForrige = new Command(Forrige, CanExecute);
             GemMCQ = new Command(GEMMCQ, CanExecute);
             SelectFaculityCommand = new Command(SelectFaculity, CanExecute);
-            NySvarmulighed = new DelegateCommand(nySvar,CanExecute);
+            
+            Questions = new List<Question>();
+            
             GetFaculties();
+            QuestionName = "";
+        }
 
+        private bool CanExecute(object o)
+        {
+            return true;
+        }
+
+
+        private List<string> TempList = new List<string>();
+
+        private void Naeste(object o)
+        {
+
+            newQuestion = new Question();
+            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1});
+            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
+            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
+            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
+            
+            
+            newQuestion.Question1 = QuestionName;
+
+            CurrentQuiz.Questions.Add(newQuestion);
+
+           
+
+            Questions.Add(newQuestion);
+
+           
+            RaisePropertyChanged("Questions");
+
+            QuestionName = "";
+            SvarMul1 = "";
+            SvarMul2 = "";
+            SvarMul3 = "";
+            SvarMul4 = "";
+        }
+
+        private void Forrige(object o)
+        {
+            
         }
 
 
@@ -138,20 +188,6 @@ namespace ViewModels
         }
 
 
-        private bool CanExecute(object o)
-        {
-            return true;
-        }
-
-        private void Naeste(object o)
-        {
-            
-        }
-
-        private void Forrige(object o)
-        {
-
-        }
 
         private void GEMMCQ(object o)
         {
@@ -210,7 +246,7 @@ namespace ViewModels
             }
             SemesterList = new List<Semester>();
             CourseList = new List<Course>();
-            QuizList = new List<Quiz>();
+           
             int id = Convert.ToInt32(SelectedStudy.StudyID);
             SemesterList = (await Data.Semester.GetAllAsync()).FindAll(s => s.StudyID == id);
         }
@@ -223,14 +259,55 @@ namespace ViewModels
                 return;
             }
             CourseList = new List<Course>();
-            QuizList = new List<Quiz>();
+            
             int id = Convert.ToInt32(SelectedSemester.SemesterID);
             CourseList = (await Data.Course.GetAllAsync()).FindAll(s => s.SemesterID == id);
         }
 
 
-        private string SvarMul1 { get; set; }
-        public string SvatMul1 { get; set; }
+        private string svarMul1 { get; set; }
+        public string SvarMul1
+        {
+            get { return svarMul1; }
+            set
+            {
+                svarMul1 = value;
+                RaisePropertyChanged("SvarMul1");
+            }
+        }
+        private string svarMul2 { get; set; }
+        public string SvarMul2
+        {
+            get { return svarMul2; }
+            set
+            {
+                svarMul2 = value;
+                RaisePropertyChanged("SvarMul2");
+            }
+        }
+        private string svarMul3 { get; set; }
+        public string SvarMul3
+        {
+            get { return svarMul3; }
+            set
+            {
+                svarMul3 = value;
+                RaisePropertyChanged("SvarMul3");
+            }
+        }
+        private string svarMul4 { get; set; }
+        public string SvarMul4
+        {
+            get { return svarMul4; }
+            set
+            {
+                svarMul4 = value;
+                RaisePropertyChanged("SvarMul4");
+            }
+        }
+
+
+
 
 
     }
