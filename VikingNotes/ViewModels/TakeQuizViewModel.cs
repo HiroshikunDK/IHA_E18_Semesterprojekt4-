@@ -213,9 +213,9 @@ namespace ViewModels
 
         private void SelectQuiz(Quiz quiz)
         {
-            quizContent = new AnswerQuizQuestionViewModel(quiz);
-            answerView.DataContext = quizContent;
-
+            QuizContent = new AnswerQuizQuestionViewModel(quiz);
+            answerView.DataContext = QuizContent;
+           
         }
     }
 }
