@@ -123,13 +123,10 @@ namespace ViewModels
             GemogForrige = new Command(Forrige, CanExecute);
             GemMCQ = new Command(GEMMCQ, CanExecute);
             SelectFaculityCommand = new Command(SelectFaculity, CanExecute);
-<<<<<<< HEAD
             //NySvarmulighed = new DelegateCommand(nySvar,CanExecute);
-=======
             
             Questions = new List<Question>();
             
->>>>>>> 09c116c11a60876f1b7c6af25ffac1c02ffb8e7e
             GetFaculties();
             QuestionName = "";
         }
