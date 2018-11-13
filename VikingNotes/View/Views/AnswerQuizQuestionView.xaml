@@ -40,7 +40,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-
         <!-- Please don't hurt me.
         <Button Content="{Binding ConverterParameter=0, Converter={StaticResource IntToAnswerConverter}, Mode=OneWay}" HorizontalAlignment="Left" Margin="54,30,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" MinWidth="100" MinHeight="50" Width="100" Height="50" 
                 Visibility="{Binding ConverterParameter=0, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" Command="{Binding QuestionAnswerClick}"/>
@@ -52,7 +51,7 @@
                 Visibility="{Binding ConverterParameter=3, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" Command="{Binding QuestionAnswerClick}"/>
         -->
 
-        <ListBox Grid.Column="3" HorizontalAlignment="Left" Height="218" Margin="10,22,0,0" VerticalAlignment="Top" Width="173" ItemsSource="{Binding SelectedQuiz.Questions}" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <ListBox Grid.Column="3" HorizontalAlignment="Left" Height="218" Margin="10,22,0,0" VerticalAlignment="Top" Width="173" ItemsSource="{Binding SelectedQuiz.Questions}" SelectedItem="{Binding CurrentQuestion}" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>

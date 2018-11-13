@@ -18,6 +18,7 @@ namespace ViewModels
     public class AnswerQuizQuestionViewModel : BaseViewModel
     {
         private Quiz selectedQuiz { get; set; }
+        private List<Question> questions { get; set; }
         private Question currentQuestion { get; set; }
         private List<Answer> answers { get; set; } //TODO: Remove this, once it is tested without 
 
@@ -35,44 +36,24 @@ namespace ViewModels
 
         public AnswerQuizQuestionViewModel (Quiz quiz)
         {
-            QuestionAnswerClick = new Command(QuestionAnswerClickFunc, canExecute);
-            NextQuestionClick = new Command(NextQuestionClickFunc, canExecute);
-            PrevQuestionClick = new Command(PrevQuestionClickFunc, canExecute);
+            selectedQuiz = quiz;
+            questions = selectedQuiz.Questions.ToList();
+            _answersGiven = new bool[questions.Count, 2];
+            currentQuestion = questions[0];
+            answers = currentQuestion.Answers.ToList();
 
             //Testing TODO remove this once it has been tested properly
-            selectedQuiz = new Quiz();
-            selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 1"});
-            selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 2"});
+            //selectedQuiz = new Quiz();
+            //selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 1"});
+            //selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 2"});
 
-            currentQuestion = new Question();
-            _answersGiven = new bool[selectedQuiz.Questions.Count, 2];
+            //currentQuestion = new Question();
 
-            currentQuestion.Question1 = "test spørgsmål: ";
-            Answers = new List<Answer>();
-            Answers.Add(new Answer(){Answer1 = "mulighed 1"});
-            Answers.Add(new Answer(){Answer1 = "mulighed 2"});
-            Answers.Add(new Answer(){Answer1 = "mulighed 3"});
-            //Answers.Add(new Answer(){Answer1 = "mulighed 4"}); //TODO: kommenter ud/ind for at teste
-        }
-        public AnswerQuizQuestionViewModel()
-        {
-            QuestionAnswerClick = new Command(QuestionAnswerClickFunc, canExecute);
-            NextQuestionClick = new Command(NextQuestionClickFunc, canExecute);
-            PrevQuestionClick = new Command(PrevQuestionClickFunc, canExecute);
-
-            //Testing TODO remove this once it has been tested properly
-            selectedQuiz = new Quiz();
-            selectedQuiz.Questions.Add(new Question() { CorrectCount = 0, Question1 = "spørgsmål 1" });
-            selectedQuiz.Questions.Add(new Question() { CorrectCount = 0, Question1 = "spørgsmål 2" });
-
-            currentQuestion = new Question();
-            _answersGiven = new bool[selectedQuiz.Questions.Count, 2];
-
-            currentQuestion.Question1 = "test spørgsmål: ";
-            Answers = new List<Answer>();
-            Answers.Add(new Answer() { Answer1 = "mulighed 1" });
-            Answers.Add(new Answer() { Answer1 = "mulighed 2" });
-            Answers.Add(new Answer() { Answer1 = "mulighed 3" });
+            //currentQuestion.Question1 = "test spørgsmål: ";
+            //Answers = new List<Answer>();
+            //Answers.Add(new Answer(){Answer1 = "mulighed 1"});
+            //Answers.Add(new Answer(){Answer1 = "mulighed 2"});
+            //Answers.Add(new Answer(){Answer1 = "mulighed 3"});
             //Answers.Add(new Answer(){Answer1 = "mulighed 4"}); //TODO: kommenter ud/ind for at teste
         }
 

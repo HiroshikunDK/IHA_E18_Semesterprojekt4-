@@ -38,8 +38,8 @@
 CREATE TABLE Quiz (
     QuizID         BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     UserID         BIGINT NOT NULL,
-    Name           NCHAR(100) NOT NULL,
-    Description    NCHAR(1000) NULL,
+    Name           NVARCHAR(100) NOT NULL,
+    Description    NVARCHAR(1000) NULL,
     CatagoryID     BIGINT NOT NULL,
 CONSTRAINT pk_Quiz PRIMARY KEY CLUSTERED (QuizID),
 CONSTRAINT fk_Quiz FOREIGN KEY (UserID)
