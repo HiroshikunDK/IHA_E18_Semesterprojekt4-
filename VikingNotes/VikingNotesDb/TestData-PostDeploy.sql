@@ -76,7 +76,7 @@ INSERT INTO [dbo].[UserType] ([UserTypeID], [Type]) VALUES (3, N'SystemAdmin')
 SET IDENTITY_INSERT [dbo].[UserType] OFF
 SET IDENTITY_INSERT [dbo].[Userr] ON
 
-INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (1, N'SvendTheMan', N'123456', N'Svenden@gmail.com', 1, 3, N'201110642')
+INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (1, N'SvendTheMan', N'123456', N'Svenden@gmail.com', 1, 1, N'201110642')
 INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (2, N'Jens', N'megetlangkode', N'L33tM4ch1ne@gmail.com', 2, 2, N'20150652')
 INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (3, N'Kirstine', N'utroliglangkode', N'Admin@VikingNotes.dk', 3, 3, N'201211071')
 
@@ -199,10 +199,10 @@ INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VAL
 INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (9, N'==', 0, 3)
 
 /*Spørgsmål 4 - Linux*/
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (6, N'Torvald Linus', 1, 4)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (7, N'Bill Gates', 0, 4)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (8, N'Steven Jobs', 0, 4)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (9, N'Inger Støjberg', 0,4)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (64, N'Torvald Linus', 1, 4)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (65, N'Bill Gates', 0, 4)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (66, N'Steven Jobs', 0, 4)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (67, N'Inger Støjberg', 0,4)
 
 /*Spørgsmål 5 - DYN ALLOC*/
 INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (10, N'Struct', 0, 5)
