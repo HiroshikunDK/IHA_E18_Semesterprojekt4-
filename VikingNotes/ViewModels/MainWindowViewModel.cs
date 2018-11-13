@@ -35,14 +35,17 @@ namespace ViewModels
 
         private UserControl answerView { get; set; }
 
-        public MainWindowViewModel(IUnitOfWork data, ILoginService loginservice, TopBarViewModel topBarVM, UserControl view)
+        private UserControl takeView { get; set; }
+
+        public MainWindowViewModel(IUnitOfWork data, ILoginService loginservice, TopBarViewModel topBarVM, UserControl ansView, UserControl taView)
         {
-            this.LoadTakeQuizView();
             Data = data;
             loginService = loginservice;
             TopBarViewModel = topBarVM;
-            answerView = view;
-         
+            answerView = ansView;
+            takeView = taView;
+            this.LoadTakeQuizView();
+
 
             // Hook up Commands to associated methods
             this.LoadTakeQuizViewCommand = new DelegateCommand(o => this.LoadTakeQuizView());
@@ -76,6 +79,7 @@ namespace ViewModels
         private void LoadTakeQuizView()
         {
             CurrentViewModel = new TakeQuizViewModel(answerView);
+            takeView.DataContext = CurrentViewModel;
         }
 
         private void LoadStatisticsView()

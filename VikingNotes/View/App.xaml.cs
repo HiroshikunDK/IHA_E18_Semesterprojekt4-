@@ -30,7 +30,7 @@ namespace View
         private IUnitOfWork Data { get; set; }
 
         private AnswerQuizQuestionView answerView { get; set; }
-        private AnswerQuizQuestionViewModel answerVM { get; set; } 
+        private TakeQuizView takeView { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -49,8 +49,12 @@ namespace View
 
             answerView = new AnswerQuizQuestionView();
 
+            takeView = new TakeQuizView();
+
+            
+
             mainWindow = new MainWindow();
-            mainWindowVM = new MainWindowViewModel(Data, loginService, topBarVM, answerView);
+            mainWindowVM = new MainWindowViewModel(Data, loginService, topBarVM, answerView, takeView);
             mainWindow.DataContext = mainWindowVM;
 
             loginService.UserLoggedIn += LoginSuccesfull;

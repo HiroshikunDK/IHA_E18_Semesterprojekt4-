@@ -15,9 +15,6 @@
             <local:AnswerQuizQuestionView />
         </DataTemplate>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <ViewModels:TakeQuizViewModel/>
-    </UserControl.DataContext>
 
     <Grid Background="LightCyan">
         <Grid.ColumnDefinitions>
