@@ -45,8 +45,8 @@
 --
 CREATE TABLE Userr (
     UserID         BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    UserName       NCHAR(20) NOT NULL UNIQUE,
-    Password       NCHAR(20) NOT NULL,
+    UserName       NCHAR(100) NOT NULL UNIQUE,
+    Password       NCHAR(100) NOT NULL,
     EmailAdress    NCHAR(50) NOT NULL UNIQUE,
     UserTypeID     BIGINT NOT NULL,
     StudyID        BIGINT NOT NULL,

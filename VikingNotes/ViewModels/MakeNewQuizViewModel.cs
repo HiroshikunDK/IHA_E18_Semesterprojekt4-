@@ -102,6 +102,12 @@ namespace ViewModels
         public ICommand GemogNaeste { get; set; }
         public ICommand GemogForrige { get; set; }
         public ICommand GemMCQ { get; set; }
+
+        public ICommand NySvarmulighed { get; set; }
+
+
+
+
         public ICommand SelectFaculityCommand { get; set; }
 
         public MakeNewQuizViewModel()
@@ -110,9 +116,11 @@ namespace ViewModels
             GemogForrige = new Command(Forrige, CanExecute);
             GemMCQ = new Command(GEMMCQ, CanExecute);
             SelectFaculityCommand = new Command(SelectFaculity, CanExecute);
+            NySvarmulighed = new DelegateCommand(nySvar,CanExecute);
             GetFaculties();
 
         }
+
 
         public async void GetFaculties()
         {
@@ -154,7 +162,6 @@ namespace ViewModels
         private Semester selectedSemester;
         private Course selectedCourse;
         private Faculty selectedFaculty;
-
         public Faculty SelectedFaculty
         {
             get { return selectedFaculty; }
@@ -220,5 +227,11 @@ namespace ViewModels
             int id = Convert.ToInt32(SelectedSemester.SemesterID);
             CourseList = (await Data.Course.GetAllAsync()).FindAll(s => s.SemesterID == id);
         }
+
+
+        private string SvarMul1 { get; set; }
+        public string SvatMul1 { get; set; }
+
+
     }
 }

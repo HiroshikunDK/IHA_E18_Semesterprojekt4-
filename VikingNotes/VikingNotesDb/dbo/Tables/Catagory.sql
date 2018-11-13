@@ -20,5 +20,5 @@
 --
 CREATE TABLE Catagory (
     CatagoryID     BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Name           NCHAR(20) NOT NULL UNIQUE,
+    Name           NCHAR(300) NOT NULL UNIQUE,
 CONSTRAINT pk_Catagory PRIMARY KEY CLUSTERED (CatagoryID))
