@@ -42,6 +42,7 @@ namespace ViewModels
             this.LoadTakeQuizViewCommand = new DelegateCommand(o => this.LoadTakeQuizView());
             this.LoadStatisticsViewCommand = new DelegateCommand(o => this.LoadStatisticsView());
             this.LoadMakeQuizViewCommand = new DelegateCommand(o => this.LoadMakeQuizView());
+
         }
         
 
@@ -80,13 +81,10 @@ namespace ViewModels
         {
             CurrentViewModel = new MakeQuizViewModel();
         }
-<<<<<<< HEAD
 
         private void LoadAnswerQuiz()
         {
             CurrentViewModel = new AnswerQuizQuestionViewModel(new Quiz());
         }
-=======
->>>>>>> parent of 887cf04... many small changes to work towards getting AnswerQuizQuestionView running
     }
 }

@@ -18,9 +18,9 @@ namespace View.Views
     /// <summary>
     /// Interaction logic for AnswerQuizQuestion.xaml
     /// </summary>
-    public partial class AnswerQuizQuestion : UserControl
+    public partial class AnswerQuizQuestionView : UserControl
     {
-        public AnswerQuizQuestion()
+        public AnswerQuizQuestionView()
         {
             InitializeComponent();
         }
