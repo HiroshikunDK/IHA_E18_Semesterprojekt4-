@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DAL.Core;
 using DAL.Presistence;
@@ -30,12 +31,17 @@ namespace ViewModels
 
         private BaseViewModel _topBarViewModel;
 
-        public MainWindowViewModel(IUnitOfWork data, ILoginService loginservice, TopBarViewModel topBarVM)
+        private List<ViewBase> viewListe { get; set; }
+
+        private UserControl answerView { get; set; }
+
+        public MainWindowViewModel(IUnitOfWork data, ILoginService loginservice, TopBarViewModel topBarVM, UserControl view)
         {
             this.LoadTakeQuizView();
             Data = data;
             loginService = loginservice;
             TopBarViewModel = topBarVM;
+            answerView = view;
          
 
             // Hook up Commands to associated methods
@@ -69,7 +75,7 @@ namespace ViewModels
 
         private void LoadTakeQuizView()
         {
-            CurrentViewModel = new TakeQuizViewModel();
+            CurrentViewModel = new TakeQuizViewModel(answerView);
         }
 
         private void LoadStatisticsView()
@@ -80,11 +86,6 @@ namespace ViewModels
         private void LoadMakeQuizView()
         {
             CurrentViewModel = new MakeQuizViewModel();
-        }
-
-        private void LoadAnswerQuiz()
-        {
-            CurrentViewModel = new AnswerQuizQuestionViewModel(new Quiz());
         }
     }
 }

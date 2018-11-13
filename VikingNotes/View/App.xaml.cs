@@ -31,6 +31,7 @@ namespace View
 
         private AnswerQuizQuestionView answerView { get; set; }
         private AnswerQuizQuestionViewModel answerVM { get; set; } 
+
         protected override void OnStartup(StartupEventArgs e)
         {
             // Run startup code first
@@ -46,8 +47,10 @@ namespace View
             topBarVM = new TopBarViewModel(loginService);
             topBarView.DataContext = topBarVM;
 
+            answerView = new AnswerQuizQuestionView();
+
             mainWindow = new MainWindow();
-            mainWindowVM = new MainWindowViewModel(Data, loginService, topBarVM);
+            mainWindowVM = new MainWindowViewModel(Data, loginService, topBarVM, answerView);
             mainWindow.DataContext = mainWindowVM;
 
             loginService.UserLoggedIn += LoginSuccesfull;

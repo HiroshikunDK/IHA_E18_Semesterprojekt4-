@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DAL.Core;
 using DAL.Presistence;
@@ -34,13 +35,28 @@ namespace ViewModels
 
         private IUnitOfWork Data = new UnitOfWork();
 
-        public TakeQuizViewModel()
+        private BaseViewModel quizContent { set; get; }
+
+        public BaseViewModel QuizContent
+        {
+            get { return quizContent; }
+            set
+            {
+                quizContent = value;
+                RaisePropertyChanged("QuizContent");
+            }
+        }
+
+        private UserControl answerView { get; set; }
+
+        public TakeQuizViewModel(UserControl ansView)
         {
             _studyList = new List<Study>();
             _semesterList = new List<Semester>();
             _courseList = new List<Course>();
             _quizList = new List<Quiz>();
             SelectFaculityCommand = new Command(SelectFaculity, canExecute);
+            answerView = ansView;
         }
 
 
@@ -77,6 +93,8 @@ namespace ViewModels
             set
             {
                 selectedQuiz = value;
+                SelectQuiz(selectedQuiz);
+                RaisePropertyChanged("SelectedQuiz");
             }
         }
         public IList<Study> StudyList
@@ -191,6 +209,13 @@ namespace ViewModels
             _semesterList.Clear();
             _courseList.Clear();
             _quizList.Clear();
+        }
+
+        private void SelectQuiz(Quiz quiz)
+        {
+            quizContent = new AnswerQuizQuestionViewModel(quiz);
+            answerView.DataContext = quizContent;
+
         }
     }
 }

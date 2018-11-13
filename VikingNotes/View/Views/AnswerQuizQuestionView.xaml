@@ -13,10 +13,6 @@
         <viewModels:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <UserControl.DataContext>
-        <viewModels:AnswerQuizQuestionViewModel/>
-    </UserControl.DataContext>
-
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="54*"/>
