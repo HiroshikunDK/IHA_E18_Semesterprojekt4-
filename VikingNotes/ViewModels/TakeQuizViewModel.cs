@@ -168,8 +168,6 @@ namespace ViewModels
             List<Catagory> catagoriesinList = selectedCourse.Catagories.ToList();
             List<Quiz> tempQuizList = (await Data.Quiz.GetAllAsync());
 
-            QuizList = tempQuizList;
-
             if (catagoriesinList.Count > 0)
             {
                 foreach (var catagory in catagoriesinList)
