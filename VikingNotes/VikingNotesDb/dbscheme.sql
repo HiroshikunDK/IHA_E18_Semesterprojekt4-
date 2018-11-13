@@ -28,7 +28,7 @@ GO
 --
 CREATE TABLE Catagory (
     CatagoryID     BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Name           NCHAR(20) NOT NULL UNIQUE,
+    Name           NCHAR(300) NOT NULL UNIQUE,
 CONSTRAINT pk_Catagory PRIMARY KEY CLUSTERED (CatagoryID))
 GO
 
@@ -50,7 +50,7 @@ GO
 --
 CREATE TABLE Faculty (
     FacultyID      BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Name           NCHAR(30) NOT NULL UNIQUE,
+    Name           NCHAR(300) NOT NULL UNIQUE,
 CONSTRAINT pk_Faculty PRIMARY KEY CLUSTERED (FacultyID))
 GO
 
@@ -62,7 +62,7 @@ GO
 --
 CREATE TABLE Study (
     StudyID        BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Name           NCHAR(40) NOT NULL UNIQUE,
+    Name           NCHAR(300) NOT NULL UNIQUE,
     FacultyID      BIGINT NOT NULL,
 CONSTRAINT pk_Study PRIMARY KEY CLUSTERED (StudyID),
 CONSTRAINT fk_Study FOREIGN KEY (FacultyID)
@@ -96,7 +96,7 @@ GO
 --
 CREATE TABLE Course (
     CourseID       BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Name           NCHAR(30) NOT NULL UNIQUE,
+    Name           NCHAR(300) NOT NULL UNIQUE,
     SemesterID     BIGINT NOT NULL,
 CONSTRAINT pk_Course PRIMARY KEY CLUSTERED (CourseID),
 CONSTRAINT fk_Course FOREIGN KEY (SemesterID)
@@ -136,9 +136,9 @@ GO
 --
 CREATE TABLE Userr (
     UserID         BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    UserName       NCHAR(20) NOT NULL UNIQUE,
-    Password       NCHAR(20) NOT NULL,
-    EmailAdress    NCHAR(50) NOT NULL UNIQUE,
+    UserName       NCHAR(200) NOT NULL UNIQUE,
+    Password       NCHAR(200) NOT NULL,
+    EmailAdress    NCHAR(100) NOT NULL UNIQUE,
     UserTypeID     BIGINT NOT NULL,
     StudyID        BIGINT NOT NULL,
     StudentNumber  NCHAR(20) NOT NULL UNIQUE,
@@ -164,8 +164,8 @@ GO
 CREATE TABLE Quiz (
     QuizID         BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     UserID         BIGINT NOT NULL,
-    Name           NCHAR(20) NOT NULL,
-    Description    NCHAR(100) NULL,
+    Name           NCHAR(300) NOT NULL,
+    Description    NCHAR(1000) NULL,
     CatagoryID     BIGINT NOT NULL,
 CONSTRAINT pk_Quiz PRIMARY KEY CLUSTERED (QuizID),
 CONSTRAINT fk_Quiz FOREIGN KEY (UserID)
@@ -188,7 +188,7 @@ GO
 --
 CREATE TABLE Question (
     QuestionID     BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Question       NCHAR(400) NOT NULL,
+    Question       NCHAR(1000) NOT NULL,
     QuizID         BIGINT NOT NULL,
     WrongCount     BIGINT NOT NULL,
     CorrectCount   BIGINT NOT NULL,
@@ -208,7 +208,7 @@ GO
 --
 CREATE TABLE Answer (
     AnswerID       BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Answer         NCHAR(50) NOT NULL,
+    Answer         NCHAR(300) NOT NULL,
     IsCorrect      CHAR(1) NOT NULL,
     QuestionID     BIGINT NOT NULL,
 CONSTRAINT pk_Answer PRIMARY KEY CLUSTERED (AnswerID),
@@ -228,7 +228,7 @@ GO
 CREATE TABLE Rating (
     RatingID       BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     Rating         INT NOT NULL,
-    Reason         NCHAR(100) NOT NULL,
+    Reason         NCHAR(500) NOT NULL,
     QuizID         BIGINT NOT NULL,
 CONSTRAINT pk_Rating PRIMARY KEY CLUSTERED (RatingID),
 CONSTRAINT fk_Rating FOREIGN KEY (QuizID)
