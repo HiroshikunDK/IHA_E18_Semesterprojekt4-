@@ -116,7 +116,7 @@ namespace ViewModels
             GemogForrige = new Command(Forrige, CanExecute);
             GemMCQ = new Command(GEMMCQ, CanExecute);
             SelectFaculityCommand = new Command(SelectFaculity, CanExecute);
-            NySvarmulighed = new DelegateCommand(nySvar,CanExecute);
+            //NySvarmulighed = new DelegateCommand(nySvar,CanExecute);
             GetFaculties();
 
         }

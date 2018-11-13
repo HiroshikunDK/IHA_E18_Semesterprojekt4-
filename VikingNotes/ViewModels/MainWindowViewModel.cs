@@ -41,6 +41,7 @@ namespace ViewModels
             this.LoadTakeQuizViewCommand = new DelegateCommand(o => this.LoadTakeQuizView());
             this.LoadStatisticsViewCommand = new DelegateCommand(o => this.LoadStatisticsView());
             this.LoadMakeQuizViewCommand = new DelegateCommand(o => this.LoadMakeQuizView());
+
         }
         
 
@@ -78,6 +79,11 @@ namespace ViewModels
         private void LoadMakeQuizView()
         {
             CurrentViewModel = new MakeQuizViewModel();
+        }
+
+        private void LoadAnswerQuiz()
+        {
+            CurrentViewModel = new AnswerQuizQuestionViewModel();
         }
     }
 }

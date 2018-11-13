@@ -29,6 +29,8 @@ namespace View
         private MainWindowViewModel mainWindowVM { get; set; }
         private IUnitOfWork Data { get; set; }
 
+        private AnswerQuizQuestionView answerView { get; set; }
+        private AnswerQuizQuestionViewModel answerVM { get; set; } 
         protected override void OnStartup(StartupEventArgs e)
         {
             // Run startup code first
