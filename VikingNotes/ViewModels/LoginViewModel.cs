@@ -49,11 +49,12 @@ namespace ViewModels
             loginService = loginservice;
             Data = data;
 
-            Username = "Virkman";
-            Password = "nicholas";
-            RePassword = "nicholas";
-            Email = "nvirkman@gmail.com";
-            StudyID = "11786";
+            Username = "TestBruger";
+            Password = "12341234";
+            RePassword = "";
+            Email = "";
+            StudyID = "";
+            Study = new Study();
 
             Usernames = new List<string>();
             StudentNumbers = new List<string>();
@@ -115,10 +116,13 @@ namespace ViewModels
         {
             if (IsRegistrering)
             {
-                if (StudyID.ToString().Length >= 4 && Password.Length >= 3 && Password.Length >= 8 && Password == RePassword && Email.Contains("@") &&
-                    Email.Contains(".") && Study != null)
+                if (StudyID != null)
                 {
-                    return true;
+                    if (StudyID.Length >= 4 && Password.Length >= 3 && Password.Length >= 8 && Password == RePassword && Email.Contains("@") &&
+                        Email.Contains(".") && Study != null)
+                    {
+                        return true;
+                    }
                 }
             }
             else if(Username.Length >= 3 && password.Length >= 8 )
@@ -220,6 +224,7 @@ namespace ViewModels
             get { return email; }
             set
             {
+                email = value;
                 RaisePropertyChanged("Email");
                 if (!(value.Contains("@") && value.Contains(".")))
                 {
@@ -253,7 +258,6 @@ namespace ViewModels
                 {
                     ClearErrors("Email");
                 }
-                email = value;
             }
         }
 
