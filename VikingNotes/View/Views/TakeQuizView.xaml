@@ -10,6 +10,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type ViewModels:AnswerQuizQuestionViewModel}">
+            <local:AnswerQuizQuestionView />
+        </DataTemplate>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <ViewModels:TakeQuizViewModel/>
     </UserControl.DataContext>
@@ -96,6 +101,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-            <ContentControl VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="10"/>
+            <ContentControl VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" Grid.RowSpan="8" Content="{Binding Path=QuizContent}"/>
     </Grid>
 </UserControl>
