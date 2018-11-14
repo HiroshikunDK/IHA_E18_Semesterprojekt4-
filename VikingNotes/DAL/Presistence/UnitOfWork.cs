@@ -7,6 +7,8 @@ using DAL.Core;
 using DAL.Core.Repositories;
 using DAL.Presistence.Repositories;
 using RESTfullWebApi.Models;
+using ViewModels.Services.Interfaces;
+using ViewModels.Services.Source;
 
 namespace DAL.Presistence
 {
@@ -25,6 +27,7 @@ namespace DAL.Presistence
             Faculty = new Repository<Faculty>();
             Rating = new Repository<Rating>();
             Semester = new Repository<Semester>();
+            LoginService = new LoginService(this);
         }
 
         public IUserRepository User { get; }
@@ -38,5 +41,6 @@ namespace DAL.Presistence
         public IRepository<Faculty> Faculty { get; }
         public IRepository<Rating> Rating { get; }
         public IRepository<Semester> Semester { get; }
+        public ILoginService LoginService { get; }
     }
 }

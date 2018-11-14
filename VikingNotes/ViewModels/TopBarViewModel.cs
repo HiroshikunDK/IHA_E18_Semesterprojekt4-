@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using DAL.Core;
 using RESTfullWebApi.Models;
 using ViewModels.Services.Interfaces;
 using ViewModels.Services.Source;
@@ -17,8 +18,9 @@ namespace ViewModels
         private DateTime _now;
         private Userr user { get; set; }
         private string username { get; set; }
+        private IUnitOfWork Data;
 
-        public TopBarViewModel(ILoginService loginService)
+        public TopBarViewModel(IUnitOfWork data)
         {
             _now = DateTime.Now;
             DispatcherTimer timer = new DispatcherTimer();
@@ -26,7 +28,7 @@ namespace ViewModels
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
 
-            loginService.UserLoggedIn += SetUser;
+            data.LoginService.UserLoggedIn += SetUser;
         }
 
         public DateTime CurrentDateTime

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Core.Repositories;
 using RESTfullWebApi.Models;
+using ViewModels.Services.Interfaces;
 
 namespace DAL.Core
 {
@@ -21,5 +22,6 @@ namespace DAL.Core
         IRepository<Faculty> Faculty { get; }
         IRepository<Rating> Rating { get; }
         IRepository<Semester> Semester { get; }
+        ILoginService LoginService { get; }
     }
 }

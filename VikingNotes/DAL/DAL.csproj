@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ILoginService.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IAnswerRepository.cs" />
     <Compile Include="Core\Repositories\ICatagoryRepository.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Core\Repositories\IStudyRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="Core\Repositories\IUserTypeRepository.cs" />
+    <Compile Include="Presistence\LoginService.cs" />
     <Compile Include="Presistence\Repositories\AnswerRepository.cs" />
     <Compile Include="Presistence\Repositories\CatagoryRepository.cs" />
     <Compile Include="Presistence\Repositories\CourseRepository.cs" />

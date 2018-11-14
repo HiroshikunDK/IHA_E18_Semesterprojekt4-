@@ -24,7 +24,6 @@ namespace ViewModels
         private bool isRegistrering { get; set; }
         private string buttonContent { get; set; }
 
-        private ILoginService loginService { get; set; }
         private IUnitOfWork Data { get; set; }
 
         public ICommand CheckBoxClick { get; set; }
@@ -44,9 +43,8 @@ namespace ViewModels
         private List<string> Emails { get; set; }
         private List<string> StudentNumbers{ get; set; }
 
-        public LoginViewModel(IUnitOfWork data, ILoginService loginservice)
+        public LoginViewModel(IUnitOfWork data)
         {
-            loginService = loginservice;
             Data = data;
 
             Username = "TestBruger";
@@ -105,10 +103,10 @@ namespace ViewModels
 
                 Userr responsUser = await Data.User.Add(newUser);
                 MessageBox.Show("User succefully registrede! Welcome " + username + ", dit userID er " + responsUser.UserID +" du logges nu ind");
-                loginService.User = responsUser;
+                Data.LoginService.User = responsUser;
                 return;
             }
-            loginService.VertifyLogin(username, password);
+            Data.LoginService.VertifyLogin(username, password);
 
         }
 
