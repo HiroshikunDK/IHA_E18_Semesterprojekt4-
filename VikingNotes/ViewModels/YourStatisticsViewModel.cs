@@ -15,7 +15,7 @@ namespace ViewModels
 {
     public class YourStatisticsViewModel : BaseViewModel
     {
-        private long userID { get; set; }
+        private Userr currentUser { get; set; }
         private Quiz currentQuiz { get; set; }
         private Rating currentRating { get; set; }
         private double quizRating { get; set; }
@@ -30,8 +30,24 @@ namespace ViewModels
             Data = data;
         }
 
-        //public long UserID
-        //{ }
+        private void getUser()
+        {
+            currentUser = Data.L
+        }
+
+        public long UserID
+        {
+            get { return userID; }
+            set
+            {
+                userID = value;
+                RaisePropertyChanged("userName");
+
+
+
+
+        }
+        }
    
         
         public ICollection<Rating> RatingsList
