@@ -18,7 +18,7 @@ namespace DAL.Presistence
             Answer = new Repository<Answer>();
             Catagory = new Repository<Catagory>();
             Question = new Repository<Question>();
-            Quiz = new Repository<Quiz>();
+            Quiz = new QuizRepository();
             Study = new Repository<Study>();
             UserType = new Repository<UserType>();
             Course = new Repository<Course>();
@@ -32,7 +32,7 @@ namespace DAL.Presistence
         public IRepository<Answer> Answer { get; }
         public IRepository<Catagory> Catagory { get; }
         public IRepository<Question> Question { get; }
-        public IRepository<Quiz> Quiz { get; }
+        public IQuizRepository Quiz { get; }
         public IRepository<Study> Study { get; }
         public IRepository<UserType> UserType { get; }
         public IRepository<Course> Course { get; }

@@ -21,28 +21,51 @@ namespace RESTfullWebApi.Controllers
             //db.Configuration.ProxyCreationEnabled = false;
 
             db.Database.Log = sql => Debug.Write(sql);
+            
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Userr
-        public IQueryable<Userr> GetUserrs(string username = null, string password = null)
+        public IQueryable<UserrDTO> GetUserrs(string username = null, string password = null)
         {
             if (username != null && password != null)
             {
-                List<Userr> list = new List<Userr>();
-                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password == password);
+                List<UserrDTO> list = new List<UserrDTO>();
+                string passwordHash = GetHash.SHA256(password);
+                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password == passwordHash);
                 if (loggedInUserr == null)
                 {
                     return list.AsQueryable();
                 }
-                list.Add(loggedInUserr);
+                UserrDTO transferUserObject = new UserrDTO()
+                {
+                    UserID = loggedInUserr.UserID,
+                    EmailAdress = loggedInUserr.EmailAdress,
+                    StudentNumber = loggedInUserr.StudentNumber,
+                    UserName = loggedInUserr.UserName,
+                    StudyID =  loggedInUserr.StudyID,
+                    UserTypeID = loggedInUserr.UserTypeID
+
+                };
+                list.Add(transferUserObject);
                 return list.AsQueryable();
             }
-            return db.Userrs;
+
+            var users = from u in db.Userrs
+                select new UserrDTO()
+                {
+                    UserID = u.UserID,
+                    EmailAdress = u.EmailAdress,
+                    StudentNumber = u.StudentNumber,
+                    UserName = u.UserName,
+                    StudyID = u.StudyID,
+                    UserTypeID = u.UserTypeID
+                };
+            return users;
         }
 
         // GET: api/Userr/5
-        [ResponseType(typeof(Userr))]
+        [ResponseType(typeof(UserrDTO))]
         public async Task<IHttpActionResult> GetUserr(long id)
         {
             
@@ -51,8 +74,17 @@ namespace RESTfullWebApi.Controllers
             {
                 return NotFound();
             }
+            UserrDTO transferUserObject = new UserrDTO()
+            {
+                UserID = userr.UserID,
+                EmailAdress = userr.EmailAdress,
+                StudentNumber = userr.StudentNumber,
+                UserName = userr.UserName,
+                StudyID = userr.StudyID,
+                UserTypeID = userr.UserTypeID
 
-            return Ok(userr);
+            };
+            return Ok(transferUserObject);
         }
 
         // PUT: api/Userr/5
@@ -69,6 +101,7 @@ namespace RESTfullWebApi.Controllers
                 return BadRequest();
             }
 
+            userr.Password = GetHash.SHA256(userr.Password);
             db.Entry(userr).State = EntityState.Modified;
 
             try
@@ -91,19 +124,30 @@ namespace RESTfullWebApi.Controllers
         }
 
         // POST: api/Userr
-        [ResponseType(typeof(Userr))]
+        [ResponseType(typeof(UserrDTO))]
         
-        public async Task<IHttpActionResult> PostUserr(Userr userr)
+        public async Task<IHttpActionResult> PostUserr([FromBody]Userr userr)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            userr.Password = GetHash.SHA256(userr.Password);
             db.Userrs.Add(userr);
             await db.SaveChangesAsync();
 
-            return Ok(userr);
+            UserrDTO transferUserObject = new UserrDTO()
+            {
+                UserID = userr.UserID,
+                EmailAdress = userr.EmailAdress,
+                StudentNumber = userr.StudentNumber,
+                UserName = userr.UserName,
+                StudyID = userr.StudyID,
+                UserTypeID = userr.UserTypeID
+
+            };
+            return Ok(transferUserObject);
         }
 
         // DELETE: api/Userr/5

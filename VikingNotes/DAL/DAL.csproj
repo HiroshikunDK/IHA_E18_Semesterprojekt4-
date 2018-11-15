@@ -59,6 +59,7 @@
     <Compile Include="Core\Repositories\IStudyRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="Core\Repositories\IUserTypeRepository.cs" />
+    <Compile Include="Presistence\GetHash.cs" />
     <Compile Include="Presistence\LoginService.cs" />
     <Compile Include="Presistence\Repositories\AnswerRepository.cs" />
     <Compile Include="Presistence\Repositories\CatagoryRepository.cs" />
