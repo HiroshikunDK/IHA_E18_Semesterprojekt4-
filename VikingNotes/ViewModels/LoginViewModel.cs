@@ -14,8 +14,6 @@ using DAL.Core;
 using DAL.Presistence;
 using RESTfullWebApi.Models;
 using ViewModels.Commands;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
 
 namespace ViewModels
 {
@@ -24,7 +22,6 @@ namespace ViewModels
         private bool isRegistrering { get; set; }
         private string buttonContent { get; set; }
 
-        private ILoginService loginService { get; set; }
         private IUnitOfWork Data { get; set; }
 
         public ICommand CheckBoxClick { get; set; }
@@ -44,16 +41,15 @@ namespace ViewModels
         private List<string> Emails { get; set; }
         private List<string> StudentNumbers{ get; set; }
 
-        public LoginViewModel(IUnitOfWork data, ILoginService loginservice)
+        public LoginViewModel(IUnitOfWork data)
         {
-            loginService = loginservice;
             Data = data;
 
-            Username = "TestBruger";
+            Username = "Tester";
             Password = "12341234";
-            RePassword = "";
-            Email = "";
-            StudyID = "";
+            RePassword = "12341234";
+            Email = "testtest@test.test";
+            StudyID = "1231231231";
             Study = new Study();
 
             Usernames = new List<string>();
@@ -104,11 +100,15 @@ namespace ViewModels
                 newUser.UserTypeID = userTypeStandard.UserTypeID;
 
                 Userr responsUser = await Data.User.Add(newUser);
+                if (responsUser.UserID == 0)
+                {
+                    MessageBox.Show("User unsuccefully registrede! Check the connection to the server,\nVikingNote will start up in anonymous mode");
+                }
                 MessageBox.Show("User succefully registrede! Welcome " + username + ", dit userID er " + responsUser.UserID +" du logges nu ind");
-                loginService.User = responsUser;
+                Data.LoginService.User = responsUser;
                 return;
             }
-            loginService.VertifyLogin(username, password);
+            Data.LoginService.VertifyLogin(username, password);
 
         }
 

@@ -14,12 +14,13 @@ namespace DAL.Core
         IRepository<Answer> Answer { get; }
         IRepository<Catagory> Catagory { get; }
         IRepository<Question> Question { get; }
-        IRepository<Quiz> Quiz { get; }
+        IQuizRepository Quiz { get; }
         IRepository<Study> Study { get; }
         IRepository<UserType> UserType { get; }
         IRepository<Course> Course { get; }
         IRepository<Faculty> Faculty { get; }
         IRepository<Rating> Rating { get; }
         IRepository<Semester> Semester { get; }
+        ILoginService LoginService { get; }
     }
 }

@@ -211,11 +211,15 @@ namespace ViewModels
             _quizList.Clear();
         }
 
-        private void SelectQuiz(Quiz quiz)
+        private async void SelectQuiz(Quiz quiz)
         {
-            QuizContent = new AnswerQuizQuestionViewModel(quiz);
-            answerView.DataContext = QuizContent;
-           
+            if (quiz != null)
+            {
+                Quiz quizWithQuestions = quiz;
+                quizWithQuestions = await Data.Quiz.GetAsync(quiz.QuizID);
+                QuizContent = new AnswerQuizQuestionViewModel(quizWithQuestions);
+                answerView.DataContext = QuizContent;
+            }
         }
     }
 }

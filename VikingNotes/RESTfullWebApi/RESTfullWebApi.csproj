@@ -198,6 +198,7 @@
     <Compile Include="Controllers\StudyController.cs" />
     <Compile Include="Controllers\UserrController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
+    <Compile Include="GetHash.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -219,6 +220,7 @@
     <Compile Include="Models\Quiz.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuizDTO.cs" />
     <Compile Include="Models\Rating.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
@@ -231,6 +233,7 @@
     <Compile Include="Models\Userr.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserrDTO.cs" />
     <Compile Include="Models\UserType.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>

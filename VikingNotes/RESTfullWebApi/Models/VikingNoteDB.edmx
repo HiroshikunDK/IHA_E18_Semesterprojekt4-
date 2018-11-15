@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VikingNoteDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VikingNoteDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Answer">
           <Key>
             <PropertyRef Name="AnswerID" />
           </Key>
           <Property Name="AnswerID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Answer" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Answer" Type="nchar" MaxLength="500" Nullable="false" />
           <Property Name="IsCorrect" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="QuestionID" Type="bigint" Nullable="false" />
         </EntityType>
@@ -19,14 +19,14 @@
             <PropertyRef Name="CatagoryID" />
           </Key>
           <Property Name="CatagoryID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseID" />
           </Key>
           <Property Name="CourseID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="300" Nullable="false" />
           <Property Name="SemesterID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Faculty">
@@ -34,7 +34,7 @@
             <PropertyRef Name="FacultyID" />
           </Key>
           <Property Name="FacultyID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="IsPartOfMany">
           <Key>
@@ -49,7 +49,7 @@
             <PropertyRef Name="QuestionID" />
           </Key>
           <Property Name="QuestionID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Question" Type="nchar" MaxLength="400" Nullable="false" />
+          <Property Name="Question" Type="nchar" MaxLength="1000" Nullable="false" />
           <Property Name="QuizID" Type="bigint" Nullable="false" />
           <Property Name="WrongCount" Type="bigint" Nullable="false" />
           <Property Name="CorrectCount" Type="bigint" Nullable="false" />
@@ -60,8 +60,8 @@
           </Key>
           <Property Name="QuizID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="bigint" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
-          <Property Name="Description" Type="nchar" MaxLength="100" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="1000" />
           <Property Name="CatagoryID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Rating">
@@ -70,7 +70,7 @@
           </Key>
           <Property Name="RatingID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Rating" Type="int" Nullable="false" />
-          <Property Name="Reason" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Reason" Type="nchar" MaxLength="1000" Nullable="false" />
           <Property Name="QuizID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Semester">
@@ -86,7 +86,7 @@
             <PropertyRef Name="StudyID" />
           </Key>
           <Property Name="StudyID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="40" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="FacultyID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Userr">
@@ -94,19 +94,19 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nchar" MaxLength="20" Nullable="false" />
-          <Property Name="Password" Type="nchar" MaxLength="20" Nullable="false" />
-          <Property Name="EmailAdress" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="EmailAdress" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserTypeID" Type="bigint" Nullable="false" />
           <Property Name="StudyID" Type="bigint" Nullable="false" />
-          <Property Name="StudentNumber" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="StudentNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
             <PropertyRef Name="UserTypeID" />
           </Key>
           <Property Name="UserTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Type" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Type" Type="nchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="fk_Answer">
           <End Role="Question" Type="Self.Question" Multiplicity="1" />
@@ -322,8 +322,7 @@
             <End Role="Userr" EntitySet="Userr" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VikingNoteDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -332,7 +331,7 @@
             <PropertyRef Name="AnswerID" />
           </Key>
           <Property Name="AnswerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Answer1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Answer1" Type="String" MaxLength="500" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="IsCorrect" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="QuestionID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="Self.fk_Answer" FromRole="Answer" ToRole="Question" />
@@ -342,7 +341,7 @@
             <PropertyRef Name="CatagoryID" />
           </Key>
           <Property Name="CatagoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Quizs" Relationship="Self.fk_Quiz2" FromRole="Catagory" ToRole="Quiz" />
           <NavigationProperty Name="Courses" Relationship="Self.IsPartOfMany" FromRole="Catagory" ToRole="Course" />
         </EntityType>
@@ -351,7 +350,7 @@
             <PropertyRef Name="CourseID" />
           </Key>
           <Property Name="CourseID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="SemesterID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Semester" Relationship="Self.fk_Course" FromRole="Course" ToRole="Semester" />
           <NavigationProperty Name="Catagories" Relationship="Self.IsPartOfMany" FromRole="Course" ToRole="Catagory" />
@@ -361,7 +360,7 @@
             <PropertyRef Name="FacultyID" />
           </Key>
           <Property Name="FacultyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Studies" Relationship="Self.fk_Study" FromRole="Faculty" ToRole="Study" />
         </EntityType>
         <EntityType Name="Question">
@@ -369,7 +368,7 @@
             <PropertyRef Name="QuestionID" />
           </Key>
           <Property Name="QuestionID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Question1" Type="String" MaxLength="400" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Question1" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="QuizID" Type="Int64" Nullable="false" />
           <Property Name="WrongCount" Type="Int64" Nullable="false" />
           <Property Name="CorrectCount" Type="Int64" Nullable="false" />
@@ -382,8 +381,8 @@
           </Key>
           <Property Name="QuizID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
           <Property Name="CatagoryID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Catagory" Relationship="Self.fk_Quiz2" FromRole="Quiz" ToRole="Catagory" />
           <NavigationProperty Name="Questions" Relationship="Self.fk_Question" FromRole="Quiz" ToRole="Question" />
@@ -396,7 +395,7 @@
           </Key>
           <Property Name="RatingID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rating1" Type="Int32" Nullable="false" />
-          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="QuizID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Quiz" Relationship="Self.fk_Rating" FromRole="Rating" ToRole="Quiz" />
         </EntityType>
@@ -415,7 +414,7 @@
             <PropertyRef Name="StudyID" />
           </Key>
           <Property Name="StudyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="FacultyID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Faculty" Relationship="Self.fk_Study" FromRole="Study" ToRole="Faculty" />
           <NavigationProperty Name="Semesters" Relationship="Self.fk_Semester" FromRole="Study" ToRole="Semester" />
@@ -426,12 +425,12 @@
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="EmailAdress" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailAdress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserTypeID" Type="Int64" Nullable="false" />
           <Property Name="StudyID" Type="Int64" Nullable="false" />
-          <Property Name="StudentNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StudentNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Quizs" Relationship="Self.fk_Quiz" FromRole="Userr" ToRole="Quiz" />
           <NavigationProperty Name="Study" Relationship="Self.fk_Userr2" FromRole="Userr" ToRole="Study" />
           <NavigationProperty Name="UserType" Relationship="Self.fk_Userr" FromRole="Userr" ToRole="UserType" />
@@ -441,7 +440,7 @@
             <PropertyRef Name="UserTypeID" />
           </Key>
           <Property Name="UserTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Userrs" Relationship="Self.fk_Userr" FromRole="UserType" ToRole="Userr" />
         </EntityType>
         <Association Name="fk_Answer">

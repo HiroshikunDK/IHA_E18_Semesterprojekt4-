@@ -5,9 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Core;
 using RESTfullWebApi.Models;
-using ViewModels.Services.Interfaces;
 
-namespace ViewModels.Services.Source
+namespace DAL.Presistence
 {
     public class LoginService : ILoginService
     {
