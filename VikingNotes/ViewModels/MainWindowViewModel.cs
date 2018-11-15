@@ -9,8 +9,6 @@ using DAL.Core;
 using DAL.Presistence;
 using RESTfullWebApi.Models;
 using ViewModels.Commands;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
 
 namespace ViewModels
 {

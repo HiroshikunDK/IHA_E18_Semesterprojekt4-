@@ -7,8 +7,6 @@ using DAL.Core;
 using DAL.Core.Repositories;
 using DAL.Presistence.Repositories;
 using RESTfullWebApi.Models;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
 
 namespace DAL.Presistence
 {

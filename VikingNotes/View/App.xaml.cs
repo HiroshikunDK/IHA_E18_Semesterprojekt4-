@@ -10,8 +10,6 @@ using System.Windows;
 using DAL.Core;
 using View.Views;
 using ViewModels;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
 
 namespace View
 {

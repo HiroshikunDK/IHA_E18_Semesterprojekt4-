@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Core.Repositories;
 using RESTfullWebApi.Models;
-using ViewModels.Services.Interfaces;
 
 namespace DAL.Core
 {

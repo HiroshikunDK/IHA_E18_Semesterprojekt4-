@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using DAL.Core;
 using RESTfullWebApi.Models;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
 
 namespace ViewModels
 {
