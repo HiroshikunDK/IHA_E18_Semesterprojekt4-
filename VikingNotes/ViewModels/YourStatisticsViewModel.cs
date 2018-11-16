@@ -7,9 +7,6 @@ using DAL.Core;
 using DAL.Presistence;
 using RESTfullWebApi.Models;
 using ViewModels.Commands;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
-
 
 namespace ViewModels
 {
@@ -32,21 +29,17 @@ namespace ViewModels
 
         private void getUser()
         {
-            currentUser = Data.L
+            currentUser = Data.LoginService.User;
         }
 
-        public long UserID
+        public Userr UserID
         {
-            get { return userID; }
+            get { return currentUser; }
             set
             {
-                userID = value;
+                currentUser = value;
                 RaisePropertyChanged("userName");
-
-
-
-
-        }
+            }
         }
    
         
