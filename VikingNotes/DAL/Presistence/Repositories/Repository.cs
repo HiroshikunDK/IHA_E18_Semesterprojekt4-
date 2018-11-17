@@ -14,10 +14,12 @@ namespace DAL.Presistence.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
+        
         public static HttpClient Client()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://virkman-001-site1.ctempurl.com/");
+            //client.BaseAddress = new Uri("http://localhost:57869/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -25,7 +27,7 @@ namespace DAL.Presistence.Repositories
         }
 
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public virtual async Task<List<TEntity>> GetAllAsync()
         {
             string uri = "api/" + typeof(TEntity).Name;
             string responseString = await Client().GetStringAsync(uri);
@@ -33,7 +35,7 @@ namespace DAL.Presistence.Repositories
             return respons;
         }
 
-        public async Task<TEntity> GetAsync(int id)
+        public virtual async Task<TEntity> GetAsync(long id)
         {
             string uri = "api/" + typeof(TEntity).Name + "/" + id;
             string responseString = await Client().GetStringAsync(uri);
@@ -41,14 +43,14 @@ namespace DAL.Presistence.Repositories
             return respons;
         }
 
-        public async void Update(int id, TEntity entity)
+        public virtual async void Update(long id, TEntity entity)
         {
             string uri = "api/" + typeof(TEntity).Name + "/" + id;
             HttpContent content = new StringContent(entity.ToString(), Encoding.UTF8, "application/json");
             await Client().PutAsync(uri, content);
         }
 
-        public async Task<TEntity> Add(TEntity entity)
+        public virtual async Task<TEntity> Add(TEntity entity)
         {
             string uri = "api/" + typeof(TEntity).Name;
             var stringPayload = await Task.Run(() => JsonConvert.SerializeObject(entity));
@@ -65,7 +67,7 @@ namespace DAL.Presistence.Repositories
             return null;
         }
 
-        public async void Remove(int id)
+        public virtual async void Remove(long id)
         {
             string uri = "api/" + typeof(TEntity).Name + "/" + id;
             await Client().DeleteAsync(uri);

@@ -9,14 +9,13 @@ using DAL.Core;
 using DAL.Presistence;
 using RESTfullWebApi.Models;
 using ViewModels.Commands;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
 
 namespace ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private ILoginService loginService { get; set; }
+        private TopBarViewModel topBarVM { get; set; }
+
         private IUnitOfWork Data { get; set; }
 
         public ICommand LoadTakeQuizViewCommand { get; private set; }
@@ -37,13 +36,19 @@ namespace ViewModels
 
         private UserControl takeView { get; set; }
 
-        public MainWindowViewModel(IUnitOfWork data, ILoginService loginservice, TopBarViewModel topBarVM, UserControl ansView, UserControl taView)
+        private UserControl topBarView { get; set; }
+
+        public MainWindowViewModel(IUnitOfWork data, UserControl topView, UserControl ansView, UserControl taView)
         {
             Data = data;
-            loginService = loginservice;
-            TopBarViewModel = topBarVM;
+            topBarView = topView;
             answerView = ansView;
             takeView = taView;
+
+            topBarVM = new TopBarViewModel(Data);
+            topBarView.DataContext = topBarVM;
+            _topBarViewModel = topBarVM;
+
             this.LoadTakeQuizView();
 
 

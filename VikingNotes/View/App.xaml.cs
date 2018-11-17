@@ -10,8 +10,6 @@ using System.Windows;
 using DAL.Core;
 using View.Views;
 using ViewModels;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
 
 namespace View
 {
@@ -20,11 +18,11 @@ namespace View
     /// </summary>
     public partial class App : Application
     {
-        private LoginService loginService { get; set; }
         private LoginView loginView { get; set; }
         private LoginViewModel loginVM { get; set; }
+
         private TopBarView topBarView { get; set; }
-        private TopBarViewModel topBarVM { get; set; }
+
         private MainWindow mainWindow { get; set; }
         private MainWindowViewModel mainWindowVM { get; set; }
         private IUnitOfWork Data { get; set; }
@@ -40,12 +38,9 @@ namespace View
 
             // Create Windows
             loginView = new LoginView();
-            loginService = new LoginService(Data);
-            loginVM = new LoginViewModel(Data, loginService);
+            loginVM = new LoginViewModel(Data);
 
             topBarView = new TopBarView();
-            topBarVM = new TopBarViewModel(loginService);
-            topBarView.DataContext = topBarVM;
 
             answerView = new AnswerQuizQuestionView();
 
@@ -54,11 +49,11 @@ namespace View
             
 
             mainWindow = new MainWindow();
-            mainWindowVM = new MainWindowViewModel(Data, loginService, topBarVM, answerView, takeView);
+            mainWindowVM = new MainWindowViewModel(Data, topBarView, answerView, takeView);
             mainWindow.DataContext = mainWindowVM;
 
-            loginService.UserLoggedIn += LoginSuccesfull;
-            loginService.UserFailedToLogIn += LoginFailed;
+            Data.LoginService.UserLoggedIn += LoginSuccesfull;
+            Data.LoginService.UserFailedToLogIn += LoginFailed;
 
 
             loginView.DataContext = loginVM;
