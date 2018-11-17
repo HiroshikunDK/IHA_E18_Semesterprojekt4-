@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
@@ -40,7 +41,10 @@ namespace ViewModels
             questions = selectedQuiz.Questions.ToList();
             _answersGiven = new bool[questions.Count, 2];
             currentQuestion = questions[0];
-            answers = currentQuestion.Answers.ToList();
+            //GetAnswers();
+            
+
+            //answers = currentQuestion.Answers.ToList();
 
             //Testing TODO remove this once it has been tested properly
             //selectedQuiz = new Quiz();
@@ -72,13 +76,24 @@ namespace ViewModels
             set
             {
                 currentQuestion = value;
+                Answers = currentQuestion.Answers.ToList();
+                GetAnswers();
+                RaisePropertyChanged("CurrentQuestion");
             }
         }
 
         public List<Answer> Answers //Testing TODO: Remove once it has been tested properly
         {
             get { return answers; }
-            set { answers = value; }
+            set
+            {
+                answers = value;
+
+                //answers = new List<Answer>(); //TODO: Testing
+                //answers.Add(new Answer() { Answer1 = "lol" });
+
+                RaisePropertyChanged("Answers");
+            }
         }
 
         public bool[,] AnswersGiven
@@ -87,6 +102,24 @@ namespace ViewModels
         }
 
         #endregion
+
+        private async void GetAnswers()
+        {
+            //int id;
+            //foreach (var question in SelectedQuiz.Questions)
+            //{
+            //    id = Convert.ToInt32(question.QuestionID);
+            //    question.Answers = (await Data.Answer.GetAllAsync()).FindAll(a => a.QuestionID == id);
+            //}
+
+            int id = Convert.ToInt32(CurrentQuestion.QuestionID);
+            Answers = (await Data.Answer.GetAllAsync()).ToList();
+
+            while (Answers.Count == 0)
+            {
+                
+            }
+        }
 
         #region CommandFunctions
 
