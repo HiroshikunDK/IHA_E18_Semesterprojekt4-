@@ -31,5 +31,12 @@ namespace DAL.Presistence.Repositories
             //}
             return quiz;
         }
+        public async Task<List<Quiz>> GetQuizzesByUserID(long UserID)
+        {
+            string uri = "api/Quiz?UserID=" + UserID.ToString();
+            string responseString = await Client().GetStringAsync(uri);
+            var respons = JsonConvert.DeserializeObject<List<Quiz>>(responseString);
+            return respons;
+        }
     }
 }
