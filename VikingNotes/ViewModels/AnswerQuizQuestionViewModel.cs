@@ -29,8 +29,7 @@ namespace ViewModels
         public ICommand NextQuestionClick { get; set; }
         public ICommand PrevQuestionClick { get; set; }
 
-        private int currentQuestionIndex;
-        private int answerCount;
+        private int answerCount; //TODO: use to keep track of when we have answered all questions, to lessen the amount of work to do in EndQuiz.
 
         //TODO: this should be made into something that is stored in a Question, to make access possible in converters, and easier to associate with given question.
         private bool[,] _answersGiven; //[x,0] = is answer given, [x, 1] = is answer correct
@@ -134,19 +133,63 @@ namespace ViewModels
             {
                 if (SelectedAnswer.AnswerID == answer.AnswerID)
                 {
-                    LogAnswer(answer);
+                    LogAnswer();
                     break;
                 }
             }
 
             if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to reflect that jumping through is possible
-            else
+            else GoToNextQuestion();
+        }
+
+        private void NextQuestionClickFunc(object obj)
+        {
+            if (currentQuestionIndex < SelectedQuiz.Questions.Count)
             {
-                NextQuestionClickFunc(null); //TODO: Consider if this dirty code is really worth it to avoid the two lines of duplicate code
-                //currentQuestionIndex++;
-                //currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
+                GoToNextQuestion();
             }
         }
+
+        private void PrevQuestionClickFunc(object obj)
+        {
+            GoToPrevQuestion();
+        }
+
+        #endregion
+
+        private bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Save selected answer locally.
+        /// </summary>
+        private void LogAnswer()
+        {
+            int index = 0;
+            foreach (var question in SelectedQuiz.Questions)
+            {
+                if (question.QuestionID == CurrentQuestion.QuestionID) break;
+
+                index++;
+            }
+
+            _answersGiven[index, 0] = true;
+
+            if (SelectedAnswer.IsCorrect == "1") _answersGiven[currentQuestionIndex, 1] = true;
+            else _answersGiven[currentQuestionIndex, 1] = false;
+        }
+
+        /// <summary>
+        /// Push answers up to the web, and go to other view
+        /// </summary>
+        private void EndQuiz()
+        {
+
+        }
+
+        #region HelperFunctions
 
         /// <summary>
         /// Moves to first Question in the quiz that hasn't been answered.
@@ -163,54 +206,26 @@ namespace ViewModels
             }
         }
 
-
-        private void NextQuestionClickFunc(object obj)
+        /// <summary>
+        /// Moves to the question at the index below the currently selected question.
+        /// </summary>
+        private void GoToPrevQuestion()
         {
-            if (currentQuestionIndex < SelectedQuiz.Questions.Count)
+            int index = 0;
+            foreach (var question in SelectedQuiz.Questions)
             {
-                //GoToNextQuestion();
-                //TODO: Update this to go to first unanswered question, as this method causes issues upon jumping in the question list.
-                currentQuestionIndex++;
-                CurrentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
-            }
-        }
+                if (question == CurrentQuestion) break;
 
-        private void PrevQuestionClickFunc(object obj)
-        {
-            if (currentQuestionIndex > 0)
-            {
-                //TODO: update to find the question we are on, and then go back the the one at the index below it.
-                currentQuestionIndex--;
-                CurrentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
+                index++;
             }
+
+            CurrentQuestion = SelectedQuiz.Questions.ElementAt(index - 1);
         }
 
         #endregion
 
-        private bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// Save selected answer locally.
-        /// </summary>
-        private void LogAnswer(Answer selectedAnswer)
-        {
-            _answersGiven[currentQuestionIndex, 0] = true;
-
-            if (SelectedAnswer.IsCorrect == "1") _answersGiven[currentQuestionIndex, 1] = true;
-            else _answersGiven[currentQuestionIndex, 1] = false;
-        }
-
-        /// <summary>
-        /// Push answers up to the web, and go to other view
-        /// </summary>
-        private void EndQuiz()
-        {
-
-        }
     }
+
 
     //TODO: these are currently out of use, due to not being favourable above other solutions, or otherwise just not functioning.
     #region ValueConverters
