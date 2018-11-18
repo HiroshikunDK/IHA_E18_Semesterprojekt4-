@@ -216,7 +216,7 @@ namespace ViewModels
                 index++;
             }
 
-            CurrentQuestion = SelectedQuiz.Questions.ElementAt(index - 1);
+            if (index != 0) CurrentQuestion = SelectedQuiz.Questions.ElementAt(index - 1);
         }
 
         #endregion
