@@ -11,7 +11,7 @@ namespace DAL.Presistence.Repositories
 {
     public class RatingRepository : Repository<Rating>, IRatingRepository
     {
-        public async Task<List<Rating>> GetRatingsByQuizID(long QuizID)
+        public async Task<List<Rating>> GetRatingByQuizID(long QuizID)
         {
             string uri = "api/Rating?QuizID=" + QuizID.ToString();
             string responseString = await Client().GetStringAsync(uri);

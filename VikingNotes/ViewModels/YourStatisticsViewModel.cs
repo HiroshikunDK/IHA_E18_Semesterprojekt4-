@@ -22,9 +22,13 @@ namespace ViewModels
         private List<Quiz> listOfQuizzes { get; set; }
         private IUnitOfWork Data;
 
-        public YourStatisticsViewModel(IUnitOfWork data = null)
+        public YourStatisticsViewModel(IUnitOfWork data )
         {
             Data = data;
+            currentUser = (Userr)Data.User;
+            getRelevantQuizList(currentUser.UserID);
+
+
         }
 
         private void getUser()
@@ -41,20 +45,28 @@ namespace ViewModels
                 RaisePropertyChanged("userName");
             }
         }
-   
-        
-        public ICollection<Rating> RatingsList
+
+
+        public ICollection<Quiz> Quizzes
         {
-            
-            get { return ListOfRating; }
+            get { return listOfQuizzes; }
             set
             {
-                //if (value != currentRating.Rating1)
-                //{
-                //    _superModel.Debtors = value;
-                //    NotifyPropertyChanged();
-                //}
+                if (value != listOfQuizzes)
+                {
+                    RaisePropertyChanged("listOfQuizzes");
+                }
             }
+        }
+
+        public async void getRelevantQuizList(long UserID)
+        {
+          listOfQuizzes = await Data.Quiz.GetQuizzesByUserID(currentUser.UserID);
+        }
+
+        public async void getRelevantRatingList(long quizID)
+        {
+            //ListOfRating = await Data.Rating.;
         }
 
 
