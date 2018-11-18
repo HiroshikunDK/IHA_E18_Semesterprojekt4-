@@ -95,11 +95,13 @@
           </Key>
           <Property Name="UserID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="EmailAdress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="256" Nullable="false" />
+          <Property Name="EmailAdress" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="UserTypeID" Type="bigint" Nullable="false" />
           <Property Name="StudyID" Type="bigint" Nullable="false" />
           <Property Name="StudentNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="AuthToken" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -426,14 +428,16 @@
           </Key>
           <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EmailAdress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="256" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="EmailAdress" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="UserTypeID" Type="Int64" Nullable="false" />
           <Property Name="StudyID" Type="Int64" Nullable="false" />
           <Property Name="StudentNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Quizs" Relationship="Self.fk_Quiz" FromRole="Userr" ToRole="Quiz" />
           <NavigationProperty Name="Study" Relationship="Self.fk_Userr2" FromRole="Userr" ToRole="Study" />
           <NavigationProperty Name="UserType" Relationship="Self.fk_Userr" FromRole="Userr" ToRole="UserType" />
+          <Property Name="AuthToken" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -724,6 +728,8 @@
           <EntitySetMapping Name="Userrs">
             <EntityTypeMapping TypeName="VikingNoteDBModel.Userr">
               <MappingFragment StoreEntitySet="Userr">
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="AuthToken" ColumnName="AuthToken" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

@@ -26,17 +26,28 @@ namespace RESTfullWebApi.Controllers
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Userr
-        public IQueryable<UserrDTO> GetUserrs(string username = null, string password = null)
+        public async Task<IQueryable<UserrDTO>> GetUserrs(string username = null, string password = null)
         {
             if (username != null && password != null)
             {
                 List<UserrDTO> list = new List<UserrDTO>();
-                string passwordHash = GetHash.SHA256(password);
-                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password == passwordHash);
+                Userr userTryinToLogIn = db.Userrs.FirstOrDefault(u => u.UserName == username);
+                if (userTryinToLogIn == null)
+                {
+                    return list.AsQueryable();
+                }
+                string[] passwordHash = GetHash.SHA256(password, userTryinToLogIn.Salt);
+                string passwordToCheck = passwordHash[0];
+                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password.Trim() == passwordToCheck);
                 if (loggedInUserr == null)
                 {
                     return list.AsQueryable();
                 }
+                // Generer en ny authtoken.
+                loggedInUserr.AuthToken = GetHash.SHA256(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"))[0];
+                db.Entry(loggedInUserr).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+
                 UserrDTO transferUserObject = new UserrDTO()
                 {
                     UserID = loggedInUserr.UserID,
@@ -44,7 +55,8 @@ namespace RESTfullWebApi.Controllers
                     StudentNumber = loggedInUserr.StudentNumber,
                     UserName = loggedInUserr.UserName,
                     StudyID =  loggedInUserr.StudyID,
-                    UserTypeID = loggedInUserr.UserTypeID
+                    UserTypeID = loggedInUserr.UserTypeID,
+                    AuthToken = loggedInUserr.AuthToken
 
                 };
                 list.Add(transferUserObject);
@@ -101,7 +113,9 @@ namespace RESTfullWebApi.Controllers
                 return BadRequest();
             }
 
-            userr.Password = GetHash.SHA256(userr.Password);
+            string[] passwordParameters = GetHash.SHA256(userr.Password);
+            userr.Password = passwordParameters[0];
+            userr.Salt = passwordParameters[1];
             db.Entry(userr).State = EntityState.Modified;
 
             try
@@ -132,8 +146,10 @@ namespace RESTfullWebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            userr.Password = GetHash.SHA256(userr.Password);
+            string[] passwordParameters = GetHash.SHA256(userr.Password);
+            userr.Password = passwordParameters[0];
+            userr.Salt = passwordParameters[1];
+            userr.AuthToken = GetHash.SHA256(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"))[0];
             db.Userrs.Add(userr);
             await db.SaveChangesAsync();
 
@@ -144,7 +160,8 @@ namespace RESTfullWebApi.Controllers
                 StudentNumber = userr.StudentNumber,
                 UserName = userr.UserName,
                 StudyID = userr.StudyID,
-                UserTypeID = userr.UserTypeID
+                UserTypeID = userr.UserTypeID,
+                AuthToken = userr.AuthToken
 
             };
             return Ok(transferUserObject);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Core;
+using DAL.Presistence.Repositories;
 using RESTfullWebApi.Models;
 
 namespace DAL.Presistence
@@ -20,6 +21,7 @@ namespace DAL.Presistence
         public LoginService(IUnitOfWork data)
         {
             Data = data;
+            user = new Userr();
         }
 
         public Userr User

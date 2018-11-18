@@ -9,21 +9,33 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using DAL.Core.Repositories;
 using System.Windows;
+using DAL.Core;
 
 namespace DAL.Presistence.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        
-        public static HttpClient Client()
+        public static string authToken;
+
+        public virtual HttpClient Client()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://virkman-001-site1.ctempurl.com/");
             //client.BaseAddress = new Uri("http://localhost:57869/");
+            if (authToken != null)
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authToken);
+            }
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
+            client.Timeout = new TimeSpan(0, 0, 5);
             return client;
+        }
+
+        public void SetAuthToken(string authT)
+        {
+            authToken = authT;
         }
 
 
@@ -71,6 +83,11 @@ namespace DAL.Presistence.Repositories
         {
             string uri = "api/" + typeof(TEntity).Name + "/" + id;
             await Client().DeleteAsync(uri);
+        }
+
+        HttpClient IRepository<TEntity>.Client()
+        {
+            return Client();
         }
     }
 }
