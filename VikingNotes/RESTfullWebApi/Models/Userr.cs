@@ -27,6 +27,8 @@ namespace RESTfullWebApi.Models
         public long UserTypeID { get; set; }
         public long StudyID { get; set; }
         public string StudentNumber { get; set; }
+        public string AuthToken { get; set; }
+        public string Salt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Quiz> Quizs { get; set; }

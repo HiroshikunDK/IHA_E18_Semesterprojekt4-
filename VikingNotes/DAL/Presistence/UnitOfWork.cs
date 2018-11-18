@@ -14,18 +14,19 @@ namespace DAL.Presistence
     {
         public UnitOfWork()
         {
-            User = new UserRepository();
-            Answer = new AnswerRepository();
-            Catagory = new Repository<Catagory>();
-            Question = new Repository<Question>();
-            Quiz = new QuizRepository();
-            Study = new Repository<Study>();
-            UserType = new Repository<UserType>();
-            Course = new Repository<Course>();
-            Faculty = new Repository<Faculty>();
-            Rating = new Repository<Rating>();
-            Semester = new Repository<Semester>();
             LoginService = new LoginService(this);
+            User = new UserRepository(LoginService);
+            Answer = new AnswerRepository(LoginService);
+            Catagory = new Repository<Catagory>(LoginService);
+            Question = new Repository<Question>(LoginService);
+            Quiz = new QuizRepository(LoginService);
+            Study = new Repository<Study>(LoginService);
+            UserType = new Repository<UserType>(LoginService);
+            Course = new Repository<Course>(LoginService);
+            Faculty = new Repository<Faculty>(LoginService);
+            Rating = new Repository<Rating>(LoginService);
+            Semester = new Repository<Semester>(LoginService);
+            
         }
 
         public IUserRepository User { get; }

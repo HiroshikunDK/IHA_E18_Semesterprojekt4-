@@ -13,5 +13,6 @@ namespace RESTfullWebApi.Models
         public long UserTypeID { get; set; }
         public long StudyID { get; set; }
         public string StudentNumber { get; set; }
+        public string AuthToken { get; set; }
     }
 }

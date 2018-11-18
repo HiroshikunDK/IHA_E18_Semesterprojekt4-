@@ -13,6 +13,7 @@ using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
+    [BasicAuthentication]
     public class QuizController : ApiController
     {
         public QuizController()
