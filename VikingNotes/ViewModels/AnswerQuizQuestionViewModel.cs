@@ -138,16 +138,13 @@ namespace ViewModels
                 }
             }
 
-            if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to reflect that jumping through is possible
-            else GoToNextQuestion();
+            //if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to reflect that jumping through is possible
+            GoToNextQuestion();
         }
 
         private void NextQuestionClickFunc(object obj)
         {
-            if (currentQuestionIndex < SelectedQuiz.Questions.Count)
-            {
-                GoToNextQuestion();
-            }
+            GoToNextQuestion();
         }
 
         private void PrevQuestionClickFunc(object obj)
@@ -177,8 +174,8 @@ namespace ViewModels
 
             _answersGiven[index, 0] = true;
 
-            if (SelectedAnswer.IsCorrect == "1") _answersGiven[currentQuestionIndex, 1] = true;
-            else _answersGiven[currentQuestionIndex, 1] = false;
+            if (SelectedAnswer.IsCorrect == "1") _answersGiven[index, 1] = true;
+            else _answersGiven[index, 1] = false;
         }
 
         /// <summary>
