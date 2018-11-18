@@ -140,7 +140,13 @@ namespace ViewModels
                 }
             }
 
-            if (answerCount == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to make a prompt where it is possible to end or wait
+            if (answerCount == selectedQuiz.Questions.Count)
+            {
+                var res = MessageBox.Show("You have answered all questions, do you want to end the quiz?",
+                    "Do you want to end the Quiz?", MessageBoxButton.YesNo);
+
+                if (res == MessageBoxResult.Yes) EndQuiz(); //TODO: update to make a prompt where it is possible to end or wait
+            }           
             else GoToNextQuestion();
         }
 
@@ -156,7 +162,15 @@ namespace ViewModels
 
         private void EndQuizClickFunc(object obj)
         {
-            EndQuiz();
+            MessageBoxResult res = MessageBoxResult.OK;
+
+            if (answerCount != questions.Count)
+            {
+                res = MessageBox.Show($"You have answered: {answerCount} out of: {questions.Count} questions. Are you sure that you want to end the quiz before answering the remaining questions?",
+                    "Are you sure you want to end the quiz?", MessageBoxButton.OKCancel);
+            }
+            
+            if (res == MessageBoxResult.OK) EndQuiz();
         }
 
         #endregion
@@ -212,9 +226,12 @@ namespace ViewModels
 
             correctPercentage = (correctAnswers * 100) / questions.Count;
 
-            //TODO: show the statistics to the user
+            //TODO: Add comparison with the average in percentage.
+            MessageBox.Show(
+                $"You have answered {correctAnswers} correctly, out of: {questions.Count} questions. Making for {correctPercentage}% correct answers.",
+                "Quiz stats", MessageBoxButton.OK);
 
-            //TODO: push with the new information to the web.
+            //TODO: push with the new information to the web. And close the view.
         }
 
         #region HelperFunctions
