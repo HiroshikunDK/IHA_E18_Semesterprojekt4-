@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
@@ -18,62 +19,34 @@ namespace ViewModels
     public class AnswerQuizQuestionViewModel : BaseViewModel
     {
         private Quiz selectedQuiz { get; set; }
+        private List<Question> questions { get; set; }
         private Question currentQuestion { get; set; }
-        private List<Answer> answers { get; set; } //TODO: Remove this, once it is tested without 
+        private Answer selectedAnswer { get; set; }
 
         IUnitOfWork Data = new UnitOfWork();
 
         public ICommand QuestionAnswerClick { get; set; }
+        public ICommand EndQuizClick { get; set; }
         public ICommand NextQuestionClick { get; set; }
         public ICommand PrevQuestionClick { get; set; }
 
-        private int currentQuestionIndex;
-        private int answerCount;
+        private int answerCount; //TODO: use to keep track of when we have answered all questions, to lessen the amount of work to do in EndQuiz.
 
         //TODO: this should be made into something that is stored in a Question, to make access possible in converters, and easier to associate with given question.
         private bool[,] _answersGiven; //[x,0] = is answer given, [x, 1] = is answer correct
 
         public AnswerQuizQuestionViewModel (Quiz quiz)
         {
-            QuestionAnswerClick = new Command(QuestionAnswerClickFunc, canExecute);
-            NextQuestionClick = new Command(NextQuestionClickFunc, canExecute);
-            PrevQuestionClick = new Command(PrevQuestionClickFunc, canExecute);
+            selectedQuiz = quiz;
+            questions = selectedQuiz.Questions.ToList();
+            _answersGiven = new bool[questions.Count, 2];
+            CurrentQuestion = questions[0];
+            GetAllAnswers();
 
-            //Testing TODO remove this once it has been tested properly
-            selectedQuiz = new Quiz();
-            selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 1"});
-            selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 2"});
-
-            currentQuestion = new Question();
-            _answersGiven = new bool[selectedQuiz.Questions.Count, 2];
-
-            currentQuestion.Question1 = "test spørgsmål: ";
-            Answers = new List<Answer>();
-            Answers.Add(new Answer(){Answer1 = "mulighed 1"});
-            Answers.Add(new Answer(){Answer1 = "mulighed 2"});
-            Answers.Add(new Answer(){Answer1 = "mulighed 3"});
-            //Answers.Add(new Answer(){Answer1 = "mulighed 4"}); //TODO: kommenter ud/ind for at teste
-        }
-        public AnswerQuizQuestionViewModel()
-        {
-            QuestionAnswerClick = new Command(QuestionAnswerClickFunc, canExecute);
-            NextQuestionClick = new Command(NextQuestionClickFunc, canExecute);
-            PrevQuestionClick = new Command(PrevQuestionClickFunc, canExecute);
-
-            //Testing TODO remove this once it has been tested properly
-            selectedQuiz = new Quiz();
-            selectedQuiz.Questions.Add(new Question() { CorrectCount = 0, Question1 = "spørgsmål 1" });
-            selectedQuiz.Questions.Add(new Question() { CorrectCount = 0, Question1 = "spørgsmål 2" });
-
-            currentQuestion = new Question();
-            _answersGiven = new bool[selectedQuiz.Questions.Count, 2];
-
-            currentQuestion.Question1 = "test spørgsmål: ";
-            Answers = new List<Answer>();
-            Answers.Add(new Answer() { Answer1 = "mulighed 1" });
-            Answers.Add(new Answer() { Answer1 = "mulighed 2" });
-            Answers.Add(new Answer() { Answer1 = "mulighed 3" });
-            //Answers.Add(new Answer(){Answer1 = "mulighed 4"}); //TODO: kommenter ud/ind for at teste
+            NextQuestionClick = new Command(NextQuestionClickFunc, CanExecute);
+            PrevQuestionClick = new Command(PrevQuestionClickFunc, CanExecute);
+            QuestionAnswerClick = new Command(QuestionAnswerClickFunc, CanExecute);
+            EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
         }
 
         #region Properties
@@ -91,13 +64,32 @@ namespace ViewModels
             set
             {
                 currentQuestion = value;
+
+                //frontloading or load answers upon selection change.
+                Answers = currentQuestion.Answers.ToList(); //if frontloaded questions
+                //GetAnswers(); //load Answers when question is selected
+
+                RaisePropertyChanged("CurrentQuestion");
             }
         }
 
-        public List<Answer> Answers //Testing TODO: Remove once it has been tested properly
+        public List<Answer> Answers //Testing TODO: test if this implementation is reasonable
         {
-            get { return answers; }
-            set { answers = value; }
+            get { return CurrentQuestion.Answers.ToList(); }
+            set
+            {
+                CurrentQuestion.Answers = value;
+                RaisePropertyChanged("Answers");
+            }
+        }
+
+        public Answer SelectedAnswer
+        {
+            get { return selectedAnswer; }
+            set
+            {
+                selectedAnswer = value;
+            }
         }
 
         public bool[,] AnswersGiven
@@ -107,52 +99,83 @@ namespace ViewModels
 
         #endregion
 
-        #region CommandFunctions
+        #region DataAcess
 
-        private void QuestionAnswerClickFunc(object parameter)
+        /// <summary>
+        /// Get answers for a single question.
+        /// </summary>
+        private async void GetAnswers()
         {
-            //string selectedAnswer = ((Button)obj).Content.ToString();
-            int id = Convert.ToInt32(parameter);
-
-
-            foreach (var answer in Answers)
-            {
-                if (id == answer.AnswerID)
-                {
-                    LogAnswer(answer);
-                    break;
-                }
-            }
-
-            if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to reflect that jumping through is possible
-            else
-            {
-                currentQuestionIndex++;
-                currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
-            }
+            int id = Convert.ToInt32(CurrentQuestion.QuestionID);
+            //Answers = (await Data.Answer.GetAllAsync()).ToList();
+            Answers = (await Data.Answer.GetAnswerByQuestionID(CurrentQuestion.QuestionID));
         }
 
-        private void NextQuestionClickFunc(object obj)
+        /// <summary>
+        /// Used for frontloading all answers to the questions in the quiz.
+        /// </summary>
+        private async void GetAllAnswers()
         {
-            if (currentQuestionIndex < SelectedQuiz.Questions.Count)
+            foreach (var question in SelectedQuiz.Questions)
             {
-                currentQuestionIndex++;
-                currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
-            }
-        }
-
-        private void PrevQuestionClickFunc(object obj)
-        {
-            if (currentQuestionIndex > 0)
-            {
-                currentQuestionIndex--;
-                currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
+                Answers = (await Data.Answer.GetAnswerByQuestionID(question.QuestionID));
             }
         }
 
         #endregion
 
-        private bool canExecute(object parameter)
+        #region CommandFunctions
+
+        private void QuestionAnswerClickFunc(object parameter)
+        {
+            if (SelectedAnswer == null) return;
+
+
+            foreach (var answer in Answers)
+            {
+                if (SelectedAnswer.AnswerID == answer.AnswerID)
+                {
+                    LogAnswer();
+                    break;
+                }
+            }
+
+            if (answerCount == selectedQuiz.Questions.Count)
+            {
+                var res = MessageBox.Show("You have answered all questions, do you want to end the quiz?",
+                    "Do you want to end the Quiz?", MessageBoxButton.YesNo);
+
+                if (res == MessageBoxResult.Yes) EndQuiz(); //TODO: update to make a prompt where it is possible to end or wait
+            }           
+            else GoToNextQuestion();
+        }
+
+        private void NextQuestionClickFunc(object obj)
+        {
+            GoToNextQuestion();
+        }
+
+        private void PrevQuestionClickFunc(object obj)
+        {
+            GoToPrevQuestion();
+        }
+
+        private void EndQuizClickFunc(object obj)
+        {
+            MessageBoxResult res = MessageBoxResult.OK;
+
+            if (answerCount != questions.Count)
+            {
+                res = MessageBox.Show($"You have answered: {answerCount} out of: {questions.Count} questions. Are you sure that you want to end the quiz before answering the remaining questions?",
+                    "Are you sure you want to end the quiz?", MessageBoxButton.OKCancel);
+            }
+            
+            if (res == MessageBoxResult.OK) EndQuiz();
+        }
+
+        #endregion
+
+        private bool CanExecute(object parameter)
         {
             return true;
         }
@@ -160,10 +183,24 @@ namespace ViewModels
         /// <summary>
         /// Save selected answer locally.
         /// </summary>
-        private void LogAnswer(Answer selectedAnswer)
+        private void LogAnswer()
         {
-            _answersGiven[currentQuestionIndex, 0] = true;
-            _answersGiven[currentQuestionIndex, 1] = false; //selectedAnswer.IsCorrect; //TODO: why is IsCorrect a string? and make this set itself to the state of IsCorrect (true/false)
+            int index = 0;
+            foreach (var question in SelectedQuiz.Questions)
+            {
+                if (question.QuestionID == CurrentQuestion.QuestionID) break;
+
+                index++;
+            }
+
+            if (_answersGiven[index, 0] == false)
+            {
+                _answersGiven[index, 0] = true;
+                answerCount++;
+            }
+
+            if (SelectedAnswer.IsCorrect == "1") _answersGiven[index, 1] = true;
+            else _answersGiven[index, 1] = false;
         }
 
         /// <summary>
@@ -171,9 +208,69 @@ namespace ViewModels
         /// </summary>
         private void EndQuiz()
         {
+            int correctAnswers = 0;
+            float correctPercentage = 0;
 
+            int i = 0;
+            foreach (var question in questions)
+            {
+                if (_answersGiven[i, 1] == true)
+                {
+                    question.CorrectCount++;
+                    correctAnswers++;
+                }
+                else question.WrongCount++;
+
+                i++;
+            }
+
+            correctPercentage = (correctAnswers * 100) / questions.Count;
+
+            //TODO: Add comparison with the average in percentage.
+            MessageBox.Show(
+                $"You have answered {correctAnswers} correctly, out of: {questions.Count} questions. Making for {correctPercentage}% correct answers.",
+                "Quiz stats", MessageBoxButton.OK);
+
+            //TODO: push with the new information to the web. And close the view.
         }
+
+        #region HelperFunctions
+
+        /// <summary>
+        /// Moves to first Question in the quiz that hasn't been answered.
+        /// </summary>
+        private void GoToNextQuestion()
+        {
+            for (int i = 0; i < _answersGiven.Length; i++)
+            {
+                if (_answersGiven[i, 0] == false)
+                {
+                    CurrentQuestion = SelectedQuiz.Questions.ElementAt(i);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Moves to the question at the index below the currently selected question.
+        /// </summary>
+        private void GoToPrevQuestion()
+        {
+            int index = 0;
+            foreach (var question in SelectedQuiz.Questions)
+            {
+                if (question == CurrentQuestion) break;
+
+                index++;
+            }
+
+            if (index != 0) CurrentQuestion = SelectedQuiz.Questions.ElementAt(index - 1);
+        }
+
+        #endregion
+
     }
+
 
     //TODO: these are currently out of use, due to not being favourable above other solutions, or otherwise just not functioning.
     #region ValueConverters

@@ -35,7 +35,7 @@
 --
 CREATE TABLE Answer (
     AnswerID       BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Answer         NCHAR(500) NOT NULL,
+    Answer         NVARCHAR(500) NOT NULL,
     IsCorrect      CHAR(1) NOT NULL,
     QuestionID     BIGINT NOT NULL,
 CONSTRAINT pk_Answer PRIMARY KEY CLUSTERED (AnswerID),

@@ -15,7 +15,7 @@
 CREATE TABLE Rating (
     RatingID       BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     Rating         INT NOT NULL,
-    Reason         NCHAR(1000) NOT NULL,
+    Reason         NVARCHAR(1000) NOT NULL,
     QuizID         BIGINT NOT NULL,
 CONSTRAINT pk_Rating PRIMARY KEY CLUSTERED (RatingID),
 CONSTRAINT fk_Rating FOREIGN KEY (QuizID)

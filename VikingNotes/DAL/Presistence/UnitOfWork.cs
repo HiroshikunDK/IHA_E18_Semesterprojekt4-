@@ -15,7 +15,7 @@ namespace DAL.Presistence
         public UnitOfWork()
         {
             User = new UserRepository();
-            Answer = new Repository<Answer>();
+            Answer = new AnswerRepository();
             Catagory = new Repository<Catagory>();
             Question = new Repository<Question>();
             Quiz = new QuizRepository();
@@ -29,7 +29,7 @@ namespace DAL.Presistence
         }
 
         public IUserRepository User { get; }
-        public IRepository<Answer> Answer { get; }
+        public IAnswerRepository Answer { get; }
         public IRepository<Catagory> Catagory { get; }
         public IRepository<Question> Question { get; }
         public IQuizRepository Quiz { get; }

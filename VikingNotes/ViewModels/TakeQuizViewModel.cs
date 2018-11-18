@@ -217,6 +217,16 @@ namespace ViewModels
             {
                 Quiz quizWithQuestions = quiz;
                 quizWithQuestions = await Data.Quiz.GetAsync(quiz.QuizID);
+
+                //int id = 0; //TODO: Getting answers from previous view
+                //foreach (var question in quizWithQuestions.Questions)
+                //{
+                ////    //id = Convert.ToInt32(question.QuestionID);
+
+                ////    //question.Answers = (await Data.Answer.GetAllAsync()).FindAll(a => a.QuestionID == id);
+                //    question.Answers = (await Data.Answer.GetAnswerByQuestionID(question.QuestionID));
+                //}
+
                 QuizContent = new AnswerQuizQuestionViewModel(quizWithQuestions);
                 answerView.DataContext = QuizContent;
             }

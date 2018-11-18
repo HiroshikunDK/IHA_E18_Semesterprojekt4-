@@ -9,5 +9,6 @@ namespace DAL.Core.Repositories
 {
     public interface IAnswerRepository : IRepository<Answer>
     {
+        Task<List<Answer>> GetAnswerByQuestionID(long id);
     }
 }
