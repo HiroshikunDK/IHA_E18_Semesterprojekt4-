@@ -41,24 +41,7 @@ namespace ViewModels
             questions = selectedQuiz.Questions.ToList();
             _answersGiven = new bool[questions.Count, 2];
             CurrentQuestion = questions[0];
-            //GetAnswers();
-            
-
-            //answers = currentQuestion.Answers.ToList();
-
-            //Testing TODO remove this once it has been tested properly
-            //selectedQuiz = new Quiz();
-            //selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 1"});
-            //selectedQuiz.Questions.Add(new Question(){CorrectCount = 0, Question1 = "spørgsmål 2"});
-
-            //currentQuestion = new Question();
-
-            //currentQuestion.Question1 = "test spørgsmål: ";
-            //Answers = new List<Answer>();
-            //Answers.Add(new Answer(){Answer1 = "mulighed 1"});
-            //Answers.Add(new Answer(){Answer1 = "mulighed 2"});
-            //Answers.Add(new Answer(){Answer1 = "mulighed 3"});
-            //Answers.Add(new Answer(){Answer1 = "mulighed 4"}); //TODO: kommenter ud/ind for at teste
+            GetAllAnswers();
         }
 
         #region Properties
@@ -77,7 +60,7 @@ namespace ViewModels
             {
                 currentQuestion = value;
                 Answers = currentQuestion.Answers.ToList();
-                GetAnswers();
+                //GetAnswers();
                 RaisePropertyChanged("CurrentQuestion");
             }
         }
@@ -103,19 +86,31 @@ namespace ViewModels
 
         #endregion
 
+
+        #region DataAcess
+
+        /// <summary>
+        /// Get answers for a single question.
+        /// </summary>
         private async void GetAnswers()
         {
-            //int id;
-            //foreach (var question in SelectedQuiz.Questions)
-            //{
-            //    id = Convert.ToInt32(question.QuestionID);
-            //    question.Answers = (await Data.Answer.GetAllAsync()).FindAll(a => a.QuestionID == id);
-            //}
-
             int id = Convert.ToInt32(CurrentQuestion.QuestionID);
             //Answers = (await Data.Answer.GetAllAsync()).ToList();
             Answers = (await Data.Answer.GetAnswerByQuestionID(CurrentQuestion.QuestionID));
         }
+
+        /// <summary>
+        /// Used for frontloading all answers to the questions in the quiz.
+        /// </summary>
+        private async void GetAllAnswers()
+        {
+            foreach (var question in SelectedQuiz.Questions)
+            {
+                Answers = (await Data.Answer.GetAnswerByQuestionID(question.QuestionID));
+            }
+        }
+
+        #endregion
 
         #region CommandFunctions
 
