@@ -22,13 +22,26 @@ namespace RESTfullWebApi.Controllers
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Question
+        // GET: api/Question?QuizID=?
         public IQueryable<Question> GetQuestions(long QuizID = -1)
         {
+            IQueryable<Question> questions;
             if (QuizID == -1)
             {
-                return db.Questions;
+                questions = db.Questions;
+                foreach (var question in questions)
+                {
+                    question.Answers = db.Answers.Where(a => a.QuestionID == question.QuestionID).ToList();
+                }
+                return questions;
             }
-            return db.Questions.Where(q => q.QuizID == QuizID);        
+
+            questions = db.Questions.Where(q => q.QuizID == QuizID);
+            foreach (var question in questions)
+            {
+                question.Answers = db.Answers.Where(a => a.QuestionID == question.QuestionID).ToList();
+            }
+            return questions;        
         }
 
         // GET: api/Question/5
