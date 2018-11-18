@@ -174,22 +174,22 @@ INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VAL
 INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (5, N'nej', 0, 2)
 
 /*Spørgsmål 2 SWT guden*/
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (52, N'Frank "SWT GUD" Bodholdt Jakobsen', 1, 17)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (53, N'Troels Fedder Jensen', 0, 17)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (54, N'Poul Ejnar Rovsing', 0, 17)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (55, N'Jesper Rosholm Tørresø', 0, 17)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (52, N'Frank "SWT GUD" Bodholdt Jakobsen', 1, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (53, N'Troels Fedder Jensen', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (54, N'Poul Ejnar Rovsing', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (55, N'Jesper Rosholm Tørresø', 0, 2)
 
 /*Spørgsmål 3 Hvad hedder udvidelsen i SWT*/
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (56, N'Notepad++', 0, 18)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (57, N'QT creator', 0, 18)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (58, N'Addblocker', 0, 18)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (59, N'nuget', 1, 18)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (56, N'Notepad++', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (57, N'QT creator', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (58, N'Addblocker', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (59, N'nuget', 1, 2)
 
 /*Spørgsmål 4 The art of Unittest*/
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (60, N'The Art of The Triggering', 0, 19)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (61, N'The Art of Art', 0, 19)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (62, N'The Art of 1337', 0, 19)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (63, N'The Art of War', 1, 19)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (60, N'The Art of The Triggering', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (61, N'The Art of Art', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (62, N'The Art of 1337', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (63, N'The Art of War', 1, 2)
 
 /*QUIZ 3 Paratviden*/
 /*Spørgsmål 3 AND operator*/

@@ -217,7 +217,6 @@
     <Compile Include="Models\Question.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\QuestionDTO.cs" />
     <Compile Include="Models\Quiz.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>

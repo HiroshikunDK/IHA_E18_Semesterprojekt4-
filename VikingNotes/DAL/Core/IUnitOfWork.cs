@@ -11,7 +11,7 @@ namespace DAL.Core
     public interface IUnitOfWork
     {
         IUserRepository User { get; }
-        IAnswerRepository Answer { get; }
+        IRepository<Answer> Answer { get; }
         IRepository<Catagory> Catagory { get; }
         IRepository<Question> Question { get; }
         IQuizRepository Quiz { get; }
