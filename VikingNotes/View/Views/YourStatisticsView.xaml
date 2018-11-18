@@ -42,8 +42,7 @@
                     <DataTemplate>
                     <Border BorderBrush="DarkGray" Background="LightGray" BorderThickness="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Margin="5,5,90,5">
-                                <TextBlock Margin="5,5,90,5" Text="{Binding Name}" />
+                            <Button Content="{Binding Name}" Margin="5,5,90,5">
                             </Button>
                         </StackPanel>
                     </Border>

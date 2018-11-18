@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DAL.Core;
+using DAL.Presistence;
 using ViewModels.Commands;
 
 namespace ViewModels

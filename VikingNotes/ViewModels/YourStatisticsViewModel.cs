@@ -20,13 +20,13 @@ namespace ViewModels
 
         private List<Rating> ListOfRating { get; set; }
         private List<Quiz> listOfQuizzes { get; set; }
-        private IUnitOfWork Data;
+        private IUnitOfWork Data = new UnitOfWork();
 
-        public YourStatisticsViewModel(IUnitOfWork data )
+        public YourStatisticsViewModel(/*IUnitOfWork data*/ )
         {
-            Data = data;
-            currentUser = (Userr)Data.User;
-            getRelevantQuizList(currentUser.UserID);
+            //Data = data;
+            //currentUser = (Userr)Data.User;
+            getRelevantQuizList(3);
 
 
         }
@@ -61,7 +61,7 @@ namespace ViewModels
 
         public async void getRelevantQuizList(long UserID)
         {
-          listOfQuizzes = await Data.Quiz.GetQuizzesByUserID(currentUser.UserID);
+          listOfQuizzes = await Data.Quiz.GetQuizzesByUserID(3);
         }
 
         public async void getRelevantRatingList(long quizID)
