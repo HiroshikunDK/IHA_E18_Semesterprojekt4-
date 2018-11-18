@@ -40,7 +40,7 @@ namespace ViewModels
             selectedQuiz = quiz;
             questions = selectedQuiz.Questions.ToList();
             _answersGiven = new bool[questions.Count, 2];
-            currentQuestion = questions[0];
+            CurrentQuestion = questions[0];
             //GetAnswers();
             
 
@@ -113,12 +113,8 @@ namespace ViewModels
             //}
 
             int id = Convert.ToInt32(CurrentQuestion.QuestionID);
-            Answers = (await Data.Answer.GetAllAsync()).ToList();
-
-            while (Answers.Count == 0)
-            {
-                
-            }
+            //Answers = (await Data.Answer.GetAllAsync()).ToList();
+            Answers = (await Data.Answer.GetAnswerByQuestionID(CurrentQuestion.QuestionID));
         }
 
         #region CommandFunctions
