@@ -10,7 +10,7 @@ namespace DAL.Core
 {
     public interface IUnitOfWork
     {
-        IUserRepository User { get; }
+        IUserRepository User { get; set; }
         IAnswerRepository Answer { get; }
         IRepository<Catagory> Catagory { get; }
         IRepository<Question> Question { get; }

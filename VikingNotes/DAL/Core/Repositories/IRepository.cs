@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,5 +14,8 @@ namespace DAL.Core.Repositories
         void Update(long id, TEntity entity);
         Task<TEntity> Add(TEntity entity);
         void Remove(long id);
+
+        HttpClient Client();
+        void SetAuthToken(string authT);
     }
 }

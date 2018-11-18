@@ -12,14 +12,5 @@ namespace DAL.Presistence.Repositories
 {
     public class QuestionRepository : Repository<Question>, IQuestionRepository
     {
-        public QuestionRepository(ILoginService loginService) : base(loginService)
-        {
-            loginService.UserLoggedIn += SetAuthToken;
-        }
-
-        private void SetAuthToken(object o, UserLoggedInEventArg args)
-        {
-            Client().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(args.User.AuthToken);
-        }
     }
 }

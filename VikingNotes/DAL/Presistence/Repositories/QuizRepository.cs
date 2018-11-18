@@ -33,15 +33,6 @@ namespace DAL.Presistence.Repositories
             //}
             return quiz;
         }
-
-        public QuizRepository(ILoginService loginService) : base(loginService)
-        {
-            loginService.UserLoggedIn += SetAuthToken;
-        }
-
-        private void SetAuthToken(object o, UserLoggedInEventArg args)
-        {
-            Client().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(args.User.AuthToken);
-        }
+       
     }
 }

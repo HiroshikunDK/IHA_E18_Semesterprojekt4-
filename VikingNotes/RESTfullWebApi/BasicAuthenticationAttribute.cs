@@ -25,7 +25,7 @@ namespace RESTfullWebApi
             }
             else
             {
-                string authenticationToken = actionContext.Request.Headers.Authorization.Parameter;
+                string authenticationToken = actionContext.Request.Headers.Authorization.ToString();
 
                 Userr user = UserSecurity.Authentication(authenticationToken);
 

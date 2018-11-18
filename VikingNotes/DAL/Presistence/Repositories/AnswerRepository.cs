@@ -20,15 +20,5 @@ namespace DAL.Presistence.Repositories
             var respons = JsonConvert.DeserializeObject<List<Answer>>(responseString);
             return respons;
         }
-
-        public AnswerRepository(ILoginService loginService) : base(loginService)
-        {
-            loginService.UserLoggedIn += SetAuthToken;
-        }
-
-        private void SetAuthToken(object o, UserLoggedInEventArg args)
-        {
-            Client().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(args.User.AuthToken);
-        }
     }
 }

@@ -15,16 +15,7 @@ namespace DAL.Presistence.Repositories
 {
     public class UserRepository : Repository<Userr>, IUserRepository
     {
-
-        public UserRepository(ILoginService loginService) : base(loginService)
-        {
-            loginService.UserLoggedIn += SetAuthToken;
-        }
-
-        private void SetAuthToken(object o, UserLoggedInEventArg args)
-        {
-            Client().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(args.User.AuthToken);
-        }
+       
 
         public async Task<List<Userr>> TryLoginUser(string username, string password)
         {

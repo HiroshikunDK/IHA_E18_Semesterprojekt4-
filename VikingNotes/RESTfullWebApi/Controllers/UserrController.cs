@@ -37,7 +37,8 @@ namespace RESTfullWebApi.Controllers
                     return list.AsQueryable();
                 }
                 string[] passwordHash = GetHash.SHA256(password, userTryinToLogIn.Salt);
-                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password == passwordHash[0]);
+                string passwordToCheck = passwordHash[0];
+                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password.Trim() == passwordToCheck);
                 if (loggedInUserr == null)
                 {
                     return list.AsQueryable();
@@ -148,6 +149,7 @@ namespace RESTfullWebApi.Controllers
             string[] passwordParameters = GetHash.SHA256(userr.Password);
             userr.Password = passwordParameters[0];
             userr.Salt = passwordParameters[1];
+            userr.AuthToken = GetHash.SHA256(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"))[0];
             db.Userrs.Add(userr);
             await db.SaveChangesAsync();
 
@@ -158,7 +160,8 @@ namespace RESTfullWebApi.Controllers
                 StudentNumber = userr.StudentNumber,
                 UserName = userr.UserName,
                 StudyID = userr.StudyID,
-                UserTypeID = userr.UserTypeID
+                UserTypeID = userr.UserTypeID,
+                AuthToken = userr.AuthToken
 
             };
             return Ok(transferUserObject);
