@@ -15,11 +15,11 @@
 
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="54*"/>
-            <ColumnDefinition Width="46*"/>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="25*"/>
-            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="64*"/>
@@ -29,16 +29,20 @@
         </Grid.RowDefinitions>
 
         <TextBlock HorizontalAlignment="Left" Margin="10,44,0,0" TextWrapping="Wrap" Text="{Binding CurrentQuestion.Question1}" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="371" Height="52" TextAlignment="Center" FontSize="20" Grid.Column="1"/>
-
-        <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Height="212" Margin="10,0,0,0" VerticalAlignment="Top" Width="164" ItemsSource="{Binding Answers}" Grid.RowSpan="2">
+        <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Height="212" Margin="10,0,0,0" VerticalAlignment="Top" Width="164" ItemsSource="{Binding Answers}" Grid.RowSpan="2" SelectionMode="Single"
+                 SelectedItem="{Binding SelectedAnswer}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <Button Content="{Binding Answer1}" Command="{Binding ElementName=this, Path=DataContext.QuestionAnswerClick}" CommandParameter="{Binding Path=AnswerID}"></Button>
+                        <TextBlock Text="{Binding Answer1}"/>
+
+                        <!--<Button Content="{Binding Answer1}" Command="{Binding ElementName=this, Path=DataContext.QuestionAnswerClick}" CommandParameter="{Binding Path=AnswerID}"></Button> -->
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <Button Content="Answer" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" MinHeight="50" MinWidth="150" Command="{Binding QuestionAnswerClick}" Grid.ColumnSpan="2" Height="50" Margin="5, 5, 5, 5" Width="190" Grid.Column="1"/>
 
         <!-- Please don't hurt me.
         <Button Content="{Binding ConverterParameter=0, Converter={StaticResource IntToAnswerConverter}, Mode=OneWay}" HorizontalAlignment="Left" Margin="54,30,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" MinWidth="100" MinHeight="50" Width="100" Height="50" 
@@ -51,7 +55,7 @@
                 Visibility="{Binding ConverterParameter=3, Converter={StaticResource IntToVisibilityConverter}, Mode=OneWay}" Command="{Binding QuestionAnswerClick}"/>
         -->
 
-        <ListBox Grid.Column="3" HorizontalAlignment="Left" Height="218" Margin="10,22,0,0" VerticalAlignment="Top" Width="173" ItemsSource="{Binding SelectedQuiz.Questions}" SelectedItem="{Binding CurrentQuestion}" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <ListBox Grid.Column="3" HorizontalAlignment="Left" Height="218" Margin="10,22,0,0" VerticalAlignment="Top" Width="173" ItemsSource="{Binding SelectedQuiz.Questions}" SelectedItem="{Binding CurrentQuestion}" Grid.ColumnSpan="2" Grid.RowSpan="2" SelectionMode="Single">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>

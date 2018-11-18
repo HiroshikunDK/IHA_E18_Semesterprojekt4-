@@ -21,7 +21,7 @@ namespace ViewModels
         private Quiz selectedQuiz { get; set; }
         private List<Question> questions { get; set; }
         private Question currentQuestion { get; set; }
-        private List<Answer> answers { get; set; } //TODO: Remove this, once it is tested without 
+        private Answer selectedAnswer { get; set; }
 
         IUnitOfWork Data = new UnitOfWork();
 
@@ -42,6 +42,10 @@ namespace ViewModels
             _answersGiven = new bool[questions.Count, 2];
             CurrentQuestion = questions[0];
             GetAllAnswers();
+
+            NextQuestionClick = new Command(NextQuestionClickFunc, CanExecute);
+            PrevQuestionClick = new Command(PrevQuestionClickFunc, CanExecute);
+            QuestionAnswerClick = new Command(QuestionAnswerClickFunc, CanExecute);
         }
 
         #region Properties
@@ -59,23 +63,31 @@ namespace ViewModels
             set
             {
                 currentQuestion = value;
-                Answers = currentQuestion.Answers.ToList();
-                //GetAnswers();
+
+                //frontloading or load answers upon selection change.
+                Answers = currentQuestion.Answers.ToList(); //if frontloaded questions
+                //GetAnswers(); //load Answers when question is selected
+
                 RaisePropertyChanged("CurrentQuestion");
             }
         }
 
-        public List<Answer> Answers //Testing TODO: Remove once it has been tested properly
+        public List<Answer> Answers //Testing TODO: test if this implementation is reasonable
         {
-            get { return answers; }
+            get { return CurrentQuestion.Answers.ToList(); }
             set
             {
-                answers = value;
-
-                //answers = new List<Answer>(); //TODO: Testing
-                //answers.Add(new Answer() { Answer1 = "lol" });
-
+                CurrentQuestion.Answers = value;
                 RaisePropertyChanged("Answers");
+            }
+        }
+
+        public Answer SelectedAnswer
+        {
+            get { return selectedAnswer; }
+            set
+            {
+                selectedAnswer = value;
             }
         }
 
@@ -85,7 +97,6 @@ namespace ViewModels
         }
 
         #endregion
-
 
         #region DataAcess
 
@@ -116,13 +127,12 @@ namespace ViewModels
 
         private void QuestionAnswerClickFunc(object parameter)
         {
-            //string selectedAnswer = ((Button)obj).Content.ToString();
-            int id = Convert.ToInt32(parameter);
+            if (SelectedAnswer == null) return;
 
 
             foreach (var answer in Answers)
             {
-                if (id == answer.AnswerID)
+                if (SelectedAnswer.AnswerID == answer.AnswerID)
                 {
                     LogAnswer(answer);
                     break;
@@ -132,17 +142,36 @@ namespace ViewModels
             if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to reflect that jumping through is possible
             else
             {
-                currentQuestionIndex++;
-                currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
+                NextQuestionClickFunc(null); //TODO: Consider if this dirty code is really worth it to avoid the two lines of duplicate code
+                //currentQuestionIndex++;
+                //currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
             }
         }
+
+        /// <summary>
+        /// Moves to first Question in the quiz that hasn't been answered.
+        /// </summary>
+        private void GoToNextQuestion()
+        {
+            for (int i = 0; i < _answersGiven.Length; i++)
+            {
+                if (_answersGiven[i, 0] == false)
+                {
+                    CurrentQuestion = SelectedQuiz.Questions.ElementAt(i);
+                    break;
+                }
+            }
+        }
+
 
         private void NextQuestionClickFunc(object obj)
         {
             if (currentQuestionIndex < SelectedQuiz.Questions.Count)
             {
+                //GoToNextQuestion();
+                //TODO: Update this to go to first unanswered question, as this method causes issues upon jumping in the question list.
                 currentQuestionIndex++;
-                currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
+                CurrentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
             }
         }
 
@@ -150,14 +179,15 @@ namespace ViewModels
         {
             if (currentQuestionIndex > 0)
             {
+                //TODO: update to find the question we are on, and then go back the the one at the index below it.
                 currentQuestionIndex--;
-                currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
+                CurrentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
             }
         }
 
         #endregion
 
-        private bool canExecute(object parameter)
+        private bool CanExecute(object parameter)
         {
             return true;
         }
@@ -168,7 +198,9 @@ namespace ViewModels
         private void LogAnswer(Answer selectedAnswer)
         {
             _answersGiven[currentQuestionIndex, 0] = true;
-            _answersGiven[currentQuestionIndex, 1] = false; //selectedAnswer.IsCorrect; //TODO: why is IsCorrect a string? and make this set itself to the state of IsCorrect (true/false)
+
+            if (SelectedAnswer.IsCorrect == "1") _answersGiven[currentQuestionIndex, 1] = true;
+            else _answersGiven[currentQuestionIndex, 1] = false;
         }
 
         /// <summary>
