@@ -26,6 +26,7 @@ namespace ViewModels
         IUnitOfWork Data = new UnitOfWork();
 
         public ICommand QuestionAnswerClick { get; set; }
+        public ICommand EndQuizClick { get; set; }
         public ICommand NextQuestionClick { get; set; }
         public ICommand PrevQuestionClick { get; set; }
 
@@ -45,6 +46,7 @@ namespace ViewModels
             NextQuestionClick = new Command(NextQuestionClickFunc, CanExecute);
             PrevQuestionClick = new Command(PrevQuestionClickFunc, CanExecute);
             QuestionAnswerClick = new Command(QuestionAnswerClickFunc, CanExecute);
+            EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
         }
 
         #region Properties
@@ -138,8 +140,8 @@ namespace ViewModels
                 }
             }
 
-            //if (currentQuestionIndex == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to reflect that jumping through is possible
-            GoToNextQuestion();
+            if (answerCount == selectedQuiz.Questions.Count) EndQuiz(); //TODO: update to make a prompt where it is possible to end or wait
+            else GoToNextQuestion();
         }
 
         private void NextQuestionClickFunc(object obj)
@@ -150,6 +152,11 @@ namespace ViewModels
         private void PrevQuestionClickFunc(object obj)
         {
             GoToPrevQuestion();
+        }
+
+        private void EndQuizClickFunc(object obj)
+        {
+            EndQuiz();
         }
 
         #endregion
@@ -172,7 +179,11 @@ namespace ViewModels
                 index++;
             }
 
-            _answersGiven[index, 0] = true;
+            if (_answersGiven[index, 0] == false)
+            {
+                _answersGiven[index, 0] = true;
+                answerCount++;
+            }
 
             if (SelectedAnswer.IsCorrect == "1") _answersGiven[index, 1] = true;
             else _answersGiven[index, 1] = false;
@@ -183,7 +194,27 @@ namespace ViewModels
         /// </summary>
         private void EndQuiz()
         {
+            int correctAnswers = 0;
+            float correctPercentage = 0;
 
+            int i = 0;
+            foreach (var question in questions)
+            {
+                if (_answersGiven[i, 1] == true)
+                {
+                    question.CorrectCount++;
+                    correctAnswers++;
+                }
+                else question.WrongCount++;
+
+                i++;
+            }
+
+            correctPercentage = (correctAnswers * 100) / questions.Count;
+
+            //TODO: show the statistics to the user
+
+            //TODO: push with the new information to the web.
         }
 
         #region HelperFunctions

@@ -29,7 +29,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock HorizontalAlignment="Left" Margin="10,44,0,0" TextWrapping="Wrap" Text="{Binding CurrentQuestion.Question1}" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="371" Height="52" TextAlignment="Center" FontSize="20" Grid.Column="1"/>
-        <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Height="212" Margin="10,0,0,0" VerticalAlignment="Top" Width="164" ItemsSource="{Binding Answers}" Grid.RowSpan="2" SelectionMode="Single"
+        <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" MinHeight="212" Margin="5,5" VerticalAlignment="Top" MinWidth="190" ItemsSource="{Binding Answers}" Grid.RowSpan="2" SelectionMode="Single"
                  SelectedItem="{Binding SelectedAnswer}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -43,6 +43,7 @@
         </ListBox>
 
         <Button Content="Answer" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" MinHeight="50" MinWidth="150" Command="{Binding QuestionAnswerClick}" Grid.ColumnSpan="2" Height="50" Margin="5, 5, 5, 5" Width="190" Grid.Column="1"/>
+        <Button Content="End Quiz" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" MinHeight="50" MinWidth="150" Command="{Binding EndQuizClick}" Grid.ColumnSpan="2" Height="50" Margin="5, 5, 5, 5" Width="190" Grid.Column="2"/>
 
         <!-- Please don't hurt me.
         <Button Content="{Binding ConverterParameter=0, Converter={StaticResource IntToAnswerConverter}, Mode=OneWay}" HorizontalAlignment="Left" Margin="54,30,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" MinWidth="100" MinHeight="50" Width="100" Height="50" 
@@ -59,7 +60,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <TextBlock Text="{Binding Path=Question1}" MinWidth="40" Foreground="{Binding Converter={StaticResource QuestionToAnswerStatusBrush}, Mode=OneWay}" />
+                        <TextBlock Text="{Binding Path=Question1}" MinWidth="40"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
