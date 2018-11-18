@@ -32,7 +32,7 @@ namespace ViewModels
 
         private int answerCount; //TODO: use to keep track of when we have answered all questions, to lessen the amount of work to do in EndQuiz.
 
-        //TODO: this should be made into something that is stored in a Question, to make access possible in converters, and easier to associate with given question.
+        //TODO: this should be made into something that is stored in the database
         private bool[,] _answersGiven; //[x,0] = is answer given, [x, 1] = is answer correct
 
         public AnswerQuizQuestionViewModel (Quiz quiz)
@@ -232,6 +232,11 @@ namespace ViewModels
                 "Quiz stats", MessageBoxButton.OK);
 
             //TODO: push with the new information to the web. And close the view.
+            foreach (var question in questions)
+            {
+                //Data.Question.Update(question.QuestionID, question);
+            }
+
         }
 
         #region HelperFunctions
