@@ -10,6 +10,12 @@
 -- SemesterNumber  :  
 -- StudyID         :  (references Study.StudyID)
 --
+--
+-- Create Table    : 'Semester'   
+-- SemesterID      :  
+-- SemesterNumber  :  
+-- StudyID         :  (references Study.StudyID)
+--
 CREATE TABLE Semester (
     SemesterID     BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     SemesterNumber NVARCHAR(5) NOT NULL,

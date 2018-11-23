@@ -33,6 +33,13 @@
 -- IsCorrect       :  
 -- QuestionID      :  (references Question.QuestionID)
 --
+--
+-- Create Table    : 'Answer'   
+-- AnswerID        :  
+-- Answer          :  
+-- IsCorrect       :  
+-- QuestionID      :  (references Question.QuestionID)
+--
 CREATE TABLE Answer (
     AnswerID       BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     Answer         NVARCHAR(500) NOT NULL,

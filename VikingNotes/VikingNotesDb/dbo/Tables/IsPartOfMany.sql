@@ -8,6 +8,11 @@
 -- CourseID        :  (references Course.CourseID)
 -- CatagoryID      :  (references Catagory.CatagoryID)
 --
+--
+-- Create Table    : 'IsPartOfMany'   
+-- CourseID        :  (references Course.CourseID)
+-- CatagoryID      :  (references Catagory.CatagoryID)
+--
 CREATE TABLE IsPartOfMany (
     CourseID       BIGINT NOT NULL,
     CatagoryID     BIGINT NOT NULL,

@@ -75,6 +75,7 @@
     <Build Include="dbo\Tables\Course.sql" />
     <Build Include="dbo\Tables\IsPartOfMany.sql" />
     <Build Include="dbo\Tables\Rating.sql" />
+    <Build Include="dbo\Tables\SelectedAnswer.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="TestData-PostDeploy.sql" />

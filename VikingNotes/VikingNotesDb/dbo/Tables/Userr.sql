@@ -43,6 +43,18 @@
 -- StudyID         :  (references Study.StudyID)
 -- StudentNumber   :  
 --
+--
+-- Create Table    : 'Userr'   
+-- UserID          :  
+-- UserName        :  
+-- Password        :  
+-- EmailAdress     :  
+-- UserTypeID      :  (references UserType.UserTypeID)
+-- StudyID         :  (references Study.StudyID)
+-- StudentNumber   :  
+-- AuthToken       :  
+-- Salt            :  
+--
 CREATE TABLE Userr (
     UserID         BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     UserName       NVARCHAR(100) NOT NULL UNIQUE,
@@ -51,8 +63,8 @@ CREATE TABLE Userr (
     UserTypeID     BIGINT NOT NULL,
     StudyID        BIGINT NOT NULL,
     StudentNumber  NVARCHAR(20) NOT NULL UNIQUE,
-	AuthToken	   NVARCHAR(100) NOT NULL,
-	Salt			NVARCHAR(20) NOT NULL,
+    AuthToken      NVARCHAR(100) NOT NULL,
+    Salt           NVARCHAR(20) NOT NULL,
 CONSTRAINT pk_Userr PRIMARY KEY CLUSTERED (UserID),
 CONSTRAINT fk_Userr FOREIGN KEY (UserTypeID)
     REFERENCES UserType (UserTypeID)

@@ -20,6 +20,12 @@
 -- Name            :  
 -- FacultyID       :  (references Faculty.FacultyID)
 --
+--
+-- Create Table    : 'Study'   
+-- StudyID         :  
+-- Name            :  
+-- FacultyID       :  (references Faculty.FacultyID)
+--
 CREATE TABLE Study (
     StudyID        BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     Name           NVARCHAR(100) NOT NULL UNIQUE,
