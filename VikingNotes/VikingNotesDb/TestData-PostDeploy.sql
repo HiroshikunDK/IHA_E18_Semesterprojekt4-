@@ -76,9 +76,9 @@ INSERT INTO [dbo].[UserType] ([UserTypeID], [Type]) VALUES (3, N'SystemAdmin')
 SET IDENTITY_INSERT [dbo].[UserType] OFF
 SET IDENTITY_INSERT [dbo].[Userr] ON
 
-INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (1, N'SvendTheMan', N'123456', N'Svenden@gmail.com', 1, 1, N'201110642')
-INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (2, N'Jens', N'megetlangkode', N'L33tM4ch1ne@gmail.com', 2, 2, N'20150652')
-INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (3, N'Kirstine', N'utroliglangkode', N'Admin@VikingNotes.dk', 3, 3, N'201211071')
+INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber], [AuthToken], [Salt]) VALUES (1, N'SvendTheMan', N'123456', N'Svenden@gmail.com', 1, 1, N'201110642', N' ', N' ')
+INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber], [AuthToken], [Salt]) VALUES (2, N'Jens', N'megetlangkode', N'L33tM4ch1ne@gmail.com', 2, 2, N'20150652', N' ', N' ')
+INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber], [AuthToken], [Salt]) VALUES (3, N'Kirstine', N'utroliglangkode', N'Admin@VikingNotes.dk', 3, 3, N'201211071', N' ', N' ')
 
 SET IDENTITY_INSERT [dbo].[Userr] OFF
 SET IDENTITY_INSERT [dbo].[Quiz] ON
