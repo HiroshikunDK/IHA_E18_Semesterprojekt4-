@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DAL.Core;
 using DAL.Core.Repositories;
 using Newtonsoft.Json;
 using RESTfullWebApi.Models;
@@ -13,6 +15,8 @@ namespace DAL.Presistence.Repositories
 {
     public class UserRepository : Repository<Userr>, IUserRepository
     {
+       
+
         public async Task<List<Userr>> TryLoginUser(string username, string password)
         {
             string uri = "api/Userr?username=" + username + "&password=" + GetHash.SHA1(password);

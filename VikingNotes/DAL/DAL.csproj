@@ -62,17 +62,10 @@
     <Compile Include="Presistence\GetHash.cs" />
     <Compile Include="Presistence\LoginService.cs" />
     <Compile Include="Presistence\Repositories\AnswerRepository.cs" />
-    <Compile Include="Presistence\Repositories\CatagoryRepository.cs" />
-    <Compile Include="Presistence\Repositories\CourseRepository.cs" />
-    <Compile Include="Presistence\Repositories\FacultyRepository.cs" />
     <Compile Include="Presistence\Repositories\QuestionRepository.cs" />
     <Compile Include="Presistence\Repositories\QuizRepository.cs" />
-    <Compile Include="Presistence\Repositories\RatingRepository.cs" />
     <Compile Include="Presistence\Repositories\Repository.cs" />
-    <Compile Include="Presistence\Repositories\SemesterRepository.cs" />
-    <Compile Include="Presistence\Repositories\StudyRepository.cs" />
     <Compile Include="Presistence\Repositories\UserRepository.cs" />
-    <Compile Include="Presistence\Repositories\UserTypeRepository.cs" />
     <Compile Include="Presistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

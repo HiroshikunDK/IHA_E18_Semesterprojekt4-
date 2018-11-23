@@ -45,11 +45,11 @@ namespace ViewModels
         {
             Data = data;
 
-            Username = "Tester";
+            Username = "TesterGuy";
             Password = "12341234";
             RePassword = "12341234";
-            Email = "testtest@test.test";
-            StudyID = "1231231231";
+            Email = "testtest2@test.test";
+            StudyID = "342424234";
             Study = new Study();
 
             Usernames = new List<string>();

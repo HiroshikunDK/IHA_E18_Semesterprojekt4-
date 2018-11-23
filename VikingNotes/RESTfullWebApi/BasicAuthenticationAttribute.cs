@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi
 {
@@ -24,15 +25,13 @@ namespace RESTfullWebApi
             }
             else
             {
-                string authenticationToken = actionContext.Request.Headers.Authorization.Parameter;
-                string decodedAuthenticationToken = Encoding.UTF8.GetString(Convert.FromBase64String(authenticationToken));
-                string[] usernamePasswordArray = decodedAuthenticationToken.Split(':');
-                string username = usernamePasswordArray[0];
-                string password = usernamePasswordArray[1];
+                string authenticationToken = actionContext.Request.Headers.Authorization.ToString();
 
-                if (UserSecurity.Login(username, password))
+                Userr user = UserSecurity.Authentication(authenticationToken);
+
+                if (user != null)
                 {
-                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
+                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(user.UserName), null);
                 }
                 else
                 {

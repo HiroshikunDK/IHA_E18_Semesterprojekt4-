@@ -41,7 +41,7 @@ namespace ViewModels
             questions = selectedQuiz.Questions.ToList();
             _answersGiven = new bool[questions.Count, 2];
             CurrentQuestion = questions[0];
-            GetAllAnswers();
+            //GetAllAnswers();
 
             NextQuestionClick = new Command(NextQuestionClickFunc, CanExecute);
             PrevQuestionClick = new Command(PrevQuestionClickFunc, CanExecute);
@@ -114,13 +114,13 @@ namespace ViewModels
         /// <summary>
         /// Used for frontloading all answers to the questions in the quiz.
         /// </summary>
-        private async void GetAllAnswers()
-        {
-            foreach (var question in SelectedQuiz.Questions)
-            {
-                Answers = (await Data.Answer.GetAnswerByQuestionID(question.QuestionID));
-            }
-        }
+        //private async void GetAllAnswers()
+        //{
+        //    foreach (var question in SelectedQuiz.Questions)
+        //    {
+        //        Answers = (await Data.Answer.GetAnswerByQuestionID(question.QuestionID));
+        //    }
+        //}
 
         #endregion
 

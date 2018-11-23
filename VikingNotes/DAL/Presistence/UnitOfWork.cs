@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Core;
@@ -14,6 +15,8 @@ namespace DAL.Presistence
     {
         public UnitOfWork()
         {
+            LoginService = new LoginService(this);
+            LoginService.UserLoggedIn += AddAuthTokens;
             User = new UserRepository();
             Answer = new AnswerRepository();
             Catagory = new Repository<Catagory>();
@@ -25,10 +28,25 @@ namespace DAL.Presistence
             Faculty = new Repository<Faculty>();
             Rating = new Repository<Rating>();
             Semester = new Repository<Semester>();
-            LoginService = new LoginService(this);
+            
         }
 
-        public IUserRepository User { get; }
+        private void AddAuthTokens(object o, UserLoggedInEventArg args)
+        {
+            User.SetAuthToken(args.User.AuthToken);
+            Answer.SetAuthToken(args.User.AuthToken);
+            Catagory.SetAuthToken(args.User.AuthToken);
+            Question.SetAuthToken(args.User.AuthToken);
+            Quiz.SetAuthToken(args.User.AuthToken);
+            Study.SetAuthToken(args.User.AuthToken);
+            UserType.SetAuthToken(args.User.AuthToken);
+            Course.SetAuthToken(args.User.AuthToken);
+            Faculty.SetAuthToken(args.User.AuthToken);
+            Rating.SetAuthToken(args.User.AuthToken);
+            Semester.SetAuthToken(args.User.AuthToken);
+        }
+
+        public IUserRepository User { get; set; }
         public IAnswerRepository Answer { get; }
         public IRepository<Catagory> Catagory { get; }
         public IRepository<Question> Question { get; }
