@@ -43,6 +43,14 @@
 -- Description     :  
 -- CatagoryID      :  (references Catagory.CatagoryID)
 --
+--
+-- Create Table    : 'Quiz'   
+-- QuizID          :  
+-- UserID          :  (references Userr.UserID)
+-- Name            :  
+-- Description     :  
+-- CatagoryID      :  (references Catagory.CatagoryID)
+--
 CREATE TABLE Quiz (
     QuizID         BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     UserID         BIGINT NOT NULL,

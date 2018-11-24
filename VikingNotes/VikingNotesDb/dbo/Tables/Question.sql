@@ -40,6 +40,14 @@
 -- WrongCount      :  
 -- CorrectCount    :  
 --
+--
+-- Create Table    : 'Question'   
+-- QuestionID      :  
+-- Question        :  
+-- QuizID          :  (references Quiz.QuizID)
+-- WrongCount      :  
+-- CorrectCount    :  
+--
 CREATE TABLE Question (
     QuestionID     BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     Question       NVARCHAR(1000) NOT NULL,
