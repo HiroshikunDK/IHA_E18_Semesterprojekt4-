@@ -361,6 +361,10 @@ namespace ViewModels
         public async void GetStudyList()
         {
             StudyList = await Data.Study.GetAllAsync();
+            foreach (var Study in StudyList)
+            {
+                Study.Name = Study.Name.Trim();
+            }
         }
 
         public async void GetStandardUserType()

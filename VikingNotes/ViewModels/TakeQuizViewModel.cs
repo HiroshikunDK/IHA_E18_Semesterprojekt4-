@@ -19,6 +19,11 @@ namespace ViewModels
         public ICommand SelectFaculityCommand { get; set; }
 
         public ICommand SelectStudyCommand { get; set; }
+
+        public EventHandler<EventArgs> IsDoingQuiz;
+
+        public EventHandler<EventArgs> FinishedQuiz;
+
         //public ICommand SelectSemesterCommand { get; set; }
         //public ICommand SelectCourseCommand { get; set; }
         //public ICommand SelectQuizCommand { get; set; }
@@ -36,6 +41,8 @@ namespace ViewModels
         private IUnitOfWork Data = new UnitOfWork();
 
         private BaseViewModel quizContent { set; get; }
+
+        private bool isDoingQuiz = false;
 
         public BaseViewModel QuizContent
         {
@@ -137,7 +144,7 @@ namespace ViewModels
 
         private bool canExecute(object parameter)
         {
-            return true;
+            return !isDoingQuiz;
         }
 
         public async void SelectFaculity(object parameter)
@@ -229,6 +236,8 @@ namespace ViewModels
 
                 QuizContent = new AnswerQuizQuestionViewModel(quizWithQuestions);
                 answerView.DataContext = QuizContent;
+                isDoingQuiz = true;
+                IsDoingQuiz?.Invoke(this, EventArgs.Empty);
             }
         }
     }
