@@ -30,6 +30,9 @@ namespace ViewModels
         public ICommand NextQuestionClick { get; set; }
         public ICommand PrevQuestionClick { get; set; }
 
+        //Storing the statistics of the answers given to the quiz
+        private QuizUserStatistic _results;
+
         private int answerCount; //TODO: use to keep track of when we have answered all questions, to lessen the amount of work to do in EndQuiz.
 
         //TODO: this should be made into something that is stored in the database
@@ -47,6 +50,15 @@ namespace ViewModels
             PrevQuestionClick = new Command(PrevQuestionClickFunc, CanExecute);
             QuestionAnswerClick = new Command(QuestionAnswerClickFunc, CanExecute);
             EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
+
+            //setup for local results
+            _results = new QuizUserStatistic();
+
+            foreach (var question in questions)
+            {
+                _results.SelectedAnswers.Add(new SelectedAnswer(){Question = question, QuestionID = question.QuestionID, QuizUserStatistic = _results});
+            }
+
         }
 
         #region Properties
@@ -145,7 +157,7 @@ namespace ViewModels
                 var res = MessageBox.Show("You have answered all questions, do you want to end the quiz?",
                     "Do you want to end the Quiz?", MessageBoxButton.YesNo);
 
-                if (res == MessageBoxResult.Yes) EndQuiz(); //TODO: update to make a prompt where it is possible to end or wait
+                if (res == MessageBoxResult.Yes) EndQuiz();
             }           
             else GoToNextQuestion();
         }
@@ -199,7 +211,10 @@ namespace ViewModels
                 answerCount++;
             }
 
-            if (SelectedAnswer.IsCorrect == "1") _answersGiven[index, 1] = true;
+            if (SelectedAnswer.IsCorrect == "1")
+            {
+                _answersGiven[index, 1] = true;
+            }
             else _answersGiven[index, 1] = false;
         }
 
