@@ -24,12 +24,14 @@ namespace ViewModels
         private List<Quiz> listOfQuizzes { get; set; }
 
         public ICommand GetRatingsCommand { get; set; }
+        public ICommand GetRatingInfo { get; set; }
 
         private IUnitOfWork Data = new UnitOfWork();
 
         public YourStatisticsViewModel(/*IUnitOfWork data*/ )
         {
             GetRatingsCommand = new Command(GetRatingCommandClickFunc, canExecute);
+            GetRatingInfo = new Command(GetRatingInfoClickFunc, canExecute);
             //Data = data;
             //currentUser = (Userr)Data.User;
             getRelevantQuizList(3);
@@ -45,7 +47,7 @@ namespace ViewModels
             currentUser = Data.LoginService.User;
         }
 
-        public Userr UserID
+        public Userr Userr
         {
             get { return currentUser; }
             set
@@ -124,12 +126,39 @@ namespace ViewModels
 
         #region Commands
 
-        private void GetRatingCommandClickFunc(object obj)
+        private void GetRatingCommandClickFunc(object QuizID)
         {
-            if (currentQu)
+            int ID = Convert.ToInt32(QuizID);
+
+            foreach (var item in Quizzes)
             {
-                currentQuestionIndex--;
-                currentQuestion = selectedQuiz.Questions.ElementAt(currentQuestionIndex);
+                if (item.QuizID == ID)
+                {
+                    Quiz = item;
+                }
+            }
+
+            Quizzes.Clear();
+            getRelevantRatingList(ID);
+            TotalRating = 0;
+
+            foreach (var item in Ratings)
+            {
+                TotalRating += item.Rating1;
+            }
+            TotalRating = TotalRating / Ratings.Count();
+        }
+
+        private void GetRatingInfoClickFunc(object ratingID)
+        {
+            int ID = Convert.ToInt32(ratingID);
+
+            foreach (var item in Ratings)
+            {
+                if (item.RatingID == ID)
+                {
+                    Rating = item;
+                }
             }
         }
 
@@ -137,8 +166,10 @@ namespace ViewModels
         {
             return true;
         }
-        
+
         #endregion
+
+        #region Database_calls
 
         public async void getRelevantQuizList(long UserID)
         {
@@ -147,9 +178,10 @@ namespace ViewModels
 
         public async void getRelevantRatingList(long quizID)
         {
-            //ListOfRating = await Data.Rating.;
+            listOfRating = await Data.Rating.GetRatingByQuizID(quizID);
         }
 
+        #endregion
 
 
 
