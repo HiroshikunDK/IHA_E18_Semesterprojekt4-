@@ -51,12 +51,13 @@ namespace ViewModels
             QuestionAnswerClick = new Command(QuestionAnswerClickFunc, CanExecute);
             EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
 
+            Userr currUser = new Userr(){UserID = 1}; //TODO: fix me plox
             //setup for local results
-            _results = new QuizUserStatistic();
+            _results = new QuizUserStatistic(){QuizID = selectedQuiz.QuizID, UserID = currUser.UserID};
 
             foreach (var question in questions)
             {
-                _results.SelectedAnswers.Add(new SelectedAnswer(){Question = question, QuestionID = question.QuestionID, QuizUserStatistic = _results});
+                _results.SelectedAnswers.Add(new SelectedAnswer(){Question = question, QuestionID = question.QuestionID});
             }
 
         }
@@ -123,6 +124,18 @@ namespace ViewModels
             Answers = (await Data.Answer.GetAnswerByQuestionID(CurrentQuestion.QuestionID));
         }
 
+        private async void AddStatistics()
+        {
+            await Data.QuizUserStatistic.Add(_results);
+        }
+
+        private async void UpdateAllQuestions()
+        {
+            foreach (var question in questions)
+            {
+                Data.Question.Update(question.QuestionID, question); //TODO: Can't await
+            }
+        }
         /// <summary>
         /// Used for frontloading all answers to the questions in the quiz.
         /// </summary>
@@ -198,24 +211,27 @@ namespace ViewModels
         private void LogAnswer()
         {
             int index = 0;
-            foreach (var question in SelectedQuiz.Questions)
+            foreach (var answer in _results.SelectedAnswers)
             {
-                if (question.QuestionID == CurrentQuestion.QuestionID) break;
+                if (answer.QuestionID == CurrentQuestion.QuestionID) break;
 
                 index++;
             }
 
-            if (_answersGiven[index, 0] == false)
+            if (_results.SelectedAnswers.ElementAt(index).IsSelectedCorrect == null)
             {
+                _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = SelectedAnswer.IsCorrect;
+
                 _answersGiven[index, 0] = true;
                 answerCount++;
             }
 
-            if (SelectedAnswer.IsCorrect == "1")
-            {
-                _answersGiven[index, 1] = true;
-            }
-            else _answersGiven[index, 1] = false;
+            //if (SelectedAnswer.IsCorrect == "1")
+            //{
+            //    _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = "1";
+            //    _answersGiven[index, 1] = true; //TODO: get these fixed so we only need _results
+            //}
+            //else _answersGiven[index, 1] = false;
         }
 
         /// <summary>
@@ -226,31 +242,46 @@ namespace ViewModels
             int correctAnswers = 0;
             float correctPercentage = 0;
 
-            int i = 0;
-            foreach (var question in questions)
+            foreach (var answer in _results.SelectedAnswers)
             {
-                if (_answersGiven[i, 1] == true)
+                if (answer.IsSelectedCorrect == "1")
                 {
-                    question.CorrectCount++;
                     correctAnswers++;
+                    answer.Question.CorrectCount++;
                 }
-                else question.WrongCount++;
-
-                i++;
+                else answer.Question.WrongCount++;
             }
 
             correctPercentage = (correctAnswers * 100) / questions.Count;
+            _results.correctPercentage = (correctAnswers * 100) / questions.Count;
+
+            //int i = 0;
+            //foreach (var question in questions)
+            //{
+            //    if (_answersGiven[i, 1] == true)
+            //    {
+            //        question.CorrectCount++;
+            //        correctAnswers++;
+            //    }
+            //    else question.WrongCount++;
+
+            //    i++;
+            //}
+
+            //correctPercentage = (correctAnswers * 100) / questions.Count;
 
             //TODO: Add comparison with the average in percentage.
             MessageBox.Show(
                 $"You have answered {correctAnswers} correctly, out of: {questions.Count} questions. Making for {correctPercentage}% correct answers.",
                 "Quiz stats", MessageBoxButton.OK);
 
-            //TODO: push with the new information to the web. And close the view.
-            foreach (var question in questions)
-            {
-                //Data.Question.Update(question.QuestionID, question);
-            }
+            //TODO: check if it saves everything as it should, and make it close the view.
+
+            AddStatistics();
+            UpdateAllQuestions();
+
+            //Data.Quiz.Update(SelectedQuiz.QuizID, SelectedQuiz); //TODO check if this is ok, otherwise use loop as seen below
+
 
         }
 
