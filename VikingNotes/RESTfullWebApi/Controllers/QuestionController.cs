@@ -59,7 +59,7 @@ namespace RESTfullWebApi.Controllers
 
         // PUT: api/Question/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutQuestion(long id, Question question)
+        public async Task<IHttpActionResult> PutQuestion(long id, [FromBody]Question question)
         {
             if (!ModelState.IsValid)
             {

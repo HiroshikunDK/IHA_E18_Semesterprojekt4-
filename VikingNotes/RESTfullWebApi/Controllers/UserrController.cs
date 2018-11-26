@@ -101,7 +101,7 @@ namespace RESTfullWebApi.Controllers
 
         // PUT: api/Userr/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUserr(long id, Userr userr)
+        public async Task<IHttpActionResult> PutUserr(long id,[FromBody]Userr userr)
         {
             if (!ModelState.IsValid)
             {

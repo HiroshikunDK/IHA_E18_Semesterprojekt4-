@@ -11,7 +11,7 @@ namespace DAL.Core.Repositories
     {
         Task<TEntity> GetAsync(long id);
         Task<List<TEntity>> GetAllAsync();
-        void Update(long id, TEntity entity);
+        Task<HttpResponseMessage> Update(long id, TEntity entity);
         Task<TEntity> Add(TEntity entity);
         void Remove(long id);
 
