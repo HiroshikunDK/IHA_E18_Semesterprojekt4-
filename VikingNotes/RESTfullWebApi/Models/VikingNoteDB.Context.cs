@@ -31,7 +31,9 @@ namespace RESTfullWebApi.Models
         public virtual DbSet<Faculty> Faculties { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Quiz> Quizs { get; set; }
+        public virtual DbSet<QuizUserStatistic> QuizUserStatistics { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<SelectedAnswer> SelectedAnswers { get; set; }
         public virtual DbSet<Semester> Semesters { get; set; }
         public virtual DbSet<Study> Studies { get; set; }
         public virtual DbSet<Userr> Userrs { get; set; }

@@ -22,5 +22,7 @@ namespace DAL.Core
         IRepository<Rating> Rating { get; }
         IRepository<Semester> Semester { get; }
         ILoginService LoginService { get; }
+        IRepository<SelectedAnswer> SelectedAnswer { get; }
+        IRepository<QuizUserStatistic> QuizUserStatistic { get; }
     }
 }

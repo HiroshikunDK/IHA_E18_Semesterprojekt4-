@@ -28,6 +28,8 @@ namespace DAL.Presistence
             Faculty = new Repository<Faculty>();
             Rating = new Repository<Rating>();
             Semester = new Repository<Semester>();
+            SelectedAnswer = new Repository<SelectedAnswer>();
+            QuizUserStatistic = new Repository<QuizUserStatistic>();
             
         }
 
@@ -44,6 +46,8 @@ namespace DAL.Presistence
             Faculty.SetAuthToken(args.User.AuthToken);
             Rating.SetAuthToken(args.User.AuthToken);
             Semester.SetAuthToken(args.User.AuthToken);
+            SelectedAnswer.SetAuthToken(args.User.AuthToken);
+            QuizUserStatistic.SetAuthToken(args.User.AuthToken);
         }
 
         public IUserRepository User { get; set; }
@@ -58,5 +62,7 @@ namespace DAL.Presistence
         public IRepository<Rating> Rating { get; }
         public IRepository<Semester> Semester { get; }
         public ILoginService LoginService { get; }
+        public IRepository<SelectedAnswer> SelectedAnswer { get; }
+        public IRepository<QuizUserStatistic> QuizUserStatistic { get; }
     }
 }

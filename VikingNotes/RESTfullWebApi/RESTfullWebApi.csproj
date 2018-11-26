@@ -193,7 +193,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
+    <Compile Include="Controllers\QuizUserStatisticController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
+    <Compile Include="Controllers\SelectedAnswerController.cs" />
     <Compile Include="Controllers\SemesterController.cs" />
     <Compile Include="Controllers\StudyController.cs" />
     <Compile Include="Controllers\UserrController.cs" />
@@ -222,7 +224,13 @@
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\QuizDTO.cs" />
+    <Compile Include="Models\QuizUserStatistic.cs">
+      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Rating.cs">
+      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SelectedAnswer.cs">
       <DependentUpon>VikingNoteDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Semester.cs">

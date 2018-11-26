@@ -18,6 +18,7 @@ namespace RESTfullWebApi.Models
         public Quiz()
         {
             this.Questions = new HashSet<Question>();
+            this.QuizUserStatistics = new HashSet<QuizUserStatistic>();
             this.Ratings = new HashSet<Rating>();
         }
     
@@ -31,6 +32,8 @@ namespace RESTfullWebApi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
         public virtual Userr Userr { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QuizUserStatistic> QuizUserStatistics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rating> Ratings { get; set; }
     }
