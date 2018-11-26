@@ -39,33 +39,31 @@
             <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="The Ratings" Grid.Column="5" Grid.Row="2" />
 
             <!--List Boxes  -->
-        <ListBox Name="YourQuizzesList" Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Quizzes} ">
+        <ListBox Name="YourQuizzesList" Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Quizzes}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                    <Border BorderBrush="DarkGray" Background="LightGray" BorderThickness="2">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Content="{Binding Name}" Command="{Binding ElementName=this, Path=DataContext.QuestionAnswerClick}" CommandParameter="{Binding Path=QuizID}">
+                    <WrapPanel>
+                            <Button Content="{Binding Name}" Command="{Binding ElementName=this, Path=DataContext.GetRatingsCommand}" CommandParameter="{Binding Path=QuizID}">
                             </Button>
-                        </StackPanel>
-                    </Border>
+                    </WrapPanel>    
                 </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <ListBox Grid.Column="3" Grid.Row="3">
-                <TextBlock Name="Rating"></TextBlock>
+            <ListBox Grid.Column="3" Grid.Row="3" SelectionChanged="ListBox_SelectionChanged">
+            <TextBlock Name="Rating" Text="{Binding Rating.Rating1}"></TextBlock>
             </ListBox>
 
             <ListBox Name="SpecificReview" Grid.Column="3" Grid.Row="5">
-                <TextBlock Name="SomeReview"/>
+            <TextBlock Name="SomeReview" Text="{Binding Rating.Reasons}"/>
             </ListBox>
 
-            <ListBox Name="TheRatings" Grid.Column="5" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding theRatings}">
+            <ListBox Name="TheRatings" Grid.Column="5" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Ratings}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="DarkGray" Background="LightGray" BorderThickness="2">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Margin="5,5,90,5">
+                            <Button Content="{Binding Rating1}" Command="{Binding ElementName=this, Path=DataContext.GetRatingInfo}" CommandParameter="{Binding Path=RatingID}">
                                 </Button>
                             </StackPanel>
                         </Border>

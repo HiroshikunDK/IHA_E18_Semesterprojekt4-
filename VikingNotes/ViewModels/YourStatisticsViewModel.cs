@@ -178,7 +178,7 @@ namespace ViewModels
 
         public async void getRelevantRatingList(long quizID)
         {
-            listOfRating = await Data.Rating.GetRatingByQuizID(quizID);
+            //Ratings = await Data.Rating.GetRatingByQuizID(quizID);
         }
 
         #endregion
