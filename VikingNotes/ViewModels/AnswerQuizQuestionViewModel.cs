@@ -124,7 +124,7 @@ namespace ViewModels
         {
             foreach (var question in questions)
             {
-                Data.Question.Update(question.QuestionID, question); //TODO: Can't await
+                await Data.Question.Update(question.QuestionID, question); //TODO: Can't await
             }
         }
         /// <summary>
