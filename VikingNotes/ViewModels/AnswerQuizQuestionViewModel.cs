@@ -35,14 +35,10 @@ namespace ViewModels
 
         private int answerCount; //TODO: use to keep track of when we have answered all questions, to lessen the amount of work to do in EndQuiz.
 
-        //TODO: this should be made into something that is stored in the database
-        private bool[,] _answersGiven; //[x,0] = is answer given, [x, 1] = is answer correct
-
         public AnswerQuizQuestionViewModel (Quiz quiz)
         {
             selectedQuiz = quiz;
             questions = selectedQuiz.Questions.ToList();
-            _answersGiven = new bool[questions.Count, 2];
             CurrentQuestion = questions[0];
             //GetAllAnswers();
 
@@ -51,8 +47,8 @@ namespace ViewModels
             QuestionAnswerClick = new Command(QuestionAnswerClickFunc, CanExecute);
             EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
 
+
             Userr currUser = new Userr(){UserID = 1}; //TODO: fix me plox
-            //setup for local results
             _results = new QuizUserStatistic(){QuizID = selectedQuiz.QuizID, UserID = currUser.UserID};
 
             foreach (var question in questions)
@@ -103,11 +99,6 @@ namespace ViewModels
             {
                 selectedAnswer = value;
             }
-        }
-
-        public bool[,] AnswersGiven
-        {
-            get { return _answersGiven; }
         }
 
         #endregion
@@ -214,24 +205,15 @@ namespace ViewModels
             foreach (var answer in _results.SelectedAnswers)
             {
                 if (answer.QuestionID == CurrentQuestion.QuestionID) break;
-
                 index++;
             }
 
             if (_results.SelectedAnswers.ElementAt(index).IsSelectedCorrect == null)
             {
-                _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = SelectedAnswer.IsCorrect;
-
-                _answersGiven[index, 0] = true;
                 answerCount++;
             }
 
-            //if (SelectedAnswer.IsCorrect == "1")
-            //{
-            //    _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = "1";
-            //    _answersGiven[index, 1] = true; //TODO: get these fixed so we only need _results
-            //}
-            //else _answersGiven[index, 1] = false;
+            _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = SelectedAnswer.IsCorrect;
         }
 
         /// <summary>
@@ -240,7 +222,6 @@ namespace ViewModels
         private void EndQuiz()
         {
             int correctAnswers = 0;
-            float correctPercentage = 0;
 
             foreach (var answer in _results.SelectedAnswers)
             {
@@ -251,37 +232,15 @@ namespace ViewModels
                 }
                 else answer.Question.WrongCount++;
             }
-
-            correctPercentage = (correctAnswers * 100) / questions.Count;
             _results.correctPercentage = (correctAnswers * 100) / questions.Count;
-
-            //int i = 0;
-            //foreach (var question in questions)
-            //{
-            //    if (_answersGiven[i, 1] == true)
-            //    {
-            //        question.CorrectCount++;
-            //        correctAnswers++;
-            //    }
-            //    else question.WrongCount++;
-
-            //    i++;
-            //}
-
-            //correctPercentage = (correctAnswers * 100) / questions.Count;
 
             //TODO: Add comparison with the average in percentage.
             MessageBox.Show(
-                $"You have answered {correctAnswers} correctly, out of: {questions.Count} questions. Making for {correctPercentage}% correct answers.",
+                $"You have answered {correctAnswers} correctly, out of: {questions.Count} questions. Making for {_results.correctPercentage}% correct answers.",
                 "Quiz stats", MessageBoxButton.OK);
-
-            //TODO: check if it saves everything as it should, and make it close the view.
 
             AddStatistics();
             UpdateAllQuestions();
-
-            //Data.Quiz.Update(SelectedQuiz.QuizID, SelectedQuiz); //TODO check if this is ok, otherwise use loop as seen below
-
 
         }
 
@@ -292,13 +251,15 @@ namespace ViewModels
         /// </summary>
         private void GoToNextQuestion()
         {
-            for (int i = 0; i < _answersGiven.Length; i++)
+            int i = 0;
+            foreach (var answer in _results.SelectedAnswers)
             {
-                if (_answersGiven[i, 0] == false)
+                if (answer.IsSelectedCorrect == null)
                 {
                     CurrentQuestion = SelectedQuiz.Questions.ElementAt(i);
                     break;
                 }
+                i++;
             }
         }
 
