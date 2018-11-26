@@ -7,7 +7,9 @@
              xmlns:ViewModels="clr-namespace:ViewModels;assembly=ViewModels"
         xmlns:models="clr-namespace:RESTfullWebApi.Models;assembly=RESTfullWebApi"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+            
     <Grid>
         <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
@@ -37,12 +39,12 @@
             <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="The Ratings" Grid.Column="5" Grid.Row="2" />
 
             <!--List Boxes  -->
-        <ListBox Name="YourQuizzesList" Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Quizzes}">
+        <ListBox Name="YourQuizzesList" Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Quizzes} ">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                     <Border BorderBrush="DarkGray" Background="LightGray" BorderThickness="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Content="{Binding Name}" Margin="5,5,90,5">
+                            <Button Content="{Binding Name}" Command="{Binding ElementName=this, Path=DataContext.QuestionAnswerClick}" CommandParameter="{Binding Path=QuizID}">
                             </Button>
                         </StackPanel>
                     </Border>
