@@ -48,12 +48,12 @@ namespace ViewModels
             EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
 
 
-            Userr currUser = new Userr(){UserID = 1}; //TODO: fix me plox
-            _results = new QuizUserStatistic(){QuizID = selectedQuiz.QuizID, UserID = currUser.UserID};
-
+            _results = new QuizUserStatistic(){QuizID = selectedQuiz.QuizID, UserID = 1 };
+            int i = 0;
             foreach (var question in questions)
             {
-                _results.SelectedAnswers.Add(new SelectedAnswer(){Question = question, QuestionID = question.QuestionID});
+                _results.SelectedAnswers.Add(new SelectedAnswer(){QuestionID = question.QuestionID});
+                i++;
             }
 
         }
@@ -223,14 +223,21 @@ namespace ViewModels
         {
             int correctAnswers = 0;
 
+            int i = 0;
             foreach (var answer in _results.SelectedAnswers)
             {
                 if (answer.IsSelectedCorrect == "1")
                 {
                     correctAnswers++;
-                    answer.Question.CorrectCount++;
+                    questions[i].CorrectCount++;
                 }
-                else answer.Question.WrongCount++;
+                else
+                {
+                    answer.IsSelectedCorrect = "0"; //Used to ensure non of them are null, as this is abused to make things easier earlier.
+                    questions[i].WrongCount++;
+                }
+
+                i++;
             }
             _results.correctPercentage = (correctAnswers * 100) / questions.Count;
 
