@@ -64,6 +64,7 @@
     <Compile Include="Presistence\Repositories\AnswerRepository.cs" />
     <Compile Include="Presistence\Repositories\QuestionRepository.cs" />
     <Compile Include="Presistence\Repositories\QuizRepository.cs" />
+    <Compile Include="Presistence\Repositories\RatingRepository.cs" />
     <Compile Include="Presistence\Repositories\Repository.cs" />
     <Compile Include="Presistence\Repositories\UserRepository.cs" />
     <Compile Include="Presistence\UnitOfWork.cs" />

@@ -50,7 +50,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Grid.Column="3" Grid.Row="3" SelectionChanged="ListBox_SelectionChanged">
+        <ListBox Grid.Column="3" Grid.Row="3" >
             <TextBlock Name="Rating" Text="{Binding Rating.Rating1}"></TextBlock>
         </ListBox>
 
