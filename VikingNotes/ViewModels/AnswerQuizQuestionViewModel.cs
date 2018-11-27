@@ -181,12 +181,12 @@ namespace ViewModels
 
                 i++;
             }
-            GoToNextQuestion();
+            GoToNextUnansweredQuestion();
         }
 
         private void NextQuestionClickFunc(object obj)
         {
-            GoToNextQuestion();
+            GoToNextUnansweredQuestion();
         }
 
         private void PrevQuestionClickFunc(object obj)
@@ -276,18 +276,25 @@ namespace ViewModels
         /// <summary>
         /// Moves to first Question in the quiz that hasn't been answered.
         /// </summary>
-        private void GoToNextQuestion()
+        private void GoToNextUnansweredQuestion()
         {
+            bool isEndOfQuiz = true;
             int i = 0;
             foreach (var answer in _results.SelectedAnswers)
             {
                 if (answer.IsSelectedCorrect == null)
                 {
                     CurrentQuestion = SelectedQuiz.Questions.ElementAt(i);
+                    isEndOfQuiz = false;
                     break;
                 }
                 i++;
             }
+
+            if (isEndOfQuiz)
+                MessageBox.Show("You have answered every question in the quiz, you can end the quiz whenever you want.", "Everything has been answered",
+                    MessageBoxButton.OK);
+
         }
 
         /// <summary>
