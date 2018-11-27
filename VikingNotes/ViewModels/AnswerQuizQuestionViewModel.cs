@@ -33,7 +33,7 @@ namespace ViewModels
         //Storing the statistics of the answers given to the quiz
         private QuizUserStatistic _results;
 
-        private int answerCount; //TODO: use to keep track of when we have answered all questions, to lessen the amount of work to do in EndQuiz.
+        private int answerCount;
 
         public AnswerQuizQuestionViewModel (Quiz quiz)
         {
@@ -48,12 +48,13 @@ namespace ViewModels
             EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
 
 
-            Userr currUser = new Userr(){UserID = 1}; //TODO: fix me plox
-            _results = new QuizUserStatistic(){QuizID = selectedQuiz.QuizID, UserID = currUser.UserID};
+            //long userID = Data.LoginService.User.UserID; //returns 0 every time.
+            long userID = 1;
+            _results = new QuizUserStatistic(){QuizID = selectedQuiz.QuizID, UserID = userID};
 
             foreach (var question in questions)
             {
-                _results.SelectedAnswers.Add(new SelectedAnswer(){Question = question, QuestionID = question.QuestionID});
+                _results.SelectedAnswers.Add(new SelectedAnswer(){QuestionID = question.QuestionID});
             }
 
         }
@@ -111,7 +112,6 @@ namespace ViewModels
         private async void GetAnswers()
         {
             int id = Convert.ToInt32(CurrentQuestion.QuestionID);
-            //Answers = (await Data.Answer.GetAllAsync()).ToList();
             Answers = (await Data.Answer.GetAnswerByQuestionID(CurrentQuestion.QuestionID));
         }
 
@@ -223,14 +223,18 @@ namespace ViewModels
         {
             int correctAnswers = 0;
 
+            int i = 0;
             foreach (var answer in _results.SelectedAnswers)
             {
                 if (answer.IsSelectedCorrect == "1")
                 {
                     correctAnswers++;
-                    answer.Question.CorrectCount++;
+                    questions[i].CorrectCount++;
                 }
-                else answer.Question.WrongCount++;
+                else questions[i].WrongCount++;
+
+                answer.IsSelectedCorrect = "0"; //null fix
+                i++;
             }
             _results.correctPercentage = (correctAnswers * 100) / questions.Count;
 
