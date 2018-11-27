@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DAL.Core;
@@ -238,7 +239,16 @@ namespace ViewModels
                 answerView.DataContext = QuizContent;
                 isDoingQuiz = true;
                 IsDoingQuiz?.Invoke(this, EventArgs.Empty);
+
+                var quizviewmodel = (AnswerQuizQuestionViewModel)QuizContent;
+                quizviewmodel.QuizEndedEvent += HandleQuizEndedEvent;
             }
         }
+
+        private void HandleQuizEndedEvent(object source, QuizEndedEventArgs e)
+        {
+            MessageBox.Show("it worked", "it worked", MessageBoxButton.OK);
+        }
+
     }
 }

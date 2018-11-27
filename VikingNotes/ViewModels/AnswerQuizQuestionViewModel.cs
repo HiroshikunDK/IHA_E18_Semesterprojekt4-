@@ -28,6 +28,7 @@ namespace ViewModels
 
         IUnitOfWork Data = new UnitOfWork();
 
+        public EventHandler<QuizEndedEventArgs> QuizEndedEvent;
         public ICommand QuestionAnswerClick { get; set; }
         public ICommand EndQuizClick { get; set; }
         public ICommand NextQuestionClick { get; set; }
@@ -268,7 +269,7 @@ namespace ViewModels
 
             //hide the view
             currUserControl.Visibility = Visibility.Collapsed;
-
+            QuizEndedEvent(this, new QuizEndedEventArgs()); //TODO: add eventual args
         }
 
         #region HelperFunctions
@@ -315,6 +316,11 @@ namespace ViewModels
 
         #endregion
 
+    }
+
+    public class QuizEndedEventArgs : EventArgs
+    {
+        //TODO: add eventual args
     }
 
 
