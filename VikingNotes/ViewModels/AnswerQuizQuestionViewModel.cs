@@ -22,7 +22,11 @@ namespace ViewModels
         private Quiz selectedQuiz { get; set; }
         private List<Question> questions { get; set; }
         private Question currentQuestion { get; set; }
-        private Answer selectedAnswer { get; set; }
+        private Answer _selectedAnswer { get; set; }
+
+        private Answer[] _selectedAnswers;
+        private int _currentQuestionIndex = 0;
+
 
         IUnitOfWork Data = new UnitOfWork();
 
@@ -34,12 +38,19 @@ namespace ViewModels
         //Storing the statistics of the answers given to the quiz
         private QuizUserStatistic _results;
 
-        private int answerCount;
+        private int _answerCount;
 
         public AnswerQuizQuestionViewModel (Quiz quiz)
         {
             selectedQuiz = quiz;
             questions = selectedQuiz.Questions.ToList();
+
+            _selectedAnswers = new Answer[questions.Count];
+            //for (int i = 0; i < questions.Count; i++)
+            //{
+            //    _selectedAnswers.Add(null);
+            //}
+
             CurrentQuestion = questions[0]; //TODO: add check that questions isn't empty.
             //GetAllAnswers();
 
@@ -47,7 +58,7 @@ namespace ViewModels
             PrevQuestionClick = new Command(PrevQuestionClickFunc, CanExecute);
             QuestionAnswerClick = new Command(QuestionAnswerClickFunc, CanExecute);
             EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
-
+            
 
             //long userID = Data.LoginService.User.UserID; //returns 0 every time.
             long userID = 1;
@@ -74,13 +85,18 @@ namespace ViewModels
             get { return currentQuestion; }
             set
             {
+                _selectedAnswers[_currentQuestionIndex] = _selectedAnswer;
+
                 currentQuestion = value;
+                _currentQuestionIndex = questions.IndexOf(currentQuestion);
 
                 //frontloading or load answers upon selection change.
                 Answers = currentQuestion.Answers.ToList(); //if frontloaded questions
                 //GetAnswers(); //load Answers when question is selected
+                //SelectedAnswer = _selectedAnswers[_currentQuestionIndex];
 
                 RaisePropertyChanged("CurrentQuestion");
+                RaisePropertyChanged("SelectedAnswer");
             }
         }
 
@@ -94,12 +110,16 @@ namespace ViewModels
             }
         }
 
+        //TODO: this mismatch is very ugly, but it won't work otherwise due to the nature of how the list changes the selection to null when Answers change.
         public Answer SelectedAnswer
         {
-            get { return selectedAnswer; }
+            get { return _selectedAnswers[_currentQuestionIndex]; }
             set
             {
-                selectedAnswer = value;
+                //_selectedAnswers[_currentQuestionIndex] = value;
+                _selectedAnswer = value;
+                AnswerQuestion();
+                RaisePropertyChanged("SelectedAnswer");
             }
         }
 
@@ -145,27 +165,25 @@ namespace ViewModels
 
         private void QuestionAnswerClickFunc(object parameter)
         {
-            if (SelectedAnswer == null) return;
+            AnswerQuestion();
+        }
 
+        private void AnswerQuestion()
+        {
+            if (_selectedAnswer == null) return;
+            //_selectedAnswers[_currentQuestionIndex] = _selectedAnswer;
 
+            int i = 0;
             foreach (var answer in Answers)
             {
-                if (SelectedAnswer.AnswerID == answer.AnswerID)
+                if (_selectedAnswer.AnswerID == answer.AnswerID)
                 {
                     LogAnswer();
                     break;
                 }
+
+                i++;
             }
-
-            //TODO: this would require this to also be passed the view, and that seems to break the concepts of MVVM.
-            //if (answerCount == selectedQuiz.Questions.Count)
-            //{
-            //    var res = MessageBox.Show("You have answered all questions, do you want to end the quiz?",
-            //        "Do you want to end the Quiz?", MessageBoxButton.YesNo);
-
-            //    if (res == MessageBoxResult.Yes) EndQuiz();
-            //}           
-            //else GoToNextQuestion();
             GoToNextQuestion();
         }
 
@@ -185,9 +203,9 @@ namespace ViewModels
 
             MessageBoxResult res = MessageBoxResult.OK;
 
-            if (answerCount != questions.Count)
+            if (_answerCount != questions.Count)
             {
-                res = MessageBox.Show($"You have answered: {answerCount} out of: {questions.Count} questions. Are you sure that you want to end the quiz before answering the remaining questions?",
+                res = MessageBox.Show($"You have answered: {_answerCount} out of: {questions.Count} questions. Are you sure that you want to end the quiz before answering the remaining questions?",
                     "Are you sure you want to end the quiz?", MessageBoxButton.OKCancel);
             }
             
@@ -215,10 +233,10 @@ namespace ViewModels
 
             if (_results.SelectedAnswers.ElementAt(index).IsSelectedCorrect == null)
             {
-                answerCount++;
+                _answerCount++;
             }
 
-            _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = SelectedAnswer.IsCorrect;
+            _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = _selectedAnswer.IsCorrect;
         }
 
         /// <summary>
