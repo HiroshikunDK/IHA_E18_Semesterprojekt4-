@@ -22,8 +22,12 @@ namespace RESTfullWebApi.Controllers
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Rating
-        public IQueryable<Rating> GetRatings()
+        public IQueryable<Rating> GetRatings(long QuizID = -1)
         {
+            if (QuizID != -1)
+            {
+                return db.Ratings.Where(r => r.QuizID == QuizID);
+            }
             return db.Ratings;
         }
 
