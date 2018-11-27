@@ -40,7 +40,7 @@
         <Button Grid.Column="6" Grid.Row="8"  Content="Next Question" HorizontalAlignment="Stretch"  VerticalAlignment="Center" FontSize="14" Command="{Binding GemogNaeste}"/>
         <Button Grid.Column="1" Grid.Row="8" Content="Prev. Question" HorizontalAlignment="Stretch" VerticalAlignment="Center " FontSize="14" Command="{Binding GemogForrige}"/>
         <TextBox Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="1" HorizontalAlignment="Stretch" Margin="40,0,40,0" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="14" Height="30" Text="{Binding QuizName}"/>
-        <Button Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="8" Content="Save Multiple Choice Quiz" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+        <Button Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="8" Content="Save Multiple Choice Quiz" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Command="{Binding GemMCQ}"/>
 
         <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Grid.RowSpan="3" HorizontalAlignment="Center" Width="80"  TextWrapping="Wrap" VerticalAlignment="Stretch"  FontSize="12"  Text="{Binding SvarMul1 ,Mode=TwoWay}" />
         <TextBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Grid.RowSpan="3" HorizontalAlignment="Center" Width="80"   TextWrapping="Wrap" VerticalAlignment="Stretch"  FontSize="12" Text="{Binding SvarMul2 ,Mode=TwoWay}" />
@@ -53,15 +53,57 @@
         <Label Grid.Column="6" Grid.Row="2" Content="Semester" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
         <Label Grid.Column="6" Grid.Row="3" Content="Course" HorizontalAlignment="Left"  VerticalAlignment="Center" />
 
-        <ListView Grid.ColumnSpan="2" Grid.Column="6" HorizontalAlignment="Center"   Grid.Row="5" Grid.RowSpan="3" VerticalAlignment="Stretch" Width="140" ItemsSource="{Binding Questions}" />
-            
-        <Label Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="4" Content="Spørgsmål" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-        <ComboBox Grid.Column="6" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" ItemsSource="{Binding SemesterList,Mode=TwoWay}" SelectedItem="{Binding SelectedSemester}"/>
-        <ComboBox Grid.Column="6" HorizontalAlignment="Right"  Grid.Row="3" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" ItemsSource="{Binding CourseList,Mode=TwoWay}" SelectedItem="{Binding SelectedCourse}" />
-        <Label Grid.Row="1" Grid.Column="5" Content="Studie" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="98,16,0,2.8" Grid.ColumnSpan="2"/>
-        <ComboBox Grid.Row="1" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" ItemsSource="{Binding StudyList,Mode=TwoWay}" SelectedItem="{Binding SelectedStudy}"/>
-        <ComboBox Grid.Row="0" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2" ItemsSource="{Binding FacultyList,Mode=TwoWay}" DisplayMemberPath="{Binding FacultyList[1]}" SelectedItem="{Binding SelectedFaculty  }"/>
-        <Label Grid.Column="6" Content="Fakultet" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <TextBlock Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding QuestionCounter}" FontSize="18"/>
+
+        <ListView  Grid.ColumnSpan="2" Grid.Column="6" HorizontalAlignment="Center" Grid.Row="5" Grid.RowSpan="3" VerticalAlignment="Stretch" Width="140" ItemsSource="{Binding QuestionList}" SelectedItem="{Binding SelectedQuestion}" SelectedIndex="{Binding QuestionListIndex}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="models:Question">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Question1}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+            <Label Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="4" Content="Spørgsmål" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+        <ComboBox Margin="0,0,30,0" Grid.Column="6" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Width="100" Grid.ColumnSpan="2" ItemsSource="{Binding SemesterList}" SelectedItem="{Binding SelectedSemester}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="models:Semester">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding SemesterNumber}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox Margin="0,0,30,0" Grid.Column="6" HorizontalAlignment="Right"  Grid.Row="3" VerticalAlignment="Center" Width="100" Grid.ColumnSpan="2" ItemsSource="{Binding CourseList}" SelectedItem="{Binding SelectedCourse}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="models:Course">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+            <Label Grid.Row="1" Grid.Column="6" Content="Studie" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.ColumnSpan="1"/>
+        <ComboBox Margin="0,0,30,0" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Grid.ColumnSpan="2" ItemsSource="{Binding StudyList}" SelectedItem="{Binding SelectedStudy}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="models:Study">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+            <ComboBox Margin="0,0,30,0" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Grid.ColumnSpan="2" ItemsSource="{Binding FacultyList}" SelectedItem="{Binding SelectedFaculty  }">
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="models:Faculty">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+            <Label Grid.Column="6" Content="Fakultet" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2"/>
 
      
     </Grid>

@@ -22,6 +22,35 @@ namespace ViewModels
         private IUnitOfWork Data = new UnitOfWork();
 
         private string quizName { get; set; }
+
+
+        private int selectedQuestionIndex { get; set; }
+
+        private int questionListIndex { get; set; }
+
+        public int QuestionListIndex
+        {
+            get { return questionListIndex; }
+            set
+            {
+                questionListIndex = value;
+                RaisePropertyChanged("QuestionListIndex");
+            }
+        }
+
+        private string questionCounter;
+
+        public string QuestionCounter
+        {
+            get { return questionCounter; }
+            set
+            {
+                questionCounter = value;
+                RaisePropertyChanged("QuestionCounter");
+            }
+        }
+
+
         public string QuizName
         {
             get { return quizName; }
@@ -41,15 +70,15 @@ namespace ViewModels
 
         }
 
+        private IList<Question> questionList { get; set; }
 
-        private List<Question> questions { get; set; }
-        public List<Question> Questions
+        public IList<Question> QuestionList
         {
-            get { return questions;}
+            get { return questionList;}
             set
             {
-                questions = value;
-                RaisePropertyChanged("Questions");
+                questionList = value;
+                RaisePropertyChanged("QuestionList");
             }
         }
 
@@ -117,18 +146,22 @@ namespace ViewModels
         private Quiz CurrentQuiz=new Quiz();
         private Question newQuestion { get; set; }
 
+        
         public MakeNewQuizViewModel()
         {
-            GemogNaeste = new Command(Naeste,CanExecute);
-            GemogForrige = new Command(Forrige, CanExecute);
-            GemMCQ = new Command(GEMMCQ, CanExecute);
-            SelectFaculityCommand = new Command(SelectFaculity, CanExecute);
-            //NySvarmulighed = new DelegateCommand(nySvar,CanExecute);
-            
-            Questions = new List<Question>();
-            
-            GetFaculties();
+            QuestionList = new List<Question>();
             QuestionName = "";
+            selectedQuestionIndex = 0;
+            QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1)  + "/" + (QuestionList.Count + 1);
+
+            GemogNaeste = new Command(Naeste,CanExecute);
+            GemogForrige = new Command(Forrige, CanExecuteForrige);
+            GemMCQ = new Command(GEMMCQ, CanExecuteSave);
+            //SelectFaculityCommand = new Command(SelectFaculity, CanExecute);
+            //NySvarmulighed = new DelegateCommand(nySvar,CanExecute);          
+           
+            GetFaculties();          
+            
         }
 
         private bool CanExecute(object o)
@@ -136,56 +169,246 @@ namespace ViewModels
             return true;
         }
 
+        private bool CanExecuteForrige(object o)
+        {
+            if (selectedQuestionIndex > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool CanExecuteSave(object o)
+        {
+            if (QuizName != "" && QuestionList.Count > 0 && SelectedCourse != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         private List<string> TempList = new List<string>();
 
+        //private void SelectQuestion(Question question)
+        //{
+        //    if (selectedQuestionIndex == QuestionList.Count)
+        //    {
+        //        if (QuestionName != "")
+        //        {
+        //            newQuestion = new Question();
+        //            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
+        //            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
+        //            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
+        //            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
+
+        //            newQuestion.Question1 = QuestionName;
+
+        //            //CurrentQuiz.Questions.Add(newQuestion);
+        //            List<Question> tempList = new List<Question>(questionList);
+
+        //            tempList.Add(newQuestion);
+
+        //            QuestionList = tempList;
+        //        }               
+        //    }
+        //    else if (selectedQuestion != null)
+        //    {
+        //        newQuestion = new Question();
+        //        newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
+        //        newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
+        //        newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
+        //        newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
+
+        //        newQuestion.Question1 = QuestionName;
+
+        //        List<Question> tempList = new List<Question>(QuestionList);
+
+        //        tempList[selectedQuestionIndex] = newQuestion;
+
+        //        questionList = tempList;
+        //    }
+
+        //    selectedQuestionIndex = questionListIndex;
+        //    selectedQuestion = question;
+        //    RaisePropertyChanged("SelectedQuestion");
+        //    QuestionName = question.Question1;
+        //    List<Answer> tempAnswerList = question.Answers.ToList();
+        //    SvarMul1 = tempAnswerList[0].Answer1;
+        //    SvarMul2 = tempAnswerList[1].Answer1;
+        //    SvarMul3 = tempAnswerList[2].Answer1;
+        //    SvarMul4 = tempAnswerList[3].Answer1;
+
+        //    QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + QuestionList.Count;
+
+        //}
+
         private void Naeste(object o)
         {
+            selectedQuestionIndex++;
+            //if (selectedQuestionIndex == QuestionList.Count)
+            //{
+            //    QuestionName = "";
+            //    SvarMul1 = "";
+            //    SvarMul2 = "";
+            //    SvarMul3 = "";
+            //    SvarMul4 = "";
 
-            newQuestion = new Question();
-            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1});
-            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
-            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
-            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
+            //    QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + (QuestionList.Count + 1);
+            //    selectedQuestion = null;
+            //    RaisePropertyChanged("SelectedQuestion");
+            //}
+            //else 
+            if (selectedQuestionIndex > QuestionList.Count)
+            {
+                newQuestion = new Question();
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
+
+                newQuestion.Question1 = QuestionName;
+
+                QuestionName = "";
+                SvarMul1 = "";
+                SvarMul2 = "";
+                SvarMul3 = "";
+                SvarMul4 = "";
+
+                //CurrentQuiz.Questions.Add(newQuestion);
+                List<Question> tempList = new List<Question>(questionList);
+
+                tempList.Add(newQuestion);
+
+                QuestionList = tempList;
+
+                
+
+                QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + (QuestionList.Count + 1);
+                selectedQuestion = null;
+                RaisePropertyChanged("SelectedQuestion");
+            }
+            else
+            {
+                newQuestion = new Question();
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
+
+                newQuestion.Question1 = QuestionName;
+
+                List<Question> tempList = new List<Question>(QuestionList);
+                
+                tempList[selectedQuestionIndex - 1] = newQuestion;
+
+                QuestionList = tempList;
+
+                if (selectedQuestionIndex == QuestionList.Count)
+                {
+                    QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + (QuestionList.Count + 1);
+                    selectedQuestion = null;
+                    RaisePropertyChanged("SelectedQuestion");
+                    QuestionName = "";
+                    SvarMul1 = "";
+                    SvarMul2 = "";
+                    SvarMul3 = "";
+                    SvarMul4 = "";
+                }
+                else
+                {
+                    QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + QuestionList.Count;
+                    selectedQuestion = QuestionList[selectedQuestionIndex];
+                    RaisePropertyChanged("SelectedQuestion");
+                    QuestionName = SelectedQuestion.Question1;
+                    List<Answer> tempAnswerList = QuestionList[selectedQuestionIndex].Answers.ToList();
+                    SvarMul1 = tempAnswerList[0].Answer1;
+                    SvarMul2 = tempAnswerList[1].Answer1;
+                    SvarMul3 = tempAnswerList[2].Answer1;
+                    SvarMul4 = tempAnswerList[3].Answer1;
+                }
+            }
             
-            
-            newQuestion.Question1 = QuestionName;
-
-            CurrentQuiz.Questions.Add(newQuestion);
-
-           
-
-            Questions.Add(newQuestion);
-
-           
-            RaisePropertyChanged("Questions");
-
-            QuestionName = "";
-            SvarMul1 = "";
-            SvarMul2 = "";
-            SvarMul3 = "";
-            SvarMul4 = "";
         }
 
         private void Forrige(object o)
         {
-            
+            if (selectedQuestionIndex == QuestionList.Count)
+            {
+                if (QuestionName != "")
+                {
+                    newQuestion = new Question();
+                    newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
+                    newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
+                    newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
+                    newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
+
+                    newQuestion.Question1 = QuestionName;
+
+                    //CurrentQuiz.Questions.Add(newQuestion);
+                    List<Question> tempList = new List<Question>(questionList);
+
+                    tempList.Add(newQuestion);
+
+                    QuestionList = tempList;
+                }
+            }else if (selectedQuestion != null)
+            {
+                newQuestion = new Question();
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
+                newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
+
+                newQuestion.Question1 = QuestionName;
+
+                List<Question> tempList = new List<Question>(QuestionList);
+
+                tempList[selectedQuestionIndex] = newQuestion;
+
+                QuestionList = tempList;
+            }
+
+            selectedQuestionIndex = selectedQuestionIndex - 1;
+            selectedQuestion = QuestionList[selectedQuestionIndex];
+            RaisePropertyChanged("SelectedQuestion");
+            QuestionName = QuestionList[selectedQuestionIndex].Question1;
+            List<Answer> tempAnswerList = QuestionList[selectedQuestionIndex].Answers.ToList();
+            SvarMul1 = tempAnswerList[0].Answer1;
+            SvarMul2 = tempAnswerList[1].Answer1;
+            SvarMul3 = tempAnswerList[2].Answer1;
+            SvarMul4 = tempAnswerList[3].Answer1;
+
+            QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + QuestionList.Count;
         }
 
 
         public async void GetFaculties()
         {
             FacultyList = await Data.Faculty.GetAllAsync();
+            foreach (var faculty in FacultyList)
+            {
+                faculty.Name = faculty.Name.Trim();
+            }
         }
 
-        public async void SelectFaculity(object parameter)
+        public async void SelectFaculity(long id)
         {
             StudyList = new List<Study>();
             SemesterList = new List<Semester>();
             CourseList = new List<Course>();
-            int id = Convert.ToInt32(parameter);
             StudyList = (await Data.Study.GetAllAsync()).FindAll(s => s.FacultyID == id);
             // .Result.Where(s => s.FacultyID == id).ToList()
+            foreach (var study in StudyList)
+            {
+                study.Name = study.Name.Trim();
+            }
         }
 
 
@@ -199,13 +422,33 @@ namespace ViewModels
         private Semester selectedSemester;
         private Course selectedCourse;
         private Faculty selectedFaculty;
+
+        private Question selectedQuestion;
+
+        public Question SelectedQuestion
+        {
+            get { return selectedQuestion; }
+            set
+            {
+                selectedQuestion = value;
+                RaisePropertyChanged("SelectedQuestion");
+                //if (QuestionListIndex != -1)
+                //{
+                //    SelectQuestion(selectedQuestion);
+                //}
+            }
+        }
+
+        
+
+
         public Faculty SelectedFaculty
         {
             get { return selectedFaculty; }
             set
             {
                 selectedFaculty = value;
-
+                SelectFaculity(selectedFaculty.FacultyID);
             }
         }
 
@@ -250,6 +493,10 @@ namespace ViewModels
            
             int id = Convert.ToInt32(SelectedStudy.StudyID);
             SemesterList = (await Data.Semester.GetAllAsync()).FindAll(s => s.StudyID == id);
+            foreach (var semester in SemesterList)
+            {
+                semester.SemesterNumber = semester.SemesterNumber.Trim();
+            }
         }
 
         public async void SelectSemester()
@@ -263,6 +510,10 @@ namespace ViewModels
             
             int id = Convert.ToInt32(SelectedSemester.SemesterID);
             CourseList = (await Data.Course.GetAllAsync()).FindAll(s => s.SemesterID == id);
+            foreach (var course in CourseList)
+            {
+                course.Name = course.Name.Trim();
+            }
         }
 
 

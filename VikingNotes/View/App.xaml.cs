@@ -46,8 +46,6 @@ namespace View
 
             takeView = new TakeQuizView();
 
-            
-
             mainWindow = new MainWindow();
             mainWindowVM = new MainWindowViewModel(Data, topBarView, answerView, takeView);
             mainWindow.DataContext = mainWindowVM;
