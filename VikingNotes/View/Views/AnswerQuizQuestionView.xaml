@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:View.Views"
              xmlns:viewModels="clr-namespace:ViewModels;assembly=ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="AnswerQuiz">
     <UserControl.Resources>
         <viewModels:QuestionToAnswerStatusBrush x:Key="QuestionToAnswerStatusBrush"/>
         <viewModels:IntToAnswerConverter x:Key="IntToAnswerConverter"/>
@@ -42,7 +43,7 @@
 
         <Button Content="Answer" Grid.Row="2" FontSize="20" Command="{Binding QuestionAnswerClick}" Margin="10,10,10,10"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <Button Content="End Quiz"  Grid.Row="2" FontSize="20" Command="{Binding EndQuizClick}" Margin="10,10,10,10" Grid.Column="1"
+        <Button Content="End Quiz"  Grid.Row="2" FontSize="20" Command="{Binding EndQuizClick}" CommandParameter="{Binding ElementName=AnswerQuiz}" Margin="10,10,10,10" Grid.Column="1"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         <!-- Please don't hurt me.
@@ -70,9 +71,9 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Button Content="PREV" Grid.Column="3" Margin="10,10,10,20" Grid.Row="2" MinWidth="36" MinHeight="20" Command="{Binding Path=PrevQuestionClick}" FontSize="20"
+        <Button Content="PREV" Grid.Column="3" Margin="10,10,10,20" Grid.Row="2" MinWidth="36" MinHeight="20" Command="{Binding Path=PrevQuestionClick}" FontSize="16"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <Button Content="NEXT" Grid.Column="2" Margin="10,10,10,20" Grid.Row="2" MinWidth="36" MinHeight="20" Command="{Binding Path=NextQuestionClick}" FontSize="20"
+        <Button Content="NEXT UNANSWERED" Grid.Column="2" Margin="10,10,10,20" Grid.Row="2" MinWidth="36" MinHeight="20" Command="{Binding Path=NextQuestionClick}" FontSize="16"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
     </Grid>

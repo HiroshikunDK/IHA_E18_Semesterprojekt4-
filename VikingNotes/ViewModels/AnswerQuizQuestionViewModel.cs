@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace ViewModels
         {
             selectedQuiz = quiz;
             questions = selectedQuiz.Questions.ToList();
-            CurrentQuestion = questions[0];
+            CurrentQuestion = questions[0]; //TODO: add check that questions isn't empty.
             //GetAllAnswers();
 
             NextQuestionClick = new Command(NextQuestionClickFunc, CanExecute);
@@ -156,14 +157,16 @@ namespace ViewModels
                 }
             }
 
-            if (answerCount == selectedQuiz.Questions.Count)
-            {
-                var res = MessageBox.Show("You have answered all questions, do you want to end the quiz?",
-                    "Do you want to end the Quiz?", MessageBoxButton.YesNo);
+            //TODO: this would require this to also be passed the view, and that seems to break the concepts of MVVM.
+            //if (answerCount == selectedQuiz.Questions.Count)
+            //{
+            //    var res = MessageBox.Show("You have answered all questions, do you want to end the quiz?",
+            //        "Do you want to end the Quiz?", MessageBoxButton.YesNo);
 
-                if (res == MessageBoxResult.Yes) EndQuiz();
-            }           
-            else GoToNextQuestion();
+            //    if (res == MessageBoxResult.Yes) EndQuiz();
+            //}           
+            //else GoToNextQuestion();
+            GoToNextQuestion();
         }
 
         private void NextQuestionClickFunc(object obj)
@@ -178,6 +181,8 @@ namespace ViewModels
 
         private void EndQuizClickFunc(object obj)
         {
+            UserControl currUserControl = (UserControl) obj;
+
             MessageBoxResult res = MessageBoxResult.OK;
 
             if (answerCount != questions.Count)
@@ -186,7 +191,7 @@ namespace ViewModels
                     "Are you sure you want to end the quiz?", MessageBoxButton.OKCancel);
             }
             
-            if (res == MessageBoxResult.OK) EndQuiz();
+            if (res == MessageBoxResult.OK) EndQuiz(currUserControl); //TODO: might be bad coding practice to pass this along, as that means EndQuiz is aware of the view, as opposed to only this command being aware of it.
         }
 
         #endregion
@@ -219,7 +224,7 @@ namespace ViewModels
         /// <summary>
         /// Push answers up to the web, and go to other view
         /// </summary>
-        private void EndQuiz()
+        private void EndQuiz(UserControl currUserControl)
         {
             int correctAnswers = 0;
 
@@ -245,6 +250,9 @@ namespace ViewModels
 
             AddStatistics();
             UpdateAllQuestions();
+
+            //hide the view
+            currUserControl.Visibility = Visibility.Collapsed;
 
         }
 
