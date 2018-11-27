@@ -9,5 +9,6 @@ namespace DAL.Core.Repositories
 {
     public interface IRatingRepository : IRepository<Rating>
     {
+        Task<List<Rating>> GetRatingByQuizID(long quizID);
     }
 }

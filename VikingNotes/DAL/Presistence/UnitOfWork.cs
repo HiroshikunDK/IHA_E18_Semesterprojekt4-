@@ -26,7 +26,7 @@ namespace DAL.Presistence
             UserType = new Repository<UserType>();
             Course = new Repository<Course>();
             Faculty = new Repository<Faculty>();
-            Rating = new Repository<Rating>();
+            Rating = new RatingRepository();
             Semester = new Repository<Semester>();
             SelectedAnswer = new Repository<SelectedAnswer>();
             QuizUserStatistic = new Repository<QuizUserStatistic>();
@@ -59,7 +59,7 @@ namespace DAL.Presistence
         public IRepository<UserType> UserType { get; }
         public IRepository<Course> Course { get; }
         public IRepository<Faculty> Faculty { get; }
-        public IRepository<Rating> Rating { get; }
+        public IRatingRepository Rating { get; }
         public IRepository<Semester> Semester { get; }
         public ILoginService LoginService { get; }
         public IRepository<SelectedAnswer> SelectedAnswer { get; }

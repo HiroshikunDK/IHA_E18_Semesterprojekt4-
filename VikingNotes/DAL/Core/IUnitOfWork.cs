@@ -19,7 +19,7 @@ namespace DAL.Core
         IRepository<UserType> UserType { get; }
         IRepository<Course> Course { get; }
         IRepository<Faculty> Faculty { get; }
-        IRepository<Rating> Rating { get; }
+        IRatingRepository Rating { get; }
         IRepository<Semester> Semester { get; }
         ILoginService LoginService { get; }
         IRepository<SelectedAnswer> SelectedAnswer { get; }

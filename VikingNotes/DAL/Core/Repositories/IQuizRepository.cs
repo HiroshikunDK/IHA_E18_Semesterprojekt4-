@@ -10,5 +10,6 @@ namespace DAL.Core.Repositories
     public interface IQuizRepository : IRepository<Quiz>
     {
         new Task<Quiz> GetAsync(long id);
+        Task<List<Quiz>> GetQuizzesByUserID(long UserID);
     }
 }

@@ -4,9 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:View.Views"
+             xmlns:ViewModels="clr-namespace:ViewModels;assembly=ViewModels"
+        xmlns:models="clr-namespace:RESTfullWebApi.Models;assembly=RESTfullWebApi"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+
     <Grid>
-        <TextBlock>Her vises dine egen stastistikker</TextBlock>       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="5*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+        <!--Text block Headers  -->
+        <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="Your Quizzes " Grid.Column="1" Grid.Row="2" />
+        <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="Statistic " Grid.Column="3" Grid.Row="2" />
+        <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="The Ratings" Grid.Column="5" Grid.Row="2" />
+
+        <!--List Boxes  -->
+        <ListBox Name="YourQuizzesList" Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Quizzes}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Button Content="{Binding Name}" Command="{Binding ElementName=this, Path=DataContext.GetRatingsCommand}" CommandParameter="{Binding Path=QuizID}">
+                        </Button>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ListBox Grid.Column="3" Grid.Row="3" SelectionChanged="ListBox_SelectionChanged">
+            <TextBlock Name="Rating" Text="{Binding Rating.Rating1}"></TextBlock>
+        </ListBox>
+
+        <ListBox Name="SpecificReview" Grid.Column="3" Grid.Row="5">
+            <TextBlock Name="SomeReview" Text="{Binding Rating.Reasons}"/>
+        </ListBox>
+
+        <ListBox Name="TheRatings" Grid.Column="5" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Ratings}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="DarkGray" Background="LightGray" BorderThickness="2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="{Binding Rating1}" Command="{Binding ElementName=this, Path=DataContext.GetRatingInfo}" CommandParameter="{Binding Path=RatingID}">
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
