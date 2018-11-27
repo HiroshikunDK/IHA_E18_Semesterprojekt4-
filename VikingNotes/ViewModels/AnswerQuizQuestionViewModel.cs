@@ -22,11 +22,9 @@ namespace ViewModels
         private Quiz selectedQuiz { get; set; }
         private List<Question> questions { get; set; }
         private Question currentQuestion { get; set; }
-        private Answer _selectedAnswer { get; set; }
 
         private Answer[] _selectedAnswers;
         private int _currentQuestionIndex = 0;
-
 
         IUnitOfWork Data = new UnitOfWork();
 
@@ -85,22 +83,19 @@ namespace ViewModels
             get { return currentQuestion; }
             set
             {
-                _selectedAnswers[_currentQuestionIndex] = _selectedAnswer;
-
                 currentQuestion = value;
                 _currentQuestionIndex = questions.IndexOf(currentQuestion);
 
                 //frontloading or load answers upon selection change.
                 Answers = currentQuestion.Answers.ToList(); //if frontloaded questions
                 //GetAnswers(); //load Answers when question is selected
-                //SelectedAnswer = _selectedAnswers[_currentQuestionIndex];
 
                 RaisePropertyChanged("CurrentQuestion");
                 RaisePropertyChanged("SelectedAnswer");
             }
         }
 
-        public List<Answer> Answers //Testing TODO: test if this implementation is reasonable
+        public List<Answer> Answers
         {
             get { return CurrentQuestion.Answers.ToList(); }
             set
@@ -110,16 +105,18 @@ namespace ViewModels
             }
         }
 
-        //TODO: this mismatch is very ugly, but it won't work otherwise due to the nature of how the list changes the selection to null when Answers change.
         public Answer SelectedAnswer
         {
             get { return _selectedAnswers[_currentQuestionIndex]; }
             set
             {
-                //_selectedAnswers[_currentQuestionIndex] = value;
-                _selectedAnswer = value;
-                AnswerQuestion();
-                RaisePropertyChanged("SelectedAnswer");
+                if (value != null)
+                {
+                    _selectedAnswers[_currentQuestionIndex] = value;
+                    //_selectedAnswerFromView = value;
+                    AnswerQuestion();
+                }
+                RaisePropertyChanged("SelectedAnswer"); //Update or Force refresh of selectedAnswer. (force needed when changing Answers)
             }
         }
 
@@ -170,13 +167,13 @@ namespace ViewModels
 
         private void AnswerQuestion()
         {
-            if (_selectedAnswer == null) return;
+            if (_selectedAnswers[_currentQuestionIndex] == null) return;
             //_selectedAnswers[_currentQuestionIndex] = _selectedAnswer;
 
             int i = 0;
             foreach (var answer in Answers)
             {
-                if (_selectedAnswer.AnswerID == answer.AnswerID)
+                if (_selectedAnswers[_currentQuestionIndex].AnswerID == answer.AnswerID)
                 {
                     LogAnswer();
                     break;
@@ -236,7 +233,7 @@ namespace ViewModels
                 _answerCount++;
             }
 
-            _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = _selectedAnswer.IsCorrect;
+            _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = _selectedAnswers[_currentQuestionIndex].IsCorrect;
         }
 
         /// <summary>
