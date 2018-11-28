@@ -28,12 +28,13 @@ namespace ViewModels
 
         private IUnitOfWork Data = new UnitOfWork();
 
-        public YourStatisticsViewModel(/*IUnitOfWork data*/ )
+        public YourStatisticsViewModel(IUnitOfWork data)
         {
-            GetRatingsCommand = new Command(GetRatingCommandClickFunc, canExecute);
+            Ratings = new List<Rating>();
+            //GetRatingsCommand = new Command(GetRatingCommandClickFunc, canExecute);
             GetRatingInfo = new Command(GetRatingInfoClickFunc, canExecute);
-            //Data = data;
-            //currentUser = (Userr)Data.User;
+            Data = data;
+            currentUser = Data.LoginService.User;
             getRelevantQuizList(3);
 
 
@@ -63,7 +64,8 @@ namespace ViewModels
             set
             {
                 currentQuiz = value;
-                RaisePropertyChanged("currentQuiz");
+                RaisePropertyChanged("Quiz");
+                GetRatingCommandClickFunc();
             }
         }
 
@@ -103,11 +105,13 @@ namespace ViewModels
             get { return listOfQuizzes; }
             set
             {
-                if (value != listOfQuizzes)
-                {
-                    RaisePropertyChanged("listOfQuizzes");
-                }
+               listOfQuizzes = value;
+                RaisePropertyChanged("Quizzes");  
             }
+        }
+        private void getQuizzes()
+        {
+            
         }
 
         public List<Rating> Ratings
@@ -126,25 +130,28 @@ namespace ViewModels
 
         #region Commands
 
-        private void GetRatingCommandClickFunc(object QuizID)
+        private void GetRatingCommandClickFunc()
         {
-            int ID = Convert.ToInt32(QuizID);
+            long ID = Quiz.QuizID;
 
-            foreach (var item in Quizzes)
-            {
-                if (item.QuizID == ID)
-                {
-                    Quiz = item;
-                }
-            }
+            //foreach (var item in Quizzes)
+            //{
+            //    if (item.QuizID == ID)
+            //    {
+            //        Quiz = item;
+            //    }
+            //}
 
             Quizzes.Clear();
             getRelevantRatingList(ID);
             TotalRating = 0;
 
-            foreach (var item in Ratings)
+            if (Ratings.Count != 0)
             {
-                TotalRating += item.Rating1;
+                foreach (var item in Ratings)
+                {
+                    TotalRating += item.Rating1;
+                }
             }
             TotalRating = TotalRating / Ratings.Count();
         }
@@ -173,7 +180,7 @@ namespace ViewModels
 
         public async void getRelevantQuizList(long UserID)
         {
-            listOfQuizzes = await Data.Quiz.GetQuizzesByUserID(3);
+            Quizzes = await Data.Quiz.GetQuizzesByUserID(3);
         }
 
         public async void getRelevantRatingList(long quizID)

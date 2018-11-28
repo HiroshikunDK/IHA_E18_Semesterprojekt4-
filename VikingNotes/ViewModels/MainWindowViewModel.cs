@@ -109,7 +109,7 @@ namespace ViewModels
 
         private void LoadStatisticsView(object o)
         {
-            CurrentViewModel = new StatisticsViewModel();
+            CurrentViewModel = new StatisticsViewModel(Data);
         }
 
         private void LoadMakeQuizView(object o)

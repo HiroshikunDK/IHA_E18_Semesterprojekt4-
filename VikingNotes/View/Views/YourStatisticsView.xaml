@@ -39,13 +39,13 @@
         <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="The Ratings" Grid.Column="5" Grid.Row="2" />
 
         <!--List Boxes  -->
-        <ListBox Name="YourQuizzesList" Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Quizzes}">
+        <ListBox Name="YourQuizzesList" Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}">
             <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel>
-                        <Button Content="{Binding Name}" Command="{Binding ElementName=this, Path=DataContext.GetRatingsCommand}" CommandParameter="{Binding Path=QuizID}">
-                        </Button>
-                    </WrapPanel>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
