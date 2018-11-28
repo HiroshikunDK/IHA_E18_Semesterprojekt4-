@@ -30,6 +30,10 @@ namespace View
         private AnswerQuizQuestionView answerView { get; set; }
         private TakeQuizView takeView { get; set; }
 
+        private MakeNewQuizView makeNewQuizView { get; set; }
+
+        private MakeQuizView makeQuizView { get; set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             // Run startup code first
@@ -46,8 +50,12 @@ namespace View
 
             takeView = new TakeQuizView();
 
+            makeQuizView = new MakeQuizView();
+
+            makeNewQuizView = new MakeNewQuizView();
+
             mainWindow = new MainWindow();
-            mainWindowVM = new MainWindowViewModel(Data, topBarView, answerView, takeView);
+            mainWindowVM = new MainWindowViewModel(Data, topBarView, answerView, takeView, makeQuizView, makeNewQuizView);
             mainWindow.DataContext = mainWindowVM;
 
             Data.LoginService.UserLoggedIn += LoginSuccesfull;

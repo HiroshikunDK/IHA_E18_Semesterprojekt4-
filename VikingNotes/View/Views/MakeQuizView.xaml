@@ -17,9 +17,6 @@
             <local:EditRemoveQuizView />
         </DataTemplate>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <viewmodels:MakeQuizViewModel />
-    </UserControl.DataContext>
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>

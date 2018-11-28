@@ -38,16 +38,22 @@ namespace ViewModels
 
         private UserControl topBarView { get; set; }
 
+        private UserControl makeQuizView { get; set; }
+
+        private UserControl makeNewQuizView { get; set; }
+
         private TakeQuizViewModel takeQuizVM;
 
         private bool isDoingQuiz = false;
 
-        public MainWindowViewModel(IUnitOfWork data, UserControl topView, UserControl ansView, UserControl taView)
+        public MainWindowViewModel(IUnitOfWork data, UserControl topView, UserControl ansView, UserControl taView, UserControl maQuizView, UserControl maNewQuizView)
         {
             Data = data;
             topBarView = topView;
             answerView = ansView;
             takeView = taView;
+            makeQuizView = maQuizView;
+            makeNewQuizView = maNewQuizView;
 
             topBarVM = new TopBarViewModel(Data);
             topBarView.DataContext = topBarVM;
@@ -114,7 +120,8 @@ namespace ViewModels
 
         private void LoadMakeQuizView(object o)
         {
-            CurrentViewModel = new MakeQuizViewModel();
+            CurrentViewModel = new MakeQuizViewModel(Data, makeNewQuizView);
+            makeQuizView.DataContext = CurrentViewModel;
         }
     }
 }
