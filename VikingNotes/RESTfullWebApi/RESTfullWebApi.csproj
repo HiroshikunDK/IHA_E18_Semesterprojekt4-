@@ -205,61 +205,61 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Answer.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Catagory.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Course.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Faculty.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Question.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\QuestionDTO.cs" />
     <Compile Include="Models\Quiz.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\QuizDTO.cs" />
     <Compile Include="Models\QuizUserStatistic.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rating.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SelectedAnswer.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Semester.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Study.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Userr.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserrDTO.cs" />
     <Compile Include="Models\UserType.cs">
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VikingNoteDB.Context.cs">
+    <Compile Include="Models\VikingNoteDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VikingNoteDB.Context.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VikingNoteDB.cs">
+    <Compile Include="Models\VikingNoteDBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VikingNoteDB.tt</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VikingNoteDB.Designer.cs">
+    <Compile Include="Models\VikingNoteDBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VikingNoteDB.edmx</DependentUpon>
+      <DependentUpon>VikingNoteDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserSecurity.cs" />
@@ -273,15 +273,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\VikingNoteDB.Context.tt">
+    <Content Include="Models\VikingNoteDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VikingNoteDB.edmx</DependentUpon>
-      <LastGenOutput>VikingNoteDB.Context.cs</LastGenOutput>
+      <DependentUpon>VikingNoteDBModel.edmx</DependentUpon>
+      <LastGenOutput>VikingNoteDBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\VikingNoteDB.tt">
+    <Content Include="Models\VikingNoteDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VikingNoteDB.edmx</DependentUpon>
-      <LastGenOutput>VikingNoteDB.cs</LastGenOutput>
+      <DependentUpon>VikingNoteDBModel.edmx</DependentUpon>
+      <LastGenOutput>VikingNoteDBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -307,12 +307,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\VikingNoteDB.edmx">
+    <EntityDeploy Include="Models\VikingNoteDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>VikingNoteDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>VikingNoteDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\VikingNoteDB.edmx.diagram">
-      <DependentUpon>VikingNoteDB.edmx</DependentUpon>
+    <Content Include="Models\VikingNoteDBModel.edmx.diagram">
+      <DependentUpon>VikingNoteDBModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />

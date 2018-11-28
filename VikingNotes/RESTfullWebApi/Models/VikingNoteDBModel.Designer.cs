@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Virkman\source\repos\IHA_E18_Semesterprojekt4-\VikingNotes\RESTfullWebApi\Models\VikingNoteDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Virkman\Source\Repos\IHA_E18_Semesterprojekt4-\VikingNotes\RESTfullWebApi\Models\VikingNoteDBModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
