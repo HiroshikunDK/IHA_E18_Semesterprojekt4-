@@ -1,13 +1,6 @@
 ﻿--
 -- Create Table    : 'SelectedAnswer'   
 -- SelectedAnswerID :  
--- UserID          :  (references Userr.UserID)
--- QuestionID      :  (references Question.QuestionID)
--- IsSelectedCorrect :  
---
---
--- Create Table    : 'SelectedAnswer'   
--- SelectedAnswerID :  
 -- IsSelectedCorrect :  
 -- QuestionID      :  (references Question.QuestionID)
 -- QuizUserStatisticID :  (references QuizUserStatistic.QuizUserStatisticID)
@@ -24,4 +17,4 @@ CONSTRAINT fk_SelectedAnswer FOREIGN KEY (QuestionID)
     ON UPDATE CASCADE,
 CONSTRAINT fk_SelectedAnswer2 FOREIGN KEY (QuizUserStatisticID)
     REFERENCES QuizUserStatistic (QuizUserStatisticID)
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)

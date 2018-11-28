@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2e35cdfbf9584a2997dbae42797e631d" Name="Diagram1">
+      <Diagram DiagramId="ee5fbcefa6f84f3f9797a14a9bacfebb" Name="Diagram1">
         <EntityTypeShape EntityType="VikingNoteDBModel.Answer" Width="1.5" PointX="16.5" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VikingNoteDBModel.Catagory" Width="1.5" PointX="9.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VikingNoteDBModel.Course" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />

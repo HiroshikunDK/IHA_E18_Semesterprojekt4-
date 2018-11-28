@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
@@ -21,10 +22,13 @@ namespace ViewModels
         private Quiz selectedQuiz { get; set; }
         private List<Question> questions { get; set; }
         private Question currentQuestion { get; set; }
-        private Answer selectedAnswer { get; set; }
+
+        private Answer[] _selectedAnswers;
+        private int _currentQuestionIndex = 0;
 
         IUnitOfWork Data = new UnitOfWork();
 
+        public EventHandler<QuizEndedEventArgs> QuizEndedEvent;
         public ICommand QuestionAnswerClick { get; set; }
         public ICommand EndQuizClick { get; set; }
         public ICommand NextQuestionClick { get; set; }
@@ -33,20 +37,27 @@ namespace ViewModels
         //Storing the statistics of the answers given to the quiz
         private QuizUserStatistic _results;
 
-        private int answerCount;
+        private int _answerCount;
 
         public AnswerQuizQuestionViewModel (Quiz quiz)
         {
             selectedQuiz = quiz;
             questions = selectedQuiz.Questions.ToList();
-            CurrentQuestion = questions[0];
+
+            _selectedAnswers = new Answer[questions.Count];
+            //for (int i = 0; i < questions.Count; i++)
+            //{
+            //    _selectedAnswers.Add(null);
+            //}
+
+            CurrentQuestion = questions[0]; //TODO: add check that questions isn't empty.
             //GetAllAnswers();
 
             NextQuestionClick = new Command(NextQuestionClickFunc, CanExecute);
             PrevQuestionClick = new Command(PrevQuestionClickFunc, CanExecute);
             QuestionAnswerClick = new Command(QuestionAnswerClickFunc, CanExecute);
             EndQuizClick = new Command(EndQuizClickFunc, CanExecute);
-
+            
 
             //long userID = Data.LoginService.User.UserID; //returns 0 every time.
             long userID = 1;
@@ -74,16 +85,18 @@ namespace ViewModels
             set
             {
                 currentQuestion = value;
+                _currentQuestionIndex = questions.IndexOf(currentQuestion);
 
                 //frontloading or load answers upon selection change.
                 Answers = currentQuestion.Answers.ToList(); //if frontloaded questions
                 //GetAnswers(); //load Answers when question is selected
 
                 RaisePropertyChanged("CurrentQuestion");
+                RaisePropertyChanged("SelectedAnswer");
             }
         }
 
-        public List<Answer> Answers //Testing TODO: test if this implementation is reasonable
+        public List<Answer> Answers
         {
             get { return CurrentQuestion.Answers.ToList(); }
             set
@@ -95,10 +108,16 @@ namespace ViewModels
 
         public Answer SelectedAnswer
         {
-            get { return selectedAnswer; }
+            get { return _selectedAnswers[_currentQuestionIndex]; }
             set
             {
-                selectedAnswer = value;
+                if (value != null)
+                {
+                    _selectedAnswers[_currentQuestionIndex] = value;
+                    //_selectedAnswerFromView = value;
+                    AnswerQuestion();
+                }
+                RaisePropertyChanged("SelectedAnswer"); //Update or Force refresh of selectedAnswer. (force needed when changing Answers)
             }
         }
 
@@ -144,31 +163,31 @@ namespace ViewModels
 
         private void QuestionAnswerClickFunc(object parameter)
         {
-            if (SelectedAnswer == null) return;
+            AnswerQuestion();
+        }
 
+        private void AnswerQuestion()
+        {
+            if (_selectedAnswers[_currentQuestionIndex] == null) return;
+            //_selectedAnswers[_currentQuestionIndex] = _selectedAnswer;
 
+            int i = 0;
             foreach (var answer in Answers)
             {
-                if (SelectedAnswer.AnswerID == answer.AnswerID)
+                if (_selectedAnswers[_currentQuestionIndex].AnswerID == answer.AnswerID)
                 {
                     LogAnswer();
                     break;
                 }
+
+                i++;
             }
-
-            if (answerCount == selectedQuiz.Questions.Count)
-            {
-                var res = MessageBox.Show("You have answered all questions, do you want to end the quiz?",
-                    "Do you want to end the Quiz?", MessageBoxButton.YesNo);
-
-                if (res == MessageBoxResult.Yes) EndQuiz();
-            }           
-            else GoToNextQuestion();
+            GoToNextUnansweredQuestion();
         }
 
         private void NextQuestionClickFunc(object obj)
         {
-            GoToNextQuestion();
+            GoToNextUnansweredQuestion();
         }
 
         private void PrevQuestionClickFunc(object obj)
@@ -178,15 +197,17 @@ namespace ViewModels
 
         private void EndQuizClickFunc(object obj)
         {
+            UserControl currUserControl = (UserControl) obj;
+
             MessageBoxResult res = MessageBoxResult.OK;
 
-            if (answerCount != questions.Count)
+            if (_answerCount != questions.Count)
             {
-                res = MessageBox.Show($"You have answered: {answerCount} out of: {questions.Count} questions. Are you sure that you want to end the quiz before answering the remaining questions?",
+                res = MessageBox.Show($"You have answered: {_answerCount} out of: {questions.Count} questions. Are you sure that you want to end the quiz before answering the remaining questions?",
                     "Are you sure you want to end the quiz?", MessageBoxButton.OKCancel);
             }
             
-            if (res == MessageBoxResult.OK) EndQuiz();
+            if (res == MessageBoxResult.OK) EndQuiz(currUserControl); //TODO: might be bad coding practice to pass this along, as that means EndQuiz is aware of the view, as opposed to only this command being aware of it.
         }
 
         #endregion
@@ -210,16 +231,16 @@ namespace ViewModels
 
             if (_results.SelectedAnswers.ElementAt(index).IsSelectedCorrect == null)
             {
-                answerCount++;
+                _answerCount++;
             }
 
-            _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = SelectedAnswer.IsCorrect;
+            _results.SelectedAnswers.ElementAt(index).IsSelectedCorrect = _selectedAnswers[_currentQuestionIndex].IsCorrect;
         }
 
         /// <summary>
         /// Push answers up to the web, and go to other view
         /// </summary>
-        private void EndQuiz()
+        private void EndQuiz(UserControl currUserControl)
         {
             int correctAnswers = 0;
 
@@ -246,6 +267,9 @@ namespace ViewModels
             AddStatistics();
             UpdateAllQuestions();
 
+            //hide the view
+            currUserControl.Visibility = Visibility.Collapsed;
+            QuizEndedEvent(this, new QuizEndedEventArgs()); //TODO: add eventual args
         }
 
         #region HelperFunctions
@@ -253,18 +277,25 @@ namespace ViewModels
         /// <summary>
         /// Moves to first Question in the quiz that hasn't been answered.
         /// </summary>
-        private void GoToNextQuestion()
+        private void GoToNextUnansweredQuestion()
         {
+            bool isEndOfQuiz = true;
             int i = 0;
             foreach (var answer in _results.SelectedAnswers)
             {
                 if (answer.IsSelectedCorrect == null)
                 {
                     CurrentQuestion = SelectedQuiz.Questions.ElementAt(i);
+                    isEndOfQuiz = false;
                     break;
                 }
                 i++;
             }
+
+            if (isEndOfQuiz)
+                MessageBox.Show("You have answered every question in the quiz, you can end the quiz whenever you want.", "Everything has been answered",
+                    MessageBoxButton.OK);
+
         }
 
         /// <summary>
@@ -285,6 +316,11 @@ namespace ViewModels
 
         #endregion
 
+    }
+
+    public class QuizEndedEventArgs : EventArgs
+    {
+        //TODO: add eventual args
     }
 
 

@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
+using DAL.Core;
 using ViewModels.Commands;
 
 namespace ViewModels
 {
     public class MakeQuizViewModel : BaseViewModel
     {
-        public MakeQuizViewModel()
+        private IUnitOfWork Data;
+        private UserControl makeNewQuizView { get; set; }
+
+        public MakeQuizViewModel(IUnitOfWork data, UserControl maNewQuizView)
         {
+            Data = data;
+            makeNewQuizView = maNewQuizView;
             this.LoadMakeNewQuizView();
 
             // Hook up Commands to associated methods
@@ -37,7 +44,8 @@ namespace ViewModels
 
         private void LoadMakeNewQuizView()
         {
-            CurrentViewModel = new MakeNewQuizViewModel();
+            CurrentViewModel = new MakeNewQuizViewModel(Data);
+            makeNewQuizView.DataContext = CurrentViewModel;
         }
 
         private void LoadEditRemoveQuizView()

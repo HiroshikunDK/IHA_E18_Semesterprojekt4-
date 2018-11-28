@@ -14,187 +14,64 @@ namespace ViewModels
 {
     public class MakeNewQuizViewModel : BaseViewModel
     {
-        private IList<Study> _studyList { set; get; }
-        private IList<Faculty> _FacultyList { set; get; }
-        private IList<Semester> _semesterList { set; get; }
-        private IList<Course> _courseList { set; get; }
-        private IList<Quiz> _quizList { set; get; }
-        private IUnitOfWork Data = new UnitOfWork();
-
-        private string quizName { get; set; }
-
-
-        private int selectedQuestionIndex { get; set; }
-
-        private int questionListIndex { get; set; }
-
-        public int QuestionListIndex
-        {
-            get { return questionListIndex; }
-            set
-            {
-                questionListIndex = value;
-                RaisePropertyChanged("QuestionListIndex");
-            }
-        }
-
-        private string questionCounter;
-
-        public string QuestionCounter
-        {
-            get { return questionCounter; }
-            set
-            {
-                questionCounter = value;
-                RaisePropertyChanged("QuestionCounter");
-            }
-        }
-
-
-        public string QuizName
-        {
-            get { return quizName; }
-            set { quizName = value; }
-        }
-
-        private string questionName { get; set; }
-
-        public string QuestionName
-        {
-            get { return questionName;}
-            set
-            {
-                questionName = value;
-                RaisePropertyChanged("QuestionName");
-            }
-
-        }
-
-        private IList<Question> questionList { get; set; }
-
-        public IList<Question> QuestionList
-        {
-            get { return questionList;}
-            set
-            {
-                questionList = value;
-                RaisePropertyChanged("QuestionList");
-            }
-        }
-
-
-        private IList<Question> svarMuligheder { get; set; }
-        public IList<Question> SvarMuligheder
-        {
-            get { return svarMuligheder; }
-            set { svarMuligheder = value; }
-        }
-
-        public IList<Study> StudyList
-        {
-            get { return _studyList; }
-            set
-            {
-                _studyList = value;
-                RaisePropertyChanged("StudyList");
-            }
-        }
-
-        public IList<Faculty> FacultyList
-        {
-            get { return _FacultyList; }
-            set
-            {
-                _FacultyList = value;
-                RaisePropertyChanged("FacultyList");
-            }
-
-        }
-
-
-        public IList<Semester> SemesterList
-        {
-            get { return _semesterList; }
-            set
-            {
-                _semesterList = value;
-                RaisePropertyChanged("SemesterList");
-            }
-        }
-        public IList<Course> CourseList
-        {
-            get { return _courseList; }
-            set
-            {
-                _courseList = value;
-                RaisePropertyChanged("CourseList");
-            }
-        }
-       
-
 
         public ICommand GemogNaeste { get; set; }
         public ICommand GemogForrige { get; set; }
         public ICommand GemMCQ { get; set; }
 
-        public ICommand NySvarmulighed { get; set; }
 
+        private IList<Study> _studyList { set; get; }
+        private IList<Faculty> _FacultyList { set; get; }
+        private IList<Semester> _semesterList { set; get; }
+        private IList<Course> _courseList { set; get; }
+        private IList<Catagory> _catagoryList { set; get; }
+        private IList<Quiz> _quizList { set; get; }
 
+        private string quizName { get; set; }
 
-
-        public ICommand SelectFaculityCommand { get; set; }
-        private Quiz CurrentQuiz=new Quiz();
+        private Quiz CurrentQuiz = new Quiz();
         private Question newQuestion { get; set; }
 
-        
-        public MakeNewQuizViewModel()
+        private int selectedQuestionIndex { get; set; }
+
+        private int questionListIndex { get; set; }
+
+        private Userr user { get; set; }
+        private IUnitOfWork Data { get; set; }
+
+        private Study selectedStudy;
+        private Semester selectedSemester;
+        private Course selectedCourse;
+        private Catagory selectedCatagory;
+        private Faculty selectedFaculty;
+
+        private Question selectedQuestion;
+
+
+        public MakeNewQuizViewModel(IUnitOfWork data)
         {
+            Data = data;
+            user = Data.LoginService.User;
+            GetFaculties();
+            GetStudies();
+            
+            
+            
             QuestionList = new List<Question>();
             QuestionName = "";
             selectedQuestionIndex = 0;
-            QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1)  + "/" + (QuestionList.Count + 1);
+            QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + (QuestionList.Count + 1);
 
-            GemogNaeste = new Command(Naeste,CanExecute);
+            GemogNaeste = new Command(Naeste, CanExecute);
             GemogForrige = new Command(Forrige, CanExecuteForrige);
             GemMCQ = new Command(GEMMCQ, CanExecuteSave);
             //SelectFaculityCommand = new Command(SelectFaculity, CanExecute);
             //NySvarmulighed = new DelegateCommand(nySvar,CanExecute);          
-           
-            GetFaculties();          
+
             
+
         }
 
-        private bool CanExecute(object o)
-        {
-            return true;
-        }
-
-        private bool CanExecuteForrige(object o)
-        {
-            if (selectedQuestionIndex > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool CanExecuteSave(object o)
-        {
-            if (QuizName != "" && QuestionList.Count > 0 && SelectedCourse != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-        private List<string> TempList = new List<string>();
 
         //private void SelectQuestion(Question question)
         //{
@@ -288,7 +165,7 @@ namespace ViewModels
 
                 QuestionList = tempList;
 
-                
+
 
                 QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + (QuestionList.Count + 1);
                 selectedQuestion = null;
@@ -305,7 +182,7 @@ namespace ViewModels
                 newQuestion.Question1 = QuestionName;
 
                 List<Question> tempList = new List<Question>(QuestionList);
-                
+
                 tempList[selectedQuestionIndex - 1] = newQuestion;
 
                 QuestionList = tempList;
@@ -334,7 +211,7 @@ namespace ViewModels
                     SvarMul4 = tempAnswerList[3].Answer1;
                 }
             }
-            
+
         }
 
         private void Forrige(object o)
@@ -358,7 +235,8 @@ namespace ViewModels
 
                     QuestionList = tempList;
                 }
-            }else if (selectedQuestion != null)
+            }
+            else if (selectedQuestion != null)
             {
                 newQuestion = new Question();
                 newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
@@ -388,42 +266,167 @@ namespace ViewModels
             QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + QuestionList.Count;
         }
 
-
-        public async void GetFaculties()
-        {
-            FacultyList = await Data.Faculty.GetAllAsync();
-            foreach (var faculty in FacultyList)
-            {
-                faculty.Name = faculty.Name.Trim();
-            }
-        }
-
-        public async void SelectFaculity(long id)
-        {
-            StudyList = new List<Study>();
-            SemesterList = new List<Semester>();
-            CourseList = new List<Course>();
-            StudyList = (await Data.Study.GetAllAsync()).FindAll(s => s.FacultyID == id);
-            // .Result.Where(s => s.FacultyID == id).ToList()
-            foreach (var study in StudyList)
-            {
-                study.Name = study.Name.Trim();
-            }
-        }
-
-
-
         private void GEMMCQ(object o)
         {
+           
+        }
+
+
+        #region Can Execute Functions
+        
+        private bool CanExecute(object o)
+        {
+            return true;
+        }
+
+        private bool CanExecuteForrige(object o)
+        {
+            if (selectedQuestionIndex > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool CanExecuteSave(object o)
+        {
+            if (QuizName != "" && QuestionList.Count > 0 && SelectedCourse != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Public Props
+
+        public int QuestionListIndex
+        {
+            get { return questionListIndex; }
+            set
+            {
+                questionListIndex = value;
+                RaisePropertyChanged("QuestionListIndex");
+            }
+        }
+
+        private string questionCounter;
+
+        public string QuestionCounter
+        {
+            get { return questionCounter; }
+            set
+            {
+                questionCounter = value;
+                RaisePropertyChanged("QuestionCounter");
+            }
+        }
+
+
+        public string QuizName
+        {
+            get { return quizName; }
+            set { quizName = value; }
+        }
+
+        private string questionName { get; set; }
+
+        public string QuestionName
+        {
+            get { return questionName;}
+            set
+            {
+                questionName = value;
+                RaisePropertyChanged("QuestionName");
+            }
 
         }
 
-        private Study selectedStudy;
-        private Semester selectedSemester;
-        private Course selectedCourse;
-        private Faculty selectedFaculty;
+        private IList<Question> questionList { get; set; }
 
-        private Question selectedQuestion;
+        public IList<Question> QuestionList
+        {
+            get { return questionList;}
+            set
+            {
+                questionList = value;
+                RaisePropertyChanged("QuestionList");
+            }
+        }
+
+
+        private IList<Question> svarMuligheder { get; set; }
+        public IList<Question> SvarMuligheder
+        {
+            get { return svarMuligheder; }
+            set { svarMuligheder = value; }
+        }
+
+        public IList<Study> StudyList
+        {
+            get { return _studyList; }
+            set
+            {
+                _studyList = value;
+                RaisePropertyChanged("StudyList");
+                if (selectedStudy == null)
+                {
+                    SelectedStudy = StudyList.FirstOrDefault(s => s.StudyID == user.StudyID);
+                }
+            }
+        }
+
+        public IList<Faculty> FacultyList
+        {
+            get { return _FacultyList; }
+            set
+            {
+                _FacultyList = value;
+                RaisePropertyChanged("FacultyList");
+                if (selectedFaculty == null)
+                {
+                    SelectedFaculty = FacultyList.FirstOrDefault(f => f.FacultyID == SelectedStudy.FacultyID);
+                }
+            }
+
+        }
+
+
+        public IList<Semester> SemesterList
+        {
+            get { return _semesterList; }
+            set
+            {
+                _semesterList = value;
+                RaisePropertyChanged("SemesterList");
+            }
+        }
+        public IList<Course> CourseList
+        {
+            get { return _courseList; }
+            set
+            {
+                _courseList = value;
+                RaisePropertyChanged("CourseList");
+            }
+        }
+
+        public IList<Catagory> CatagoryList
+        {
+            get { return _catagoryList; }
+            set
+            {
+                _catagoryList = value;
+                RaisePropertyChanged("CatagoryList");
+            }
+        }
 
         public Question SelectedQuestion
         {
@@ -439,15 +442,13 @@ namespace ViewModels
             }
         }
 
-        
-
-
         public Faculty SelectedFaculty
         {
             get { return selectedFaculty; }
             set
             {
                 selectedFaculty = value;
+                RaisePropertyChanged("SelectedFaculty");
                 SelectFaculity(selectedFaculty.FacultyID);
             }
         }
@@ -458,9 +459,22 @@ namespace ViewModels
             set
             {
                 selectedCourse = value;
-
+                SelectCourse();
             }
         }
+
+        
+
+        public Catagory SelectedCatagory
+        {
+            get { return selectedCatagory; }
+
+            set
+            {
+                selectedCatagory = value;
+            }
+        }
+
 
         public Study SelectedStudy
         {
@@ -468,6 +482,7 @@ namespace ViewModels
             set
             {
                 selectedStudy = value;
+                RaisePropertyChanged("SelectedStudy");
                 SelectStudy();
             }
         }
@@ -480,6 +495,10 @@ namespace ViewModels
                 SelectSemester();
             }
         }
+
+        #endregion
+
+        #region SelectFunctions
 
         public async void SelectStudy()
         {
@@ -515,6 +534,57 @@ namespace ViewModels
                 course.Name = course.Name.Trim();
             }
         }
+
+        public async void SelectCourse()
+        {
+
+            if (SelectedCourse == null)
+            {
+                return;
+            }
+            CatagoryList = new List<Catagory>();
+
+            //CourseList = (await Data.Catagory.GetAllAsync()).FindAll(c => c.);
+            foreach (var course in CourseList)
+            {
+                course.Name = course.Name.Trim();
+            }
+        }
+
+        public async void GetFaculties()
+        {
+            FacultyList = await Data.Faculty.GetAllAsync();
+            foreach (var faculty in FacultyList)
+            {
+                faculty.Name = faculty.Name.Trim();
+            }
+        }
+
+        public async void GetStudies()
+        {
+            StudyList = await Data.Study.GetAllAsync();
+            foreach (var study in StudyList)
+            {
+                study.Name = study.Name.Trim();
+            }
+        }
+
+        public async void SelectFaculity(long id)
+        {
+            StudyList = new List<Study>();
+            SemesterList = new List<Semester>();
+            CourseList = new List<Course>();
+            StudyList = (await Data.Study.GetAllAsync()).FindAll(s => s.FacultyID == id);
+            // .Result.Where(s => s.FacultyID == id).ToList()
+            foreach (var study in StudyList)
+            {
+                study.Name = study.Name.Trim();
+            }
+        }
+
+        #endregion
+
+        #region Answer Props
 
 
         private string svarMul1 { get; set; }
@@ -558,9 +628,6 @@ namespace ViewModels
             }
         }
 
-
-
-
-
+        #endregion
     }
 }

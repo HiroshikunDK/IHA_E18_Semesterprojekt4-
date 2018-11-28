@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DAL.Core;
@@ -190,24 +191,25 @@ namespace ViewModels
                 return;
             }
             QuizList = new List<Quiz>();
-            List<Catagory> catagoriesinList = selectedCourse.Catagories.ToList();
+            //TODO: fails here after the update to the database (outcommented everything with catagories as that doesn't exist)
+            //List<Catagory> catagoriesinList = selectedCourse.Catagories.ToList();
             List<Quiz> tempQuizList = (await Data.Quiz.GetAllAsync());
 
             QuizList = tempQuizList;
 
-            if (catagoriesinList.Count > 0)
-            {
-                foreach (var catagory in catagoriesinList)
-                {
-                    foreach (var quiz in tempQuizList)
-                    {
-                        if (quiz.Catagory == catagory)
-                        {
-                            QuizList.Add(quiz);
-                        }
-                    }
-                }
-            }
+            //if (catagoriesinList.Count > 0)
+            //{
+            //    foreach (var catagory in catagoriesinList)
+            //    {
+            //        foreach (var quiz in tempQuizList)
+            //        {
+            //            if (quiz.Catagory == catagory)
+            //            {
+            //                QuizList.Add(quiz);
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         private void Clear()
@@ -238,7 +240,16 @@ namespace ViewModels
                 answerView.DataContext = QuizContent;
                 isDoingQuiz = true;
                 IsDoingQuiz?.Invoke(this, EventArgs.Empty);
+
+                var quizviewmodel = (AnswerQuizQuestionViewModel)QuizContent;
+                quizviewmodel.QuizEndedEvent += HandleQuizEndedEvent;
             }
         }
+
+        private void HandleQuizEndedEvent(object source, QuizEndedEventArgs e)
+        {
+            MessageBox.Show("it worked", "it worked", MessageBoxButton.OK);
+        }
+
     }
 }
