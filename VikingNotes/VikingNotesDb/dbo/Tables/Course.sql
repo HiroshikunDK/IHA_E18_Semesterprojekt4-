@@ -4,24 +4,6 @@
 -- Name            :  
 -- SemesterID      :  (references Semester.SemesterID)
 --
---
--- Create Table    : 'Course'   
--- CourseID        :  
--- Name            :  
--- SemesterID      :  (references Semester.SemesterID)
---
---
--- Create Table    : 'Course'   
--- CourseID        :  
--- Name            :  
--- SemesterID      :  (references Semester.SemesterID)
---
---
--- Create Table    : 'Course'   
--- CourseID        :  
--- Name            :  
--- SemesterID      :  (references Semester.SemesterID)
---
 CREATE TABLE Course (
     CourseID       BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
     Name           NVARCHAR(300) NOT NULL UNIQUE,

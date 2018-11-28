@@ -191,24 +191,25 @@ namespace ViewModels
                 return;
             }
             QuizList = new List<Quiz>();
-            List<Catagory> catagoriesinList = selectedCourse.Catagories.ToList();
+            //TODO: fails here after the update to the database (outcommented everything with catagories as that doesn't exist)
+            //List<Catagory> catagoriesinList = selectedCourse.Catagories.ToList();
             List<Quiz> tempQuizList = (await Data.Quiz.GetAllAsync());
 
             QuizList = tempQuizList;
 
-            if (catagoriesinList.Count > 0)
-            {
-                foreach (var catagory in catagoriesinList)
-                {
-                    foreach (var quiz in tempQuizList)
-                    {
-                        if (quiz.Catagory == catagory)
-                        {
-                            QuizList.Add(quiz);
-                        }
-                    }
-                }
-            }
+            //if (catagoriesinList.Count > 0)
+            //{
+            //    foreach (var catagory in catagoriesinList)
+            //    {
+            //        foreach (var quiz in tempQuizList)
+            //        {
+            //            if (quiz.Catagory == catagory)
+            //            {
+            //                QuizList.Add(quiz);
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         private void Clear()
