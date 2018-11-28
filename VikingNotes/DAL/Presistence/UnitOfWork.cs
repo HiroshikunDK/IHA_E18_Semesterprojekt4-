@@ -19,7 +19,6 @@ namespace DAL.Presistence
             LoginService.UserLoggedIn += AddAuthTokens;
             User = new UserRepository();
             Answer = new AnswerRepository();
-            Catagory = new Repository<Catagory>();
             Question = new Repository<Question>();
             Quiz = new QuizRepository();
             Study = new Repository<Study>();
@@ -37,7 +36,6 @@ namespace DAL.Presistence
         {
             User.SetAuthToken(args.User.AuthToken);
             Answer.SetAuthToken(args.User.AuthToken);
-            Catagory.SetAuthToken(args.User.AuthToken);
             Question.SetAuthToken(args.User.AuthToken);
             Quiz.SetAuthToken(args.User.AuthToken);
             Study.SetAuthToken(args.User.AuthToken);
@@ -52,7 +50,6 @@ namespace DAL.Presistence
 
         public IUserRepository User { get; set; }
         public IAnswerRepository Answer { get; }
-        public IRepository<Catagory> Catagory { get; }
         public IRepository<Question> Question { get; }
         public IQuizRepository Quiz { get; }
         public IRepository<Study> Study { get; }

@@ -24,7 +24,6 @@ namespace ViewModels
         private IList<Faculty> _FacultyList { set; get; }
         private IList<Semester> _semesterList { set; get; }
         private IList<Course> _courseList { set; get; }
-        private IList<Catagory> _catagoryList { set; get; }
         private IList<Quiz> _quizList { set; get; }
 
         private string quizName { get; set; }
@@ -42,7 +41,6 @@ namespace ViewModels
         private Study selectedStudy;
         private Semester selectedSemester;
         private Course selectedCourse;
-        private Catagory selectedCatagory;
         private Faculty selectedFaculty;
 
         private Question selectedQuestion;
@@ -418,15 +416,6 @@ namespace ViewModels
             }
         }
 
-        public IList<Catagory> CatagoryList
-        {
-            get { return _catagoryList; }
-            set
-            {
-                _catagoryList = value;
-                RaisePropertyChanged("CatagoryList");
-            }
-        }
 
         public Question SelectedQuestion
         {
@@ -461,19 +450,7 @@ namespace ViewModels
                 selectedCourse = value;
                 SelectCourse();
             }
-        }
-
-        
-
-        public Catagory SelectedCatagory
-        {
-            get { return selectedCatagory; }
-
-            set
-            {
-                selectedCatagory = value;
-            }
-        }
+        }   
 
 
         public Study SelectedStudy
@@ -542,7 +519,7 @@ namespace ViewModels
             {
                 return;
             }
-            CatagoryList = new List<Catagory>();
+            
 
             //CourseList = (await Data.Catagory.GetAllAsync()).FindAll(c => c.);
             foreach (var course in CourseList)

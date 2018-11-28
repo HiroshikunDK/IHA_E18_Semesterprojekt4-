@@ -26,9 +26,9 @@ namespace RESTfullWebApi.Models
         public long UserID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public long CatagoryID { get; set; }
+        public Nullable<long> CourseID { get; set; }
     
-        public virtual Catagory Catagory { get; set; }
+        public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
         public virtual Userr Userr { get; set; }

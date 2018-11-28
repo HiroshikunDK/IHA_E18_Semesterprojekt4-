@@ -51,7 +51,7 @@
         <Label Grid.Row="1" Grid.Column="6" Content="Studie" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.ColumnSpan="1"/>
         <Label Grid.Column="6" Grid.Row="2" Content="Semester" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
         <Label Grid.Column="6" Grid.Row="3" Content="Course" HorizontalAlignment="Left"  VerticalAlignment="Center" />
-        <Label Grid.Column="5" Content="Catagory" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Label Grid.Column="6" Content="Answer count" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2"/>
         
         <ComboBox Margin="0,0,30,0" Grid.Column="6" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Width="100" Grid.ColumnSpan="2" ItemsSource="{Binding SemesterList}" SelectedItem="{Binding SelectedSemester}">
             <ComboBox.ItemTemplate>
@@ -100,7 +100,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <ComboBox Margin="60,0,30,0" IsEditable="True" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center" Grid.ColumnSpan="3" ItemsSource="{Binding CatagoryList}" SelectedItem="{Binding SelectedCatagory  }">
+        <ComboBox Margin="0,0,30,0" Width="70" Grid.Row="4" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.ColumnSpan="2" ItemsSource="{Binding AnswerCountList}" SelectedItem="{Binding SelectedAnswerCount}">
             <ComboBox.ItemTemplate>
                 <DataTemplate DataType="models:Faculty">
                     <StackPanel Orientation="Horizontal">

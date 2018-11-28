@@ -14,13 +14,6 @@
           <Property Name="IsCorrect" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="QuestionID" Type="bigint" Nullable="false" />
         </EntityType>
-        <EntityType Name="Catagory">
-          <Key>
-            <PropertyRef Name="CatagoryID" />
-          </Key>
-          <Property Name="CatagoryID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="300" Nullable="false" />
-        </EntityType>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseID" />
@@ -35,14 +28,6 @@
           </Key>
           <Property Name="FacultyID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="300" Nullable="false" />
-        </EntityType>
-        <EntityType Name="IsPartOfMany">
-          <Key>
-            <PropertyRef Name="CourseID" />
-            <PropertyRef Name="CatagoryID" />
-          </Key>
-          <Property Name="CourseID" Type="bigint" Nullable="false" />
-          <Property Name="CatagoryID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -62,7 +47,7 @@
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="1000" />
-          <Property Name="CatagoryID" Type="bigint" Nullable="false" />
+          <Property Name="CourseID" Type="bigint" />
         </EntityType>
         <EntityType Name="QuizUserStatistic">
           <Key>
@@ -152,32 +137,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_IsPartOfMany">
-          <End Role="Course" Type="Self.Course" Multiplicity="1" />
-          <End Role="IsPartOfMany" Type="Self.IsPartOfMany" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="CourseID" />
-            </Principal>
-            <Dependent Role="IsPartOfMany">
-              <PropertyRef Name="CourseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_IsPartOfMany2">
-          <End Role="Catagory" Type="Self.Catagory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="IsPartOfMany" Type="Self.IsPartOfMany" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Catagory">
-              <PropertyRef Name="CatagoryID" />
-            </Principal>
-            <Dependent Role="IsPartOfMany">
-              <PropertyRef Name="CatagoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_Question">
           <End Role="Quiz" Type="Self.Quiz" Multiplicity="1" />
           <End Role="Question" Type="Self.Question" Multiplicity="*" />
@@ -203,23 +162,19 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_Quiz2">
-          <End Role="Catagory" Type="Self.Catagory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
           <End Role="Quiz" Type="Self.Quiz" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Catagory">
-              <PropertyRef Name="CatagoryID" />
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
             </Principal>
             <Dependent Role="Quiz">
-              <PropertyRef Name="CatagoryID" />
+              <PropertyRef Name="CourseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_QuizUserStatistic">
-          <End Role="Quiz" Type="Self.Quiz" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Quiz" Type="Self.Quiz" Multiplicity="1" />
           <End Role="QuizUserStatistic" Type="Self.QuizUserStatistic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Quiz">
@@ -334,10 +289,8 @@
         </Association>
         <EntityContainer Name="VikingNoteDBModelStoreContainer">
           <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Catagory" EntityType="Self.Catagory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IsPartOfMany" EntityType="Self.IsPartOfMany" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quiz" EntityType="Self.Quiz" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuizUserStatistic" EntityType="Self.QuizUserStatistic" Schema="dbo" store:Type="Tables" />
@@ -355,14 +308,6 @@
             <End Role="Semester" EntitySet="Semester" />
             <End Role="Course" EntitySet="Course" />
           </AssociationSet>
-          <AssociationSet Name="fk_IsPartOfMany" Association="Self.fk_IsPartOfMany">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="IsPartOfMany" EntitySet="IsPartOfMany" />
-          </AssociationSet>
-          <AssociationSet Name="fk_IsPartOfMany2" Association="Self.fk_IsPartOfMany2">
-            <End Role="Catagory" EntitySet="Catagory" />
-            <End Role="IsPartOfMany" EntitySet="IsPartOfMany" />
-          </AssociationSet>
           <AssociationSet Name="fk_Question" Association="Self.fk_Question">
             <End Role="Quiz" EntitySet="Quiz" />
             <End Role="Question" EntitySet="Question" />
@@ -372,7 +317,7 @@
             <End Role="Quiz" EntitySet="Quiz" />
           </AssociationSet>
           <AssociationSet Name="fk_Quiz2" Association="Self.fk_Quiz2">
-            <End Role="Catagory" EntitySet="Catagory" />
+            <End Role="Course" EntitySet="Course" />
             <End Role="Quiz" EntitySet="Quiz" />
           </AssociationSet>
           <AssociationSet Name="fk_QuizUserStatistic" Association="Self.fk_QuizUserStatistic">
@@ -427,15 +372,6 @@
           <Property Name="QuestionID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="Self.fk_Answer" FromRole="Answer" ToRole="Question" />
         </EntityType>
-        <EntityType Name="Catagory">
-          <Key>
-            <PropertyRef Name="CatagoryID" />
-          </Key>
-          <Property Name="CatagoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Quizs" Relationship="Self.fk_Quiz2" FromRole="Catagory" ToRole="Quiz" />
-          <NavigationProperty Name="Courses" Relationship="Self.IsPartOfMany" FromRole="Catagory" ToRole="Course" />
-        </EntityType>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseID" />
@@ -444,7 +380,7 @@
           <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SemesterID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Semester" Relationship="Self.fk_Course" FromRole="Course" ToRole="Semester" />
-          <NavigationProperty Name="Catagories" Relationship="Self.IsPartOfMany" FromRole="Course" ToRole="Catagory" />
+          <NavigationProperty Name="Quizs" Relationship="Self.fk_Quiz2" FromRole="Course" ToRole="Quiz" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -475,8 +411,8 @@
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="CatagoryID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Catagory" Relationship="Self.fk_Quiz2" FromRole="Quiz" ToRole="Catagory" />
+          <Property Name="CourseID" Type="Int64" />
+          <NavigationProperty Name="Course" Relationship="Self.fk_Quiz2" FromRole="Quiz" ToRole="Course" />
           <NavigationProperty Name="Questions" Relationship="Self.fk_Question" FromRole="Quiz" ToRole="Question" />
           <NavigationProperty Name="Userr" Relationship="Self.fk_Quiz" FromRole="Quiz" ToRole="Userr" />
           <NavigationProperty Name="QuizUserStatistics" Relationship="Self.fk_QuizUserStatistic" FromRole="Quiz" ToRole="QuizUserStatistic" />
@@ -574,20 +510,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_Quiz2">
-          <End Role="Catagory" Type="Self.Catagory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Quiz" Type="Self.Quiz" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Catagory">
-              <PropertyRef Name="CatagoryID" />
-            </Principal>
-            <Dependent Role="Quiz">
-              <PropertyRef Name="CatagoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_Course">
           <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
           <End Role="Course" Type="Self.Course" Multiplicity="*" />
@@ -597,6 +519,18 @@
             </Principal>
             <Dependent Role="Course">
               <PropertyRef Name="SemesterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Quiz2">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Quiz" Type="Self.Quiz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Quiz">
+              <PropertyRef Name="CourseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -651,9 +585,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_QuizUserStatistic">
-          <End Role="Quiz" Type="Self.Quiz" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Quiz" Type="Self.Quiz" Multiplicity="1" />
           <End Role="QuizUserStatistic" Type="Self.QuizUserStatistic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Quiz">
@@ -740,13 +672,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="IsPartOfMany">
-          <End Role="Course" Type="Self.Course" Multiplicity="*" />
-          <End Role="Catagory" Type="Self.Catagory" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="VikingNoteDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Answers" EntityType="Self.Answer" />
-          <EntitySet Name="Catagories" EntityType="Self.Catagory" />
           <EntitySet Name="Courses" EntityType="Self.Course" />
           <EntitySet Name="Faculties" EntityType="Self.Faculty" />
           <EntitySet Name="Questions" EntityType="Self.Question" />
@@ -762,13 +689,13 @@
             <End Role="Question" EntitySet="Questions" />
             <End Role="Answer" EntitySet="Answers" />
           </AssociationSet>
-          <AssociationSet Name="fk_Quiz2" Association="Self.fk_Quiz2">
-            <End Role="Catagory" EntitySet="Catagories" />
-            <End Role="Quiz" EntitySet="Quizs" />
-          </AssociationSet>
           <AssociationSet Name="fk_Course" Association="Self.fk_Course">
             <End Role="Semester" EntitySet="Semesters" />
             <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Quiz2" Association="Self.fk_Quiz2">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Quiz" EntitySet="Quizs" />
           </AssociationSet>
           <AssociationSet Name="fk_Study" Association="Self.fk_Study">
             <End Role="Faculty" EntitySet="Faculties" />
@@ -814,10 +741,6 @@
             <End Role="UserType" EntitySet="UserTypes" />
             <End Role="Userr" EntitySet="Userrs" />
           </AssociationSet>
-          <AssociationSet Name="IsPartOfMany" Association="Self.IsPartOfMany">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="Catagory" EntitySet="Catagories" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -832,14 +755,6 @@
                 <ScalarProperty Name="Answer1" ColumnName="Answer" />
                 <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Catagories">
-            <EntityTypeMapping TypeName="VikingNoteDBModel.Catagory">
-              <MappingFragment StoreEntitySet="Catagory">
-                <ScalarProperty Name="CatagoryID" ColumnName="CatagoryID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -878,7 +793,7 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CatagoryID" ColumnName="CatagoryID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -953,14 +868,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="IsPartOfMany" TypeName="VikingNoteDBModel.IsPartOfMany" StoreEntitySet="IsPartOfMany">
-            <EndProperty Name="Course">
-              <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-            </EndProperty>
-            <EndProperty Name="Catagory">
-              <ScalarProperty Name="CatagoryID" ColumnName="CatagoryID" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -4,23 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ee5fbcefa6f84f3f9797a14a9bacfebb" Name="Diagram1">
-        <EntityTypeShape EntityType="VikingNoteDBModel.Answer" Width="1.5" PointX="16.5" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VikingNoteDBModel.Catagory" Width="1.5" PointX="9.75" PointY="8.25" IsExpanded="true" />
+      <Diagram DiagramId="84541f339b3d42cf94d2b8e98afd5c04" Name="Diagram1">
+        <EntityTypeShape EntityType="VikingNoteDBModel.Answer" Width="1.5" PointX="14.25" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VikingNoteDBModel.Course" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="VikingNoteDBModel.Faculty" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VikingNoteDBModel.Question" Width="1.5" PointX="14.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VikingNoteDBModel.Quiz" Width="1.5" PointX="12" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="VikingNoteDBModel.QuizUserStatistic" Width="1.5" PointX="14.25" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VikingNoteDBModel.Rating" Width="1.5" PointX="14.25" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="VikingNoteDBModel.SelectedAnswer" Width="1.5" PointX="16.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VikingNoteDBModel.Question" Width="1.5" PointX="12" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VikingNoteDBModel.Quiz" Width="1.5" PointX="9.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VikingNoteDBModel.QuizUserStatistic" Width="1.5" PointX="12" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VikingNoteDBModel.Rating" Width="1.5" PointX="12" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VikingNoteDBModel.SelectedAnswer" Width="1.5" PointX="14.25" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="VikingNoteDBModel.Semester" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="VikingNoteDBModel.Study" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="VikingNoteDBModel.Userr" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VikingNoteDBModel.UserType" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <AssociationConnector Association="VikingNoteDBModel.fk_Answer" ManuallyRouted="false" />
-        <AssociationConnector Association="VikingNoteDBModel.fk_Quiz2" ManuallyRouted="false" />
         <AssociationConnector Association="VikingNoteDBModel.fk_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="VikingNoteDBModel.fk_Quiz2" ManuallyRouted="false" />
         <AssociationConnector Association="VikingNoteDBModel.fk_Study" ManuallyRouted="false" />
         <AssociationConnector Association="VikingNoteDBModel.fk_Question" ManuallyRouted="false" />
         <AssociationConnector Association="VikingNoteDBModel.fk_SelectedAnswer" ManuallyRouted="false" />
@@ -32,7 +31,6 @@
         <AssociationConnector Association="VikingNoteDBModel.fk_Semester" ManuallyRouted="false" />
         <AssociationConnector Association="VikingNoteDBModel.fk_Userr2" ManuallyRouted="false" />
         <AssociationConnector Association="VikingNoteDBModel.fk_Userr" ManuallyRouted="false" />
-        <AssociationConnector Association="VikingNoteDBModel.IsPartOfMany" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

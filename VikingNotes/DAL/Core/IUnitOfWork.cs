@@ -12,7 +12,6 @@ namespace DAL.Core
     {
         IUserRepository User { get; set; }
         IAnswerRepository Answer { get; }
-        IRepository<Catagory> Catagory { get; }
         IRepository<Question> Question { get; }
         IQuizRepository Quiz { get; }
         IRepository<Study> Study { get; }

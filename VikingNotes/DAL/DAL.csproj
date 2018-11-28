@@ -48,7 +48,6 @@
     <Compile Include="Core\ILoginService.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IAnswerRepository.cs" />
-    <Compile Include="Core\Repositories\ICatagoryRepository.cs" />
     <Compile Include="Core\Repositories\ICourseRepository.cs" />
     <Compile Include="Core\Repositories\IFacultyRepository.cs" />
     <Compile Include="Core\Repositories\IQuestionRepository.cs" />
