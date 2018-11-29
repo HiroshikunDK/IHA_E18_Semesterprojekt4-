@@ -12,6 +12,15 @@ using ViewModels.Commands;
 
 namespace ViewModels
 {
+    public class CanViewBeChangedEventArgs : EventArgs
+    {
+        public bool AllowedChanged;
+
+        public CanViewBeChangedEventArgs()
+        {
+            
+        }
+    }
     public class MainWindowViewModel : BaseViewModel
     {
         private TopBarViewModel topBarVM { get; set; }
@@ -36,6 +45,8 @@ namespace ViewModels
 
         private UserControl takeView { get; set; }
 
+        private UserControl statisticView { get; set; }
+
         private UserControl topBarView { get; set; }
 
         private UserControl makeQuizView { get; set; }
@@ -46,12 +57,13 @@ namespace ViewModels
 
         private bool isDoingQuiz = false;
 
-        public MainWindowViewModel(IUnitOfWork data, UserControl topView, UserControl ansView, UserControl taView, UserControl maQuizView, UserControl maNewQuizView)
+        public MainWindowViewModel(IUnitOfWork data, UserControl topView, UserControl ansView, UserControl taView, UserControl statView, UserControl maQuizView, UserControl maNewQuizView)
         {
             Data = data;
             topBarView = topView;
             answerView = ansView;
             takeView = taView;
+            statisticView = statView;
             makeQuizView = maQuizView;
             makeNewQuizView = maNewQuizView;
 
@@ -61,6 +73,7 @@ namespace ViewModels
 
             takeQuizVM = new TakeQuizViewModel(answerView);
             takeQuizVM.IsDoingQuiz += IsDoingQuiz;
+            takeQuizVM.FinishedQuiz += IsFinishedQuiz;
             this.LoadTakeQuizView();
 
 
@@ -84,7 +97,12 @@ namespace ViewModels
         {
             isDoingQuiz = true;
         }
-        
+
+        private void IsFinishedQuiz(object o, EventArgs args)
+        {
+            isDoingQuiz = false;
+        }
+
 
         public BaseViewModel CurrentViewModel
         {
@@ -116,6 +134,7 @@ namespace ViewModels
         private void LoadStatisticsView(object o)
         {
             CurrentViewModel = new StatisticsViewModel(Data);
+            statisticView.DataContext = CurrentViewModel;
         }
 
         private void LoadMakeQuizView(object o)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -19,6 +20,8 @@ namespace RESTfullWebApi.Controllers
         public QuizController()
         {
             db.Configuration.ProxyCreationEnabled = false;
+
+            db.Database.Log = sql => Debug.Write(sql);
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
@@ -78,7 +81,7 @@ namespace RESTfullWebApi.Controllers
 
         // POST: api/Quiz
         [ResponseType(typeof(Quiz))]
-        public async Task<IHttpActionResult> PostQuiz(Quiz quiz)
+        public async Task<IHttpActionResult> PostQuiz([FromBody]Quiz quiz)
         {
             if (!ModelState.IsValid)
             {

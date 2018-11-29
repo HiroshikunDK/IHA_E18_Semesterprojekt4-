@@ -233,6 +233,8 @@ namespace ViewModels
         private void HandleQuizEndedEvent(object source, QuizEndedEventArgs e)
         {
             MessageBox.Show("it worked", "it worked", MessageBoxButton.OK);
+            isDoingQuiz = false;
+            FinishedQuiz?.Invoke(this, EventArgs.Empty);
         }
 
     }

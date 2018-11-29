@@ -30,6 +30,8 @@ namespace View
         private AnswerQuizQuestionView answerView { get; set; }
         private TakeQuizView takeView { get; set; }
 
+        private StatisticsView statisticsView { get; set; }
+
         private MakeNewQuizView makeNewQuizView { get; set; }
 
         private MakeQuizView makeQuizView { get; set; }
@@ -50,12 +52,14 @@ namespace View
 
             takeView = new TakeQuizView();
 
+            statisticsView = new StatisticsView();
+
             makeQuizView = new MakeQuizView();
 
             makeNewQuizView = new MakeNewQuizView();
 
             mainWindow = new MainWindow();
-            mainWindowVM = new MainWindowViewModel(Data, topBarView, answerView, takeView, makeQuizView, makeNewQuizView);
+            mainWindowVM = new MainWindowViewModel(Data, topBarView, answerView, takeView, statisticsView, makeQuizView, makeNewQuizView);
             mainWindow.DataContext = mainWindowVM;
 
             Data.LoginService.UserLoggedIn += LoginSuccesfull;

@@ -90,9 +90,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="models:Quiz">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Catagory.Name}" Margin="20,0,0,0"/>
-                        <TextBlock Text="{Binding Name}" Margin="20,0,0,0"/>
-                        <TextBlock Text="{Binding Description}" Margin="20,0,0,0"/>
+                        <TextBlock Text="{Binding Name}" Margin="10,0,0,0" Width="150" FontSize="12"/>
+                        <TextBlock Text="{Binding Description}" Margin="20,0,0,0" FontSize="10"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

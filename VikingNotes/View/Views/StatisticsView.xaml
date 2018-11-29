@@ -16,9 +16,6 @@
             <local:YourStatisticsView />
         </DataTemplate>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <viewmodels:StatisticsViewModel/>
-    </UserControl.DataContext>
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
