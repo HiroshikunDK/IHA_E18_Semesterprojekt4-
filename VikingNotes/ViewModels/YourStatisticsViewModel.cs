@@ -30,13 +30,15 @@ namespace ViewModels
 
         public YourStatisticsViewModel(IUnitOfWork data)
         {
-            Ratings = new List<Rating>();
+           
             //GetRatingsCommand = new Command(GetRatingCommandClickFunc, canExecute);
             GetRatingInfo = new Command(GetRatingInfoClickFunc, canExecute);
             Data = data;
             currentUser = Data.LoginService.User;
             getRelevantQuizList(3);
 
+            currentRating = new Rating();
+            Quizzes = new List<Quiz>();
 
         }
 
@@ -69,13 +71,13 @@ namespace ViewModels
             }
         }
 
-        public Rating Rating
+        public Rating CurrentRating
         {
             get { return currentRating; }
             set
             {
                 currentRating = value;
-                RaisePropertyChanged("currentRating");
+                RaisePropertyChanged("CurrentRating");
             }
         }
 
@@ -96,7 +98,7 @@ namespace ViewModels
             set
             {
                 totalRating = value;
-                RaisePropertyChanged("TotalRatingChanged");
+                RaisePropertyChanged("TotalRating");
             }
         }
 
@@ -142,30 +144,47 @@ namespace ViewModels
             //    }
             //}
 
-            Quizzes.Clear();
-            getRelevantRatingList(ID);
-            TotalRating = 0;
-
-            if (Ratings.Count != 0)
+            if (Ratings != null)
             {
+                Ratings.Clear();
+                getRelevantRatingList(ID);
+                TotalRating = 0;
+
                 foreach (var item in Ratings)
                 {
                     TotalRating += item.Rating1;
                 }
+                TotalRating = TotalRating / Ratings.Count();
             }
-            TotalRating = TotalRating / Ratings.Count();
+            else
+            {
+                TotalRating = 0.00;
+                CurrentRating.Reason = "No comment was found";
+                CurrentRating.Rating1 = 0;
+            }
+            
         }
 
         private void GetRatingInfoClickFunc(object ratingID)
         {
+
             int ID = Convert.ToInt32(ratingID);
 
-            foreach (var item in Ratings)
+            if (Ratings != null)
             {
-                if (item.RatingID == ID)
+                foreach (var item in Ratings)
                 {
-                    Rating = item;
+                    if (item.RatingID == ID)
+                    {
+                        CurrentRating = item;
+                    }
                 }
+            }
+            else
+            {
+                TotalRating = 0.00;
+                CurrentRating.Reason = "No comment was found";
+                CurrentRating.Rating1 = 0;
             }
         }
 
@@ -180,11 +199,13 @@ namespace ViewModels
 
         public async void getRelevantQuizList(long UserID)
         {
+            Quizzes = new List<Quiz>();
             Quizzes = await Data.Quiz.GetQuizzesByUserID(3);
         }
 
         public async void getRelevantRatingList(long quizID)
         {
+            Ratings = new List<Rating>();
             Ratings = await Data.Rating.GetRatingByQuizID(quizID);
         }
 

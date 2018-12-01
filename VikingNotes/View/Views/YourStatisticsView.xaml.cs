@@ -24,5 +24,10 @@ namespace View.Views
         {
             InitializeComponent();
         }
+
+        private void TheRatings_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
