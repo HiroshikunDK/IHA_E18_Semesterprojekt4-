@@ -35,7 +35,7 @@ namespace ViewModels
             GetRatingInfo = new Command(GetRatingInfoClickFunc, canExecute);
             Data = data;
             currentUser = Data.LoginService.User;
-            getRelevantQuizList(3);
+            getRelevantQuizList(3); //todo: change 3 for Data.CurrentUser.UserID to get users quizzes 
 
             currentRating = new Rating();
             Quizzes = new List<Quiz>();
@@ -200,7 +200,7 @@ namespace ViewModels
         public async void getRelevantQuizList(long UserID)
         {
             Quizzes = new List<Quiz>();
-            Quizzes = await Data.Quiz.GetQuizzesByUserID(3);
+            Quizzes = await Data.Quiz.GetQuizzesByUserID(3); //todo: change 3 this for UserID
         }
 
         public async void getRelevantRatingList(long quizID)
