@@ -48,6 +48,7 @@
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="EditQuizViewModel.cs" />
     <Compile Include="EditRemoveQuizViewModel.cs" />
     <Compile Include="LoginViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
