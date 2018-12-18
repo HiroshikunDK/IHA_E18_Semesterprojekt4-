@@ -17,87 +17,74 @@ namespace NUnit.Framework
         [SetUp]
         public void setupTestEnviorment()
         {
-            Answer testAnswer = new Answer()
+            UserType testUT = new UserType()
             {
-                AnswerID = 1,
-                Answer1 = "GoF State",
-                IsCorrect ="1",
-                QuestionID = 1
+                UserTypeID = 1,
+                Type = "AlmindeligBruger"
             };
         }
 
         [Test]
         public async void testGetAllAsync()
         {
-            List<Answer> resultList = new List<Answer>();
+            List<UserType> resultList = new List<UserType>();
 
-            resultList = await data.Answer.GetAllAsync();
+            resultList = await data.UserType.GetAllAsync();
 
-            Assert.That(resultList.Count, Is.EqualTo(67)); // hvertfald i mit test script
+            Assert.That(resultList.Count, Is.EqualTo(3)); // hvertfald i mit test script
         }
 
         [Test]
         public async void testGetAsync()
         {
-            Answer answer = new Answer();
+            UserType ut = new UserType();
 
-            answer = await data.Answer.GetAsync(1);
+            ut = await data.UserType.GetAsync(1);
 
-            Assert.That(answer.AnswerID, Is.EqualTo(1));
-            Assert.That(answer.Answer1, Is.EqualTo("GoF State"));
-            Assert.That(answer.IsCorrect, Is.EqualTo("1"));
-            Assert.That(answer.QuestionID, Is.EqualTo(1));
-
+            Assert.That(ut.UserTypeID, Is.EqualTo(1));
+            Assert.That(ut.Type, Is.EqualTo("AlmindeligBruger"));
         }
 
         [Test]
         public async void testAddUpdateRemove()
         {
-            Answer testNewAnswer = new Answer()
+            UserType testNewUT = new UserType()
             {
-                AnswerID = 999,
-                Answer1 = "Because UnitTest",
-                IsCorrect = "1",
-                QuestionID = 1
+                UserTypeID = 999,
+                Type = "SuperBruger"
             };
 
-            await data.Answer.Add(testNewAnswer); //Gemmer bruger
+            await data.UserType.Add(testNewUT); //Gemmer bruger
 
-            Answer resultAnswer = await data.Answer.GetAsync(999); //henter Quiz med ID 2
+            UserType resultUT = await data.UserType.GetAsync(999); //henter Quiz med ID 2
 
-            Assert.That(resultAnswer.AnswerID, Is.EqualTo(999));
-            Assert.That(resultAnswer.Answer1, Is.EqualTo("Because UnitTest"));
-            Assert.That(resultAnswer.IsCorrect, Is.EqualTo("1"));
-            Assert.That(resultAnswer.QuestionID, Is.EqualTo(1));
+            Assert.That(resultUT.UserTypeID, Is.EqualTo(999));
+            Assert.That(resultUT.Type, Is.EqualTo("SuperBruger"));
             //update testes her
 
-            Answer testChangedAnswer = new Answer()
+            UserType testChangedUT = new UserType()
             {
-                AnswerID = 999,
-                Answer1 = "Because UnitTest is wrong",
-                IsCorrect = "0",
-                QuestionID = 1
+                UserTypeID = 999,
+                Type = "MiddelmådigBruger"
             };
 
-            await data.Answer.Update(999, testChangedAnswer); //ændre quizzen 
+            await data.UserType.Update(999, testChangedUT); //ændre quizzen 
 
-            Answer assertAnswer = await data.Answer.GetAsync(999); //henter den ændrede Quiz
+            UserType assertUT = await data.UserType.GetAsync(999); //henter den ændrede Quiz
 
-            Assert.That(assertAnswer.AnswerID, Is.EqualTo(999));
-            Assert.That(assertAnswer.Answer1, Is.EqualTo("Because UnitTest is wrong"));
-            Assert.That(assertAnswer.IsCorrect, Is.EqualTo("0"));
-            Assert.That(assertAnswer.QuestionID, Is.EqualTo(1));
+            Assert.That(assertUT.UserTypeID, Is.EqualTo(999));
+            Assert.That(assertUT.Type, Is.EqualTo("SuperBruger"));
             //delete testes her 
 
-            List<Answer> resultList = new List<Answer>();
+            List<UserType> resultList = new List<UserType>();
 
-            resultList = await data.Answer.GetAllAsync();
+            resultList = await data.UserType.GetAllAsync();
 
             int currentSize = resultList.Count;
 
-            data.Answer.Remove(999);
+            data.UserType.Remove(999);
 
-            resultList = await data.Answer.GetAllAsync();
+            resultList = await data.UserType.GetAllAsync();
 
             Assert.That(resultList.Count, Is.EqualTo(currentSize-1));
         }
