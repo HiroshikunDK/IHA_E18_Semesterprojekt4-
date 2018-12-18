@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "ViewModels\Vi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{3F55CB13-3CCC-4938-95BE-DBCBB24890C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest_Vikingnotes", "UnitTest_Vikingnotes\UnitTest_Vikingnotes.csproj", "{F22283E9-12BA-40E3-89F4-6EBAF053A1A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{3F55CB13-3CCC-4938-95BE-DBCBB24890C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F55CB13-3CCC-4938-95BE-DBCBB24890C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F55CB13-3CCC-4938-95BE-DBCBB24890C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F22283E9-12BA-40E3-89F4-6EBAF053A1A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22283E9-12BA-40E3-89F4-6EBAF053A1A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F22283E9-12BA-40E3-89F4-6EBAF053A1A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F22283E9-12BA-40E3-89F4-6EBAF053A1A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
