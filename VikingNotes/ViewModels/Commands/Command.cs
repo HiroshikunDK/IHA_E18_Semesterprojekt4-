@@ -10,7 +10,6 @@ namespace ViewModels.Commands
     public class Command : ICommand
     {
         Action<object> executeMethod;
-        //Func<object, bool> canexecuteMethod;
         private Predicate<object> canExecutePredicate;
 
         public Command(Action<object> execute)
@@ -32,11 +31,6 @@ namespace ViewModels.Commands
 
         public bool CanExecute(object parameter)
         {
-            //if (canexecuteMethod(parameter))
-            //{
-            //    return true;
-            //}
-            //return false;
             return this.canExecutePredicate == null ? true : this.canExecutePredicate(parameter);
         }
 
