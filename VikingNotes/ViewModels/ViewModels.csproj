@@ -47,7 +47,6 @@
     <Compile Include="AnswerQuizQuestionViewModel.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="EditQuizViewModel.cs" />
     <Compile Include="EditRemoveQuizViewModel.cs" />
     <Compile Include="LoginViewModel.cs" />
@@ -73,9 +72,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-    <Folder Include="Services\Source\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -22,8 +22,8 @@ namespace ViewModels
             this.LoadMakeNewQuizView();
 
             // Hook up Commands to associated methods
-            this.LoadMakeNewQuizViewCommand = new DelegateCommand(o => this.LoadMakeNewQuizView());
-            this.LoadEditRemoveQuizViewCommand = new DelegateCommand(o => this.LoadEditRemoveQuizView());
+            this.LoadMakeNewQuizViewCommand = new Command(o => this.LoadMakeNewQuizView());
+            this.LoadEditRemoveQuizViewCommand = new Command(o => this.LoadEditRemoveQuizView());
         }
 
         public ICommand LoadMakeNewQuizViewCommand { get; private set; }

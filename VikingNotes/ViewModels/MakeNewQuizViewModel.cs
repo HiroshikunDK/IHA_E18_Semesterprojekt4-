@@ -77,64 +77,8 @@ namespace ViewModels
 
             GemogNaeste = new Command(Naeste, CanExecute);
             GemogForrige = new Command(Forrige, CanExecuteForrige);
-            GemMCQ = new Command(GEMMCQ, CanExecuteSave);
-            //SelectFaculityCommand = new Command(SelectFaculity, CanExecute);
-            //NySvarmulighed = new DelegateCommand(nySvar,CanExecute);           
+            GemMCQ = new Command(GEMMCQ, CanExecuteSave);         
         }
-
-
-        //private void SelectQuestion(Question question)
-        //{
-        //    if (selectedQuestionIndex == QuestionList.Count)
-        //    {
-        //        if (QuestionName != "")
-        //        {
-        //            newQuestion = new Question();
-        //            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
-        //            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
-        //            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
-        //            newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
-
-        //            newQuestion.Question1 = QuestionName;
-
-        //            //CurrentQuiz.Questions.Add(newQuestion);
-        //            List<Question> tempList = new List<Question>(questionList);
-
-        //            tempList.Add(newQuestion);
-
-        //            QuestionList = tempList;
-        //        }               
-        //    }
-        //    else if (selectedQuestion != null)
-        //    {
-        //        newQuestion = new Question();
-        //        newQuestion.Answers.Add(new Answer() { Answer1 = svarMul1 });
-        //        newQuestion.Answers.Add(new Answer() { Answer1 = svarMul2 });
-        //        newQuestion.Answers.Add(new Answer() { Answer1 = svarMul3 });
-        //        newQuestion.Answers.Add(new Answer() { Answer1 = svarMul4 });
-
-        //        newQuestion.Question1 = QuestionName;
-
-        //        List<Question> tempList = new List<Question>(QuestionList);
-
-        //        tempList[selectedQuestionIndex] = newQuestion;
-
-        //        questionList = tempList;
-        //    }
-
-        //    selectedQuestionIndex = questionListIndex;
-        //    selectedQuestion = question;
-        //    RaisePropertyChanged("SelectedQuestion");
-        //    QuestionName = question.Question1;
-        //    List<Answer> tempAnswerList = question.Answers.ToList();
-        //    SvarMul1 = tempAnswerList[0].Answer1;
-        //    SvarMul2 = tempAnswerList[1].Answer1;
-        //    SvarMul3 = tempAnswerList[2].Answer1;
-        //    SvarMul4 = tempAnswerList[3].Answer1;
-
-        //    QuestionCounter = "Spørgsmål " + (selectedQuestionIndex + 1) + "/" + QuestionList.Count;
-
-        //}
 
         private void ClearQuestionsBoxes()
         {

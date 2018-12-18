@@ -76,12 +76,6 @@ namespace ViewModels
             takeQuizVM.FinishedQuiz += IsFinishedQuiz;
             this.LoadTakeQuizView();
 
-
-            // Hook up Commands to associated methods
-            //this.LoadTakeQuizViewCommand = new DelegateCommand(o => this.LoadTakeQuizView());
-            //this.LoadStatisticsViewCommand = new DelegateCommand(o => this.LoadStatisticsView());
-            //this.LoadMakeQuizViewCommand = new DelegateCommand(o => this.LoadMakeQuizView());
-
             this.LoadTakeQuizViewCommand = new Command(LoadTakeQuizView, canExecute);
             this.LoadStatisticsViewCommand = new Command(LoadStatisticsView, canExecute);
             this.LoadMakeQuizViewCommand = new Command(LoadMakeQuizView, canExecute);

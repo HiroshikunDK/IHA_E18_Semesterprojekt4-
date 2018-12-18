@@ -17,8 +17,8 @@ namespace ViewModels
             this.LoadAllStatisticsView();
 
             // Hook up Commands to associated methods
-            this.LoadAllStatisticsViewCommand = new DelegateCommand(o => this.LoadAllStatisticsView());
-            this.LoadYourStatisticsViewCommand = new DelegateCommand(o => this.LoadYourStatisticsView());
+            this.LoadAllStatisticsViewCommand = new Command(o => this.LoadAllStatisticsView());
+            this.LoadYourStatisticsViewCommand = new Command(o => this.LoadYourStatisticsView());
         }
         private IUnitOfWork Data;
         public ICommand LoadAllStatisticsViewCommand { get; private set; }

@@ -13,6 +13,11 @@ namespace ViewModels.Commands
         //Func<object, bool> canexecuteMethod;
         private Predicate<object> canExecutePredicate;
 
+        public Command(Action<object> execute)
+            : this(execute, null)
+        {
+        }
+
         public Command(Action<object> executeMethod, Predicate<object> canExecute)
         {
             this.executeMethod = executeMethod;
