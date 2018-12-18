@@ -54,6 +54,11 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UT_Repositories\TestFaculty.cs" />
+    <Compile Include="UT_Repositories\TestSemester.cs" />
+    <Compile Include="UT_Repositories\TestUserType.cs" />
+    <Compile Include="UT_Repositories\TestStudy.cs" />
+    <Compile Include="UT_Repositories\TestCourse.cs" />
     <Compile Include="UT_Repositories\TestAnswer.cs" />
     <Compile Include="UT_Repositories\TestQuestion.cs" />
     <Compile Include="UT_Repositories\TestUser.cs" />
