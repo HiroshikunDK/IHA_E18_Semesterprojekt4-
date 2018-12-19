@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DAL.Core;
 using DAL.Presistence;
+using RESTfullWebApi.Models;
 using ViewModels.Commands;
-using ViewModels.Services.Interfaces;
-using ViewModels.Services.Source;
 
 namespace ViewModels
 {
+    public class CanViewBeChangedEventArgs : EventArgs
+    {
+        public bool AllowedChanged;
+
+        public CanViewBeChangedEventArgs()
+        {
+            
+        }
+    }
     public class MainWindowViewModel : BaseViewModel
     {
-        private ILoginService loginService { get; set; }
+        private TopBarViewModel topBarVM { get; set; }
+
         private IUnitOfWork Data { get; set; }
 
         public ICommand LoadTakeQuizViewCommand { get; private set; }
@@ -29,20 +39,64 @@ namespace ViewModels
 
         private BaseViewModel _topBarViewModel;
 
-        public MainWindowViewModel(IUnitOfWork data, ILoginService loginservice, TopBarViewModel topBarVM)
-        {
-            this.LoadTakeQuizView();
-            Data = data;
-            loginService = loginservice;
-            TopBarViewModel = topBarVM;
-         
+        private List<ViewBase> viewListe { get; set; }
 
-            // Hook up Commands to associated methods
-            this.LoadTakeQuizViewCommand = new DelegateCommand(o => this.LoadTakeQuizView());
-            this.LoadStatisticsViewCommand = new DelegateCommand(o => this.LoadStatisticsView());
-            this.LoadMakeQuizViewCommand = new DelegateCommand(o => this.LoadMakeQuizView());
+        private UserControl answerView { get; set; }
+
+        private UserControl takeView { get; set; }
+
+        private UserControl statisticView { get; set; }
+
+        private UserControl topBarView { get; set; }
+
+        private UserControl makeQuizView { get; set; }
+
+        private UserControl makeNewQuizView { get; set; }
+
+        private TakeQuizViewModel takeQuizVM;
+
+        private bool isDoingQuiz = false;
+
+        public MainWindowViewModel(IUnitOfWork data, UserControl topView, UserControl ansView, UserControl taView, UserControl statView, UserControl maQuizView, UserControl maNewQuizView)
+        {
+            Data = data;
+            topBarView = topView;
+            answerView = ansView;
+            takeView = taView;
+            statisticView = statView;
+            makeQuizView = maQuizView;
+            makeNewQuizView = maNewQuizView;
+
+            topBarVM = new TopBarViewModel(Data);
+            topBarView.DataContext = topBarVM;
+            _topBarViewModel = topBarVM;
+
+            takeQuizVM = new TakeQuizViewModel(answerView);
+            takeQuizVM.IsDoingQuiz += IsDoingQuiz;
+            takeQuizVM.FinishedQuiz += IsFinishedQuiz;
+            this.LoadTakeQuizView();
+
+            this.LoadTakeQuizViewCommand = new Command(LoadTakeQuizView, canExecute);
+            this.LoadStatisticsViewCommand = new Command(LoadStatisticsView, canExecute);
+            this.LoadMakeQuizViewCommand = new Command(LoadMakeQuizView, canExecute);
+
         }
-        
+
+        private bool canExecute(object parameter)
+        {
+            return !isDoingQuiz;
+        }
+
+        private void IsDoingQuiz(object o, EventArgs args)
+        {
+            isDoingQuiz = true;
+        }
+
+        private void IsFinishedQuiz(object o, EventArgs args)
+        {
+            isDoingQuiz = false;
+        }
+
 
         public BaseViewModel CurrentViewModel
         {
@@ -65,19 +119,22 @@ namespace ViewModels
             }
         }
 
-        private void LoadTakeQuizView()
+        private void LoadTakeQuizView(object o = null)
         {
-            CurrentViewModel = new TakeQuizViewModel();
+            CurrentViewModel = takeQuizVM;
+            takeView.DataContext = CurrentViewModel;
         }
 
-        private void LoadStatisticsView()
+        private void LoadStatisticsView(object o)
         {
-            CurrentViewModel = new StatisticsViewModel();
+            CurrentViewModel = new StatisticsViewModel(Data);
+            statisticView.DataContext = CurrentViewModel;
         }
 
-        private void LoadMakeQuizView()
+        private void LoadMakeQuizView(object o)
         {
-            CurrentViewModel = new MakeQuizViewModel();
+            CurrentViewModel = new MakeQuizViewModel(Data, makeNewQuizView);
+            makeQuizView.DataContext = CurrentViewModel;
         }
     }
 }

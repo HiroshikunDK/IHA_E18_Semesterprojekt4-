@@ -62,21 +62,23 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="TestData-PostDeploy.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\UserType.sql" />
+    <Build Include="dbo\Tables\Faculty.sql" />
+    <Build Include="dbo\Tables\Study.sql" />
+    <Build Include="dbo\Tables\Semester.sql" />
+    <Build Include="dbo\Tables\Course.sql" />
     <Build Include="dbo\Tables\Userr.sql" />
     <Build Include="dbo\Tables\Quiz.sql" />
     <Build Include="dbo\Tables\Question.sql" />
     <Build Include="dbo\Tables\Answer.sql" />
-    <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
-    <Build Include="dbo\Tables\Catagory.sql" />
-    <Build Include="dbo\Tables\Study.sql" />
-    <Build Include="dbo\Tables\UserType.sql" />
-    <Build Include="dbo\Tables\Faculty.sql" />
-    <Build Include="dbo\Tables\Semester.sql" />
-    <Build Include="dbo\Tables\Course.sql" />
-    <Build Include="dbo\Tables\IsPartOfMany.sql" />
     <Build Include="dbo\Tables\Rating.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="TestData-PostDeploy.sql" />
+    <Build Include="dbo\Tables\QuizUserStatistic.sql" />
+    <Build Include="dbo\Tables\SelectedAnswer.sql" />
   </ItemGroup>
 </Project>

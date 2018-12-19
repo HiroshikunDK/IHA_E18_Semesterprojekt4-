@@ -17,7 +17,7 @@ namespace RESTfullWebApi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Course()
         {
-            this.Catagories = new HashSet<Catagory>();
+            this.Quizs = new HashSet<Quiz>();
         }
     
         public long CourseID { get; set; }
@@ -26,6 +26,6 @@ namespace RESTfullWebApi.Models
     
         public virtual Semester Semester { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Catagory> Catagories { get; set; }
+        public virtual ICollection<Quiz> Quizs { get; set; }
     }
 }

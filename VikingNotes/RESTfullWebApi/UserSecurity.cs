@@ -8,12 +8,11 @@ namespace RESTfullWebApi
 {
     public class UserSecurity
     {
-        public static bool Login(string username, string password)
+        public static Userr Authentication(string authToken)
         {
             using (VikingNoteDBEntities entities = new VikingNoteDBEntities())
             {
-                return entities.Userrs.Any(user => user.UserName.Equals(username, StringComparison.OrdinalIgnoreCase) &&
-                                                   user.Password == password);
+                return entities.Userrs.FirstOrDefault(user => user.AuthToken == authToken);
             }
         }
     }

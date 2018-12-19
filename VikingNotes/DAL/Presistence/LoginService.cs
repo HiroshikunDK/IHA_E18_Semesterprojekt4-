@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Core;
+using DAL.Presistence.Repositories;
 using RESTfullWebApi.Models;
-using ViewModels.Services.Interfaces;
 
-namespace ViewModels.Services.Source
+namespace DAL.Presistence
 {
     public class LoginService : ILoginService
     {
@@ -21,6 +21,7 @@ namespace ViewModels.Services.Source
         public LoginService(IUnitOfWork data)
         {
             Data = data;
+            user = new Userr();
         }
 
         public Userr User

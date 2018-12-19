@@ -12,21 +12,22 @@ namespace RESTfullWebApi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Catagory
+    public partial class QuizUserStatistic
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Catagory()
+        public QuizUserStatistic()
         {
-            this.Quizs = new HashSet<Quiz>();
-            this.Courses = new HashSet<Course>();
+            this.SelectedAnswers = new HashSet<SelectedAnswer>();
         }
     
-        public long CatagoryID { get; set; }
-        public string Name { get; set; }
+        public long QuizUserStatisticID { get; set; }
+        public int correctPercentage { get; set; }
+        public long QuizID { get; set; }
+        public Nullable<long> UserID { get; set; }
     
+        public virtual Quiz Quiz { get; set; }
+        public virtual Userr Userr { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Quiz> Quizs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<SelectedAnswer> SelectedAnswers { get; set; }
     }
 }

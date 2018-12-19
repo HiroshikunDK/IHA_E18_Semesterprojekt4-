@@ -10,16 +10,18 @@ namespace DAL.Core
 {
     public interface IUnitOfWork
     {
-        IUserRepository User { get; }
-        IRepository<Answer> Answer { get; }
-        IRepository<Catagory> Catagory { get; }
+        IUserRepository User { get; set; }
+        IAnswerRepository Answer { get; }
         IRepository<Question> Question { get; }
-        IRepository<Quiz> Quiz { get; }
+        IQuizRepository Quiz { get; }
         IRepository<Study> Study { get; }
         IRepository<UserType> UserType { get; }
         IRepository<Course> Course { get; }
         IRepository<Faculty> Faculty { get; }
-        IRepository<Rating> Rating { get; }
+        IRatingRepository Rating { get; }
         IRepository<Semester> Semester { get; }
+        ILoginService LoginService { get; }
+        IRepository<SelectedAnswer> SelectedAnswer { get; }
+        IRepository<QuizUserStatistic> QuizUserStatistic { get; }
     }
 }

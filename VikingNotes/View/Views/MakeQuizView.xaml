@@ -17,9 +17,6 @@
             <local:EditRemoveQuizView />
         </DataTemplate>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <viewmodels:MakeQuizViewModel />
-    </UserControl.DataContext>
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -47,4 +44,5 @@
 
         <ContentControl x:Name="MakeQuizContent" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="10" Content="{Binding Path=CurrentViewModel}"/>
     </Grid>
+
 </UserControl>

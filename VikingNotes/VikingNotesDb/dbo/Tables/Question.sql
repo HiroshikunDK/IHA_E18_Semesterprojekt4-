@@ -3,38 +3,12 @@
 -- QuestionID      :  
 -- Question        :  
 -- QuizID          :  (references Quiz.QuizID)
---
---
--- Create Table    : 'Question'   
--- QuestionID      :  
--- Question        :  
--- QuizID          :  (references Quiz.QuizID)
---
---
--- Create Table    : 'Question'   
--- QuestionID      :  
--- Question        :  
--- QuizID          :  (references Quiz.QuizID)
---
---
--- Create Table    : 'Question'   
--- QuestionID      :  
--- Question        :  
--- QuizID          :  (references Quiz.QuizID)
--- WrongCount      :  
--- CorrectCount    :  
---
---
--- Create Table    : 'Question'   
--- QuestionID      :  
--- Question        :  
--- QuizID          :  (references Quiz.QuizID)
 -- WrongCount      :  
 -- CorrectCount    :  
 --
 CREATE TABLE Question (
     QuestionID     BIGINT IDENTITY(1,1) NOT NULL UNIQUE,
-    Question       NCHAR(1000) NOT NULL,
+    Question       NVARCHAR(1000) NOT NULL,
     QuizID         BIGINT NOT NULL,
     WrongCount     BIGINT NOT NULL,
     CorrectCount   BIGINT NOT NULL,

@@ -13,48 +13,44 @@ using RESTfullWebApi.Models;
 
 namespace RESTfullWebApi.Controllers
 {
-    public class CatagoryController : ApiController
+    public class SelectedAnswerController : ApiController
     {
-        public CatagoryController()
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-        }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
-        // GET: api/Catagory
-        public IQueryable<Catagory> GetCatagories()
+        // GET: api/SelectedAnswer
+        public IQueryable<SelectedAnswer> GetSelectedAnswers()
         {
-            return db.Catagories;
+            return db.SelectedAnswers;
         }
 
-        // GET: api/Catagory/5
-        [ResponseType(typeof(Catagory))]
-        public async Task<IHttpActionResult> GetCatagory(long id)
+        // GET: api/SelectedAnswer/5
+        [ResponseType(typeof(SelectedAnswer))]
+        public async Task<IHttpActionResult> GetSelectedAnswer(long id)
         {
-            Catagory catagory = await db.Catagories.FindAsync(id);
-            if (catagory == null)
+            SelectedAnswer selectedAnswer = await db.SelectedAnswers.FindAsync(id);
+            if (selectedAnswer == null)
             {
                 return NotFound();
             }
 
-            return Ok(catagory);
+            return Ok(selectedAnswer);
         }
 
-        // PUT: api/Catagory/5
+        // PUT: api/SelectedAnswer/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCatagory(long id, Catagory catagory)
+        public async Task<IHttpActionResult> PutSelectedAnswer(long id, SelectedAnswer selectedAnswer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != catagory.CatagoryID)
+            if (id != selectedAnswer.SelectedAnswerID)
             {
                 return BadRequest();
             }
 
-            db.Entry(catagory).State = EntityState.Modified;
+            db.Entry(selectedAnswer).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +58,7 @@ namespace RESTfullWebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CatagoryExists(id))
+                if (!SelectedAnswerExists(id))
                 {
                     return NotFound();
                 }
@@ -75,35 +71,35 @@ namespace RESTfullWebApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Catagory
-        [ResponseType(typeof(Catagory))]
-        public async Task<IHttpActionResult> PostCatagory(Catagory catagory)
+        // POST: api/SelectedAnswer
+        [ResponseType(typeof(SelectedAnswer))]
+        public async Task<IHttpActionResult> PostSelectedAnswer(SelectedAnswer selectedAnswer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Catagories.Add(catagory);
+            db.SelectedAnswers.Add(selectedAnswer);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = catagory.CatagoryID }, catagory);
+            return CreatedAtRoute("DefaultApi", new { id = selectedAnswer.SelectedAnswerID }, selectedAnswer);
         }
 
-        // DELETE: api/Catagory/5
-        [ResponseType(typeof(Catagory))]
-        public async Task<IHttpActionResult> DeleteCatagory(long id)
+        // DELETE: api/SelectedAnswer/5
+        [ResponseType(typeof(SelectedAnswer))]
+        public async Task<IHttpActionResult> DeleteSelectedAnswer(long id)
         {
-            Catagory catagory = await db.Catagories.FindAsync(id);
-            if (catagory == null)
+            SelectedAnswer selectedAnswer = await db.SelectedAnswers.FindAsync(id);
+            if (selectedAnswer == null)
             {
                 return NotFound();
             }
 
-            db.Catagories.Remove(catagory);
+            db.SelectedAnswers.Remove(selectedAnswer);
             await db.SaveChangesAsync();
 
-            return Ok(catagory);
+            return Ok(selectedAnswer);
         }
 
         protected override void Dispose(bool disposing)
@@ -115,9 +111,9 @@ namespace RESTfullWebApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CatagoryExists(long id)
+        private bool SelectedAnswerExists(long id)
         {
-            return db.Catagories.Count(e => e.CatagoryID == id) > 0;
+            return db.SelectedAnswers.Count(e => e.SelectedAnswerID == id) > 0;
         }
     }
 }

@@ -14,10 +14,6 @@ namespace RESTfullWebApi.Models
     
     public partial class Answer
     {
-        public Answer()
-        {
-            
-        }
         public long AnswerID { get; set; }
         public string Answer1 { get; set; }
         public string IsCorrect { get; set; }

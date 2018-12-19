@@ -21,28 +21,63 @@ namespace RESTfullWebApi.Controllers
             //db.Configuration.ProxyCreationEnabled = false;
 
             db.Database.Log = sql => Debug.Write(sql);
+            
         }
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Userr
-        public IQueryable<Userr> GetUserrs(string username = null, string password = null)
+        public async Task<IQueryable<UserrDTO>> GetUserrs(string username = null, string password = null)
         {
             if (username != null && password != null)
             {
-                List<Userr> list = new List<Userr>();
-                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password == password);
+                List<UserrDTO> list = new List<UserrDTO>();
+                Userr userTryinToLogIn = db.Userrs.FirstOrDefault(u => u.UserName == username);
+                if (userTryinToLogIn == null)
+                {
+                    return list.AsQueryable();
+                }
+                string[] passwordHash = GetHash.SHA256(password, userTryinToLogIn.Salt);
+                string passwordToCheck = passwordHash[0];
+                Userr loggedInUserr = db.Userrs.FirstOrDefault(u => u.UserName == username && u.Password.Trim() == passwordToCheck);
                 if (loggedInUserr == null)
                 {
                     return list.AsQueryable();
                 }
-                list.Add(loggedInUserr);
+                // Generer en ny authtoken.
+                loggedInUserr.AuthToken = GetHash.SHA256(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"))[0];
+                db.Entry(loggedInUserr).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+
+                UserrDTO transferUserObject = new UserrDTO()
+                {
+                    UserID = loggedInUserr.UserID,
+                    EmailAdress = loggedInUserr.EmailAdress,
+                    StudentNumber = loggedInUserr.StudentNumber,
+                    UserName = loggedInUserr.UserName,
+                    StudyID =  loggedInUserr.StudyID,
+                    UserTypeID = loggedInUserr.UserTypeID,
+                    AuthToken = loggedInUserr.AuthToken
+
+                };
+                list.Add(transferUserObject);
                 return list.AsQueryable();
             }
-            return db.Userrs;
+
+            var users = from u in db.Userrs
+                select new UserrDTO()
+                {
+                    UserID = u.UserID,
+                    EmailAdress = u.EmailAdress,
+                    StudentNumber = u.StudentNumber,
+                    UserName = u.UserName,
+                    StudyID = u.StudyID,
+                    UserTypeID = u.UserTypeID
+                };
+            return users;
         }
 
         // GET: api/Userr/5
-        [ResponseType(typeof(Userr))]
+        [ResponseType(typeof(UserrDTO))]
         public async Task<IHttpActionResult> GetUserr(long id)
         {
             
@@ -51,13 +86,22 @@ namespace RESTfullWebApi.Controllers
             {
                 return NotFound();
             }
+            UserrDTO transferUserObject = new UserrDTO()
+            {
+                UserID = userr.UserID,
+                EmailAdress = userr.EmailAdress,
+                StudentNumber = userr.StudentNumber,
+                UserName = userr.UserName,
+                StudyID = userr.StudyID,
+                UserTypeID = userr.UserTypeID
 
-            return Ok(userr);
+            };
+            return Ok(transferUserObject);
         }
 
         // PUT: api/Userr/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUserr(long id, Userr userr)
+        public async Task<IHttpActionResult> PutUserr(long id,[FromBody]Userr userr)
         {
             if (!ModelState.IsValid)
             {
@@ -69,6 +113,9 @@ namespace RESTfullWebApi.Controllers
                 return BadRequest();
             }
 
+            string[] passwordParameters = GetHash.SHA256(userr.Password);
+            userr.Password = passwordParameters[0];
+            userr.Salt = passwordParameters[1];
             db.Entry(userr).State = EntityState.Modified;
 
             try
@@ -91,19 +138,33 @@ namespace RESTfullWebApi.Controllers
         }
 
         // POST: api/Userr
-        [ResponseType(typeof(Userr))]
+        [ResponseType(typeof(UserrDTO))]
         
-        public async Task<IHttpActionResult> PostUserr(Userr userr)
+        public async Task<IHttpActionResult> PostUserr([FromBody]Userr userr)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            string[] passwordParameters = GetHash.SHA256(userr.Password);
+            userr.Password = passwordParameters[0];
+            userr.Salt = passwordParameters[1];
+            userr.AuthToken = GetHash.SHA256(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"))[0];
             db.Userrs.Add(userr);
             await db.SaveChangesAsync();
 
-            return Ok(userr);
+            UserrDTO transferUserObject = new UserrDTO()
+            {
+                UserID = userr.UserID,
+                EmailAdress = userr.EmailAdress,
+                StudentNumber = userr.StudentNumber,
+                UserName = userr.UserName,
+                StudyID = userr.StudyID,
+                UserTypeID = userr.UserTypeID,
+                AuthToken = userr.AuthToken
+
+            };
+            return Ok(transferUserObject);
         }
 
         // DELETE: api/Userr/5

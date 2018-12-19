@@ -10,9 +10,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.DataContext>
-        <ViewModels:TakeQuizViewModel/>
-    </UserControl.DataContext>
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type ViewModels:AnswerQuizQuestionViewModel}">
+            <local:AnswerQuizQuestionView />
+        </DataTemplate>
+    </UserControl.Resources>
 
     <Grid Background="LightCyan">
         <Grid.ColumnDefinitions>
@@ -37,7 +39,7 @@
             <RowDefinition/>
 
         </Grid.RowDefinitions>
-
+         
         <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Content="Science And Technology" Background="LightBlue" BorderBrush="{x:Null}" Command="{Binding SelectFaculityCommand}" CommandParameter="1"/>
         <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Content="Health" Background="LightPink" BorderBrush="{x:Null}" Command="{Binding SelectFaculityCommand}" CommandParameter="2"/>
         <Button Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="0" Content="Arts" Background="LightYellow" BorderBrush="{x:Null}" Command="{Binding SelectFaculityCommand}" CommandParameter="3"/>
@@ -88,14 +90,15 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="models:Quiz">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Catagory.Name}" Margin="20,0,0,0"/>
-                        <TextBlock Text="{Binding Name}" Margin="20,0,0,0"/>
-                        <TextBlock Text="{Binding Description}" Margin="20,0,0,0"/>
+                        <TextBlock Text="{Binding Name}" Margin="10,0,0,0" Width="150" FontSize="12"/>
+                        <TextBlock Text="{Binding Description}" Margin="20,0,0,0" FontSize="10"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+       
 
-            <ContentControl VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="10"/>
+        <ContentControl Background="White" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" Grid.RowSpan="8" Content="{Binding Path=QuizContent}"/>
     </Grid>
+
 </UserControl>

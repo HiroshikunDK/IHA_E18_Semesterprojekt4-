@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RESTfullWebApi.Models;
 
-namespace ViewModels.Services.Interfaces
+namespace DAL.Core
 {
     public class UserLoggedInEventArg : EventArgs
     {

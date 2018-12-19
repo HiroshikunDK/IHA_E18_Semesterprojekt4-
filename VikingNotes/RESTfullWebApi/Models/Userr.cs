@@ -18,6 +18,7 @@ namespace RESTfullWebApi.Models
         public Userr()
         {
             this.Quizs = new HashSet<Quiz>();
+            this.QuizUserStatistics = new HashSet<QuizUserStatistic>();
         }
     
         public long UserID { get; set; }
@@ -27,9 +28,13 @@ namespace RESTfullWebApi.Models
         public long UserTypeID { get; set; }
         public long StudyID { get; set; }
         public string StudentNumber { get; set; }
+        public string AuthToken { get; set; }
+        public string Salt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Quiz> Quizs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QuizUserStatistic> QuizUserStatistics { get; set; }
         public virtual Study Study { get; set; }
         public virtual UserType UserType { get; set; }
     }

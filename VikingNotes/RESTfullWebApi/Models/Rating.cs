@@ -14,10 +14,6 @@ namespace RESTfullWebApi.Models
     
     public partial class Rating
     {
-        public Rating()
-        {
-            
-        }
         public long RatingID { get; set; }
         public int Rating1 { get; set; }
         public string Reason { get; set; }

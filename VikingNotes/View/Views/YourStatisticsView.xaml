@@ -4,9 +4,81 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:View.Views"
+             xmlns:ViewModels="clr-namespace:ViewModels;assembly=ViewModels"
+        xmlns:models="clr-namespace:RESTfullWebApi.Models;assembly=RESTfullWebApi"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+
     <Grid>
-        <TextBlock>Her vises dine egen stastistikker</TextBlock>       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="5*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+        <!--Text block Headers  -->
+        <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="Your Quizzes " Grid.Column="1" Grid.Row="1" />
+        <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="Statistic " Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="1" />
+        <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="The Ratings" Grid.Column="6" Grid.Row="1" />
+        <TextBlock Background="LightGray" Padding="10,0,0,0" FontSize="24 px" Text="Reason for rating" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4" />
+
+        <!--List Boxes  -->
+        <ListBox Name="YourQuizzesList" Grid.Column="1" Grid.Row="2" Grid.RowSpan="4" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!--Static View collum with total and rating score-->
+        <StackPanel Background="White" Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="2" >
+        </StackPanel>
+
+        <StackPanel Grid.Column="4" Grid.Row="2" Orientation="Vertical">
+        <TextBlock HorizontalAlignment="Center" Name="TotalRating" FontSize="60" Text="{Binding TotalRating}"></TextBlock>
+        <TextBlock Margin="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="YourTotalRating" FontSize="16" Text="Total Rating Value"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Column="3" Grid.Row="2" Orientation="Vertical" >
+            <TextBlock HorizontalAlignment="Center" Name="Rating" FontSize="60" Text="{Binding CurrentRating.Rating1}"></TextBlock>
+            <TextBlock  Margin="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="YourRating" FontSize="16" Text="Rating Value"></TextBlock>
+        </StackPanel>
+
+        <ListBox Name="SpecificReview" Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="5">
+            <TextBlock Name="SomeReview" Text="{Binding CurrentRating.Reason}"/>
+        </ListBox>
+
+        <ListBox Name="TheRatings" Grid.Column="6" Grid.Row="2" Grid.RowSpan="4" ItemsSource="{Binding Ratings}" SelectionChanged="TheRatings_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="DarkGray" Background="LightGray" BorderThickness="2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="{Binding Rating1}" Command="{Binding ElementName=this, Path=DataContext.GetRatingInfo}" CommandParameter="{Binding Path=RatingID}">
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

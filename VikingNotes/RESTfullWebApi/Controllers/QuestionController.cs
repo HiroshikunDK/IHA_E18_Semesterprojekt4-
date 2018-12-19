@@ -22,9 +22,26 @@ namespace RESTfullWebApi.Controllers
         private VikingNoteDBEntities db = new VikingNoteDBEntities();
 
         // GET: api/Question
-        public IQueryable<Question> GetQuestions()
+        // GET: api/Question?QuizID=?
+        public IQueryable<Question> GetQuestions(long QuizID = -1)
         {
-            return db.Questions;
+            IQueryable<Question> questions;
+            if (QuizID == -1)
+            {
+                questions = db.Questions;
+                foreach (var question in questions)
+                {
+                    question.Answers = db.Answers.Where(a => a.QuestionID == question.QuestionID).ToList();
+                }
+                return questions;
+            }
+
+            questions = db.Questions.Where(q => q.QuizID == QuizID);
+            foreach (var question in questions)
+            {
+                question.Answers = db.Answers.Where(a => a.QuestionID == question.QuestionID).ToList();
+            }
+            return questions;        
         }
 
         // GET: api/Question/5
@@ -42,7 +59,7 @@ namespace RESTfullWebApi.Controllers
 
         // PUT: api/Question/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutQuestion(long id, Question question)
+        public async Task<IHttpActionResult> PutQuestion(long id, [FromBody]Question question)
         {
             if (!ModelState.IsValid)
             {

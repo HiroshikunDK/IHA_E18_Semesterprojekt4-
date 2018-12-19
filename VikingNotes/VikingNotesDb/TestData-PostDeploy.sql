@@ -52,20 +52,6 @@ INSERT INTO [dbo].[Course] ([CourseID], [Name], [SemesterID]) VALUES (3, N'E1IDE
 INSERT INTO [dbo].[Course] ([CourseID], [Name], [SemesterID]) VALUES (4, N'Psyk101', 12)
 
 SET IDENTITY_INSERT [dbo].[Course] OFF
-SET IDENTITY_INSERT [dbo].[Catagory] ON
-
-INSERT INTO [dbo].[Catagory] ([CatagoryID], [Name]) VALUES (1, 'boolsk algebra')
-INSERT INTO [dbo].[Catagory] ([CatagoryID], [Name]) VALUES (2, 'Software design')
-INSERT INTO [dbo].[Catagory] ([CatagoryID], [Name]) VALUES (3, 'software testning')
-INSERT INTO [dbo].[Catagory] ([CatagoryID], [Name]) VALUES (4, 'noget med psykologi')
-
-SET IDENTITY_INSERT [dbo].[Catagory] OFF
-
-INSERT INTO [dbo].[IsPartOfMany] ([CatagoryID], [CourseID]) VALUES (1, 3)
-INSERT INTO [dbo].[IsPartOfMany] ([CatagoryID], [CourseID]) VALUES (2, 1)
-INSERT INTO [dbo].[IsPartOfMany] ([CatagoryID], [CourseID]) VALUES (3, 2)
-INSERT INTO [dbo].[IsPartOfMany] ([CatagoryID], [CourseID]) VALUES (4, 4)
-
 SET IDENTITY_INSERT [dbo].[UserType] ON
 
 INSERT INTO [dbo].[UserType] ([UserTypeID], [Type]) VALUES (1, N'AlmindeligBruger')
@@ -76,38 +62,38 @@ INSERT INTO [dbo].[UserType] ([UserTypeID], [Type]) VALUES (3, N'SystemAdmin')
 SET IDENTITY_INSERT [dbo].[UserType] OFF
 SET IDENTITY_INSERT [dbo].[Userr] ON
 
-INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (1, N'SvendTheMan', N'123456', N'Svenden@gmail.com', 1, 1, N'201110642')
-INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (2, N'Jens', N'megetlangkode', N'L33tM4ch1ne@gmail.com', 2, 2, N'20150652')
-INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber]) VALUES (3, N'Kirstine', N'utroliglangkode', N'Admin@VikingNotes.dk', 3, 3, N'201211071')
+INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber], [AuthToken], [Salt]) VALUES (1, N'SvendTheMan', N'123456', N'Svenden@gmail.com', 1, 1, N'201110642', N's34242d2', N'asdadsads')
+INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber], [AuthToken], [Salt]) VALUES (2, N'Jens', N'megetlangkode', N'L33tM4ch1ne@gmail.com', 2, 2, N'20150652', N's34242d2', N'asdadsads')
+INSERT INTO [dbo].[Userr] ([UserID], [UserName], [Password], [EmailAdress], [UserTypeID], [StudyID], [StudentNumber], [AuthToken], [Salt]) VALUES (3, N'Kirstine', N'utroliglangkode', N'Admin@VikingNotes.dk', 3, 3, N'201211071', N's34242d2', N'asdadsads')
 
 SET IDENTITY_INSERT [dbo].[Userr] OFF
 SET IDENTITY_INSERT [dbo].[Quiz] ON
 
-/*kategori 1 bolsk Algebra*/
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (3, 3, N'Paratviden i Kodning - C', N'En quiz med simpel viden i C og C releteret kodning', 1)
+/*Course 3 = E1IDE bolsk Algebra*/
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (3, 3, N'Paratviden i Kodning - C', N'En quiz med simpel viden i C og C releteret kodning', 3)
 /*Ikke lavet*/
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (4, 1, N'Let Boolsk algebra quiz', N'En let quiz', 1)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (5, 1, N'Svær Boolsk algebra quiz', N'En svær quiz', 1)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (6, 3, N'Omfattende Boolsk algebra quiz', N'En omfattende quiz', 1)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (7, 3, N'Tabels med mere', N'En quiz omkring de tabel som indgår i Boolsk Algebra', 1)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (4, 1, N'Let Boolsk algebra quiz', N'En let quiz', 3)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (5, 1, N'Svær Boolsk algebra quiz', N'En svær quiz', 3)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (6, 3, N'Omfattende Boolsk algebra quiz', N'En omfattende quiz', 3)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [[CourseID]) VALUES (7, 3, N'Tabels med mere', N'En quiz omkring de tabel som indgår i Boolsk Algebra', 3)
 /*Ikke lavet slut*/
 
-/*kategori 2 Software Design*/
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (1, 3, N'statemachines', N'essentielle design regler for statemachines', 2)
+/*Course 2 = I4SWD*/
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (1, 3, N'statemachines', N'essentielle design regler for statemachines', 1)
 /*Ikke lavet*/
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (8, 3, N'Observer pattern', N'essentielle design regler for observer pattern', 2)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (9, 3, N'Trådhåndtering - Tasks', N'Quiz om hvordan har man gør brug af tasks', 2)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (10, 3, N'', N'essentielle design regler for statemachines', 2)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (11, 3, N'statemachines', N'essentielle design regler for statemachines', 2)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (8, 3, N'Observer pattern', N'essentielle design regler for observer pattern', 1)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (9, 3, N'Trådhåndtering - Tasks', N'Quiz om hvordan har man gør brug af tasks', 1)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (10, 3, N'', N'essentielle design regler for statemachines', 1)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (11, 3, N'statemachines', N'essentielle design regler for statemachines', 1)
 /*Ikke lavet slut*/
 
-/*kategori 3 Software test*/
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (2, 3, N'unit testing', N'hvordan man sikrer god unit testing', 3)
+/*Course 2 = I4SWT */
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (2, 3, N'unit testing', N'hvordan man sikrer god unit testing', 2)
 /*Ikke lavet*/
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (12, 3, N'Code coverage', N'Spørgsmål omkring hvordan CC virker', 3)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (13, 3, N'Continous integration', N'En quiz lavet til de første 3 lektioner af SWT', 3)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (14, 3, N'Test med Klasse diagrammer', N'Hvilke ting man skal huske når man tester gennem klasse diagram', 3)
-INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CatagoryID]) VALUES (15, 3, N'En bedre unittest', N'Denne her test er bedre end den anden test', 3)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (12, 3, N'Code coverage', N'Spørgsmål omkring hvordan CC virker', 2)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (13, 3, N'Continous integration', N'En quiz lavet til de første 3 lektioner af SWT', 2)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (14, 3, N'Test med Klasse diagrammer', N'Hvilke ting man skal huske når man tester gennem klasse diagram', 2)
+INSERT INTO [dbo].[Quiz] ([QuizID], [UserID], [Name], [Description], [CourseID]) VALUES (15, 3, N'En bedre unittest', N'Denne her test er bedre end den anden test', 2)
 /*Ikke lavet slut*/
 
 SET IDENTITY_INSERT [dbo].[Quiz] OFF
@@ -174,22 +160,22 @@ INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VAL
 INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (5, N'nej', 0, 2)
 
 /*Spørgsmål 2 SWT guden*/
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (52, N'Frank "SWT GUD" Bodholdt Jakobsen', 1, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (53, N'Troels Fedder Jensen', 0, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (54, N'Poul Ejnar Rovsing', 0, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (55, N'Jesper Rosholm Tørresø', 0, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (52, N'Frank "SWT GUD" Bodholdt Jakobsen', 1, 17)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (53, N'Troels Fedder Jensen', 0, 17)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (54, N'Poul Ejnar Rovsing', 0, 17)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (55, N'Jesper Rosholm Tørresø', 0, 17)
 
 /*Spørgsmål 3 Hvad hedder udvidelsen i SWT*/
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (56, N'Notepad++', 0, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (57, N'QT creator', 0, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (58, N'Addblocker', 0, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (59, N'nuget', 1, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (56, N'Notepad++', 0, 18)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (57, N'QT creator', 0, 18)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (58, N'Addblocker', 0, 18)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (59, N'nuget', 1, 18)
 
 /*Spørgsmål 4 The art of Unittest*/
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (60, N'The Art of The Triggering', 0, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (61, N'The Art of Art', 0, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (62, N'The Art of 1337', 0, 2)
-INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (63, N'The Art of War', 1, 2)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (60, N'The Art of The Triggering', 0, 19)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (61, N'The Art of Art', 0, 19)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (62, N'The Art of 1337', 0, 19)
+INSERT INTO [dbo].[Answer] ([AnswerID], [Answer], [IsCorrect], [QuestionID]) VALUES (63, N'The Art of War', 1, 19)
 
 /*QUIZ 3 Paratviden*/
 /*Spørgsmål 3 AND operator*/

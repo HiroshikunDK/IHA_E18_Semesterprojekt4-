@@ -18,6 +18,7 @@ namespace RESTfullWebApi.Models
         public Question()
         {
             this.Answers = new HashSet<Answer>();
+            this.SelectedAnswers = new HashSet<SelectedAnswer>();
         }
     
         public long QuestionID { get; set; }
@@ -29,5 +30,7 @@ namespace RESTfullWebApi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answer> Answers { get; set; }
         public virtual Quiz Quiz { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SelectedAnswer> SelectedAnswers { get; set; }
     }
 }

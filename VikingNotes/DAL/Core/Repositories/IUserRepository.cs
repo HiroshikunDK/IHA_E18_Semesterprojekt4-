@@ -10,5 +10,7 @@ namespace DAL.Core.Repositories
     public interface IUserRepository : IRepository<Userr>
     {
         Task<List<Userr>> TryLoginUser(string username, string password);
+
+        new Task<Userr> Add(Userr user);
     }
 }

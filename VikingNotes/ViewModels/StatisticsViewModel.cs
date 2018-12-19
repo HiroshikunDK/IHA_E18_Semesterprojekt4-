@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +11,16 @@ namespace ViewModels
 {
     public class StatisticsViewModel : BaseViewModel
     {
-        public StatisticsViewModel()
+        public StatisticsViewModel(IUnitOfWork data)
         {
+            Data = data;
             this.LoadAllStatisticsView();
 
             // Hook up Commands to associated methods
-            this.LoadAllStatisticsViewCommand = new DelegateCommand(o => this.LoadAllStatisticsView());
-            this.LoadYourStatisticsViewCommand = new DelegateCommand(o => this.LoadYourStatisticsView());
+            this.LoadAllStatisticsViewCommand = new Command(o => this.LoadAllStatisticsView());
+            this.LoadYourStatisticsViewCommand = new Command(o => this.LoadYourStatisticsView());
         }
-
+        private IUnitOfWork Data;
         public ICommand LoadAllStatisticsViewCommand { get; private set; }
         public ICommand LoadYourStatisticsViewCommand { get; private set; }
 
@@ -42,7 +44,7 @@ namespace ViewModels
 
         private void LoadYourStatisticsView()
         {
-            CurrentViewModel = new YourStatisticsViewModel();
+            CurrentViewModel = new YourStatisticsViewModel(Data);
         }
     }
 }

@@ -7,6 +7,150 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock>Her vises alle statistikker</TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="5*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <!--Margin top-->
+            <RowDefinition Height="5*"/>
+            <!--1 Headers-->
+            <RowDefinition Height="6*"/>
+
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
+            <!--2. header-->
+            <RowDefinition Height="16*"/>
+
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
+            <!--3. header-->
+            <RowDefinition Height="16*"/>
+
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
+            <!--4. header-->
+            <RowDefinition Height="16*"/>
+
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
+            <!--5. header-->
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="5*"/>
+
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Left box Selectors -->
+        <!-- 1. box Selectors -->
+
+        <TextBlock Background="LightGray" Padding="5,0,0,0" FontSize="14 px" Text="Search here " Grid.Column="1" Grid.Row="1" />
+        <TextBox Grid.Column="1" Grid.Row="2" Text="Search Here" TextAlignment="Center"/>
+
+        <!-- 2. box Selectors -->
+        <TextBlock Background="LightGray" Padding="5,0,0,0" FontSize="14 px" Text="Factulties" Grid.Column="1" Grid.Row="4" />
+        <ListBox Background="White" Name="selectFaculty" Grid.Column="1" Grid.Row="5" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- 3. box Selectors -->
+        <TextBlock Background="LightGray" Padding="5,0,0,0" FontSize="14 px" Text="Courses " Grid.Column="1" Grid.Row="7" />
+        <ListBox Background="White" Name="selectCourse" Grid.Column="1" Grid.Row="8" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- 4. box Selectors -->
+        <TextBlock Background="LightGray" Padding="5,0,0,0" FontSize="14 px" Text="Semesters" Grid.Column="1" Grid.Row="10" />
+        <ListBox Background="White" Name="selectSemester" Grid.Column="1" Grid.Row="11" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- 5. box Selectors -->
+        <TextBlock Background="LightGray" Padding="5,0,0,0" FontSize="14 px" Text="Subject" Grid.Column="1" Grid.Row="13" />
+        <ListBox Background="White" Name="selectSubject" Grid.Column="1" Grid.Row="14" Grid.RowSpan="3" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <!--2. collum content-->
+        <!--Questions in Quiz-->
+        <TextBlock Background="LightGray" Padding="5,0,0,0" FontSize="14 px" Text="Questions in Quiz" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="1" />
+        <ListBox Background="White" Name="QuestionsInQuiz" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="7" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <!--´Describtion-->
+        <TextBlock Background="LightGray" Padding="5,0,0,0" FontSize="14 px" Text="Describtion" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="10" />
+        <ListBox Background="White" Name="Describtion" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="11" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!--3. collum content-->
+        <!--Questions in Quiz-->
+        <TextBlock Background="LightGray" Padding="5,0,0,0" FontSize="14 px" Text="Quizzes" Grid.Column="6" Grid.Row="1" />
+        <ListBox Background="White" Name="Quizzes" Grid.Column="6" Grid.Row="1" Grid.RowSpan="11" ItemsSource="{Binding Quizzes}" SelectedItem="{Binding Quiz}" Margin="0.2,17.8,0.4,1.8">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:Quiz">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}">
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
     </Grid>
 </UserControl>
+        
+    
