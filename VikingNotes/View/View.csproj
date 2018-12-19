@@ -82,6 +82,9 @@
     <Compile Include="Views\TopBarView.xaml.cs">
       <DependentUpon>TopBarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RateQuizView.xaml.cs">
+      <DependentUpon>RateQuizView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\YourStatisticsView.xaml.cs">
       <DependentUpon>YourStatisticsView.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TopBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RateQuizView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
